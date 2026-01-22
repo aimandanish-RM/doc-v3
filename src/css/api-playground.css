@@ -100,3 +100,29 @@
   background: #dc2626;
   color: white;
 }
+
+.api-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.api-tab {
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: #020617;
+  color: #94a3b8;
+  border: 1px solid #1f2937;
+}
+
+.api-tab.active {
+  background: #2563eb;
+  color: white;
+}
+
+.api-code {
+  background: #020617;
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
