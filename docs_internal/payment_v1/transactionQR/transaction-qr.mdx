@@ -1,0 +1,312 @@
+---
+id: transaction-qr
+title: Transaction QR
+sidebar_label: Transaction QR
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+:::note
+
+- Display a QR code for user to scan and pay
+
+- Transaction QR Sequence Diagram
+
+<Flex justifyContent="center">
+  <Button
+    width="100%"
+    sx={{
+      ":hover": {
+        backgroundColor: "blue",
+      },
+      backgroundColor: "#528ef7",
+      borderRadius: 15,
+    }}
+    onClick={() => {
+      window.location.href =
+        "https://drive.google.com/drive/folders/1J_f91aO7pzNrP_PXlHYozIa_ZaqKzNk6?usp=sharing";
+    }}
+  >
+    Click Here
+  </Button>
+</Flex>
+
+:::
+
+<!-- https://video-to-markdown.netlify.app/  create markdown video -->
+
+### Example of Create Transaction QR
+
+<Box
+  sx={{
+    width: "100%",
+    height: 0,
+    paddingBottom: 900 / 16 + "%",
+    position: "relative",
+    overflow: "hidden",
+    "& > iframe": {
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      top: 0,
+      bottom: 0,
+      left: 0,
+      border: 0,
+    },
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/eD1TjnTzfwM"
+    frameBorder="0"
+    allowFullScreen
+  />
+</Box>
+<br />
+
+### Step 1 : Create a QR Code
+
+Get the QR Code URL <b>qrCodeUrl</b> from the response endpoint <br />
+
+Example of QR Code URL:
+https://dev-rm-api.ap.ngrok.io/payment/unified?code=a669adc3b06fe5cef977cc762f40ce8c
+
+### Step 2 : User Fill Amount / PreFill Amount
+
+If <b>"isPreFillAmount": false</b>, user will be prompted to key-in amount for payment.
+
+<Card width={256}>
+  <Image src="https://storage.googleapis.com/rm-portal-assets/img/rm-doc/transaction-qr/1.jpeg" />
+</Card>
+<br />
+
+If <b>"isPreFillAmount": true</b>, user will be directly prompted for payment.
+
+<Card width={256}>
+  <Image src="https://storage.googleapis.com/rm-portal-assets/img/rm-doc/transaction-qr/2.jpeg" />
+</Card>
+
+### Step 3 : Insert Pin
+
+<Card width={256}>
+  <Image src="https://storage.googleapis.com/rm-portal-assets/img/rm-doc/transaction-qr/3.jpeg" />
+</Card>
+
+### Step 4 : User will receive a payment status notification
+
+<Card width={258}>
+  <Image src="https://storage.googleapis.com/rm-portal-assets/img/rm-doc/transaction-qr/4.jpeg" />
+</Card>
+
+### Step 5 : Redirect to Merchant Page
+
+After payment is complete, the user will be redirected to a URL link set at <b>redirectUrl</b>.
+
+### Step 6 : Payment History
+
+Users can view their transaction history in their own wallet application
+
+### Step 7 : Merchants can view their transaction record in Merchant Portal
+
+After payment is complete, merchants can view their transaction in Merchant Portal.
+
+<Card width={258}>
+  <Image src="https://storage.googleapis.com/rm-portal-assets/img/rm-doc/transaction-qr/6.png" />
+</Card>
+
+<hr />
+
+**Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
+URL : `https://open.revenuemonster.my/v3/payment/transaction/qrcode`<br/>
+Sandbox URL : `https://sb-open.revenuemonster.my/v3/payment/transaction/qrcode`
+
+:::note
+To create **Static/Dynamic** QR code for user scanning merchant's display QR.
+:::
+
+### Request Parameters
+
+| Parameter         | Type     | Required | Description                                                                                                                        |                                             Example                                              |
+| ----------------- | -------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------: |
+| `amount`          | Uint     | Yes      | Amount of order in cent. Only required when "isPrefillAmount" = true. (min RM 0.10 or amount: 10)                                  |                                               100                                                |
+| `currencyType`    | String   | Yes      | Currency notation (currently only support `MYR`)                                                                                   |                                              "MYR"                                               |
+| `method`          | []String | No       | [RM currently supported method](../.././payment-method.mdx)                                                                     | ["WECHATPAY_CN","WECHATPAY_MY", <br/> "BOOST_MY","ALIPAY_CN",<br/>"PRESTO_MY" ] |
+| `expiry`          | Object   | No       | Object of expiry                                                                                                                   |                                   (Refer to explanation below)                                   |
+| `order`           | Object   | Yes      | Object of order                                                                                                                    |                                   (Refer to explanation below)                                   |
+| `redirectUrl`     | String   | No       | URL to redirect after payment is made. Default is "".                                                                              |                                "https://www.apple.com/my/iphone/"                                |
+| `type`            | String   | Yes      | "STATIC" (for permanent use) or "DYNAMIC" (for one-time use)                                                                       |                                             "STATIC"                                             |
+| `storeId`         | String   | Yes      | ID of the store to create QR code                                                                                                  |                                       "10946114768247530"                                        |
+| `isPreFillAmount` | Bool     | No       | To indicate QR code has pre-fill amount. Default is false. (i.e. Amount will be shown directly on user's wallet without keying-in) |                                               true                                               |
+
+<br />
+
+<strong>Expiry object (expiry):</strong>
+
+| Parameter   | Type     | Required | Description                                                                               | Example                            |
+| ----------- | -------- | -------- | ----------------------------------------------------------------------------------------- | ---------------------------------- |
+| `type`      | String   | Yes      | "DYNAMIC" (days from now), "FIX" (specific fixed date) or "PERMANENT" (never expire)      | "PERMANENT"                        |
+| `day`       | Uint     | No       | Only required by "DYNAMIC" expiry type. To indicate number of days from now until expiry. | 3                                  |
+| `expiredAt` | DateTime | No       | Only required by "FIXED". To indicate specific expiry date.                               | "2020-10-07T17:44:26.679908+08:00" |
+
+<br />
+<strong>Order object (order):</strong>
+
+| Parameter        | Type   | Required | Description                     | Example                                 |
+| ---------------- | ------ | -------- | ------------------------------- | --------------------------------------- |
+| `detail`         | String | Yes      | Order details, max: 600         | "1 x iPhone X; 2 x SAMSUNG S8"          |
+| `title`          | String | Yes      | Order title, max: 32            | "Sales"                                 |
+| `additionalData` | String | Yes      | Order additional data, max: 128 | "Sales for customer xxx at branch xxx." |
+
+> Example Request
+
+```json
+curl --location --request POST "https://sb-open.revenuemonster.my/v3/payment/transaction/qrcode" \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiKiJdLCJleHAiOjE1MjE2MjkyNTYsImlhdCI6MTUyMTYyMjA1NywiaXNzIjoiaHR0cHM6Ly9zYi1vYXV0aC5yZXZlbnVlbW9uc3Rlci5teSIsImp0aSI6IkVod0tFRTlCZFhSb1FXTmpaWE56Vkc5clpXNFF5cmYza3EzTDY4QnoiLCJuYmYiOjE1MjE2MjIwNTcsInN1YiI6IkVoUUtDRTFsY21Ob1lXNTBFSlhWemQzd3JhcVRPUklRQ2dSVmMyVnlFSXlKcUl6dnlNUFZjUSJ9.dJknY9MZHLNrKx1p7gZxS0_oA3uXLWplDU1r1dpwxIbmdB6yw4tQBTXKlWArDfKLlBDn6v22_gT5Px7sdCMj7e5M9eRoJoMnoPnslgYpmJJ5kjqAbKU7dUxKb1OzFLrvmtSK9r-FRLVtMFHioWYpwgSvSPBgZ6lAYkUyDzH7aKadFYtQcBuJR0hlq2CXtP0mzbHOeu2q6giONf3E5-XqS8lLRtuHPAbJ7_YFwo0Oe2zc6h05IOocmx_NvBVPfDBnuygTU063h70Q987MYeGDV_Os4N6N_I4b-GoHprEPtmntB1RJPrFrY28hvvoUfDHXHZVXT1GlrsozrkWV4EjbTw" \
+  --header "X-Signature: sha256 pLZz2vnRYHKPUd28gz+f3gIPimH+dHu1xNZqBqlNVQFOdDY1UPpA8S9lIHb4vUhQlEqLS/jJp4zETKA0q4qIlA==" \
+  --header "X-Nonce-Str: mpnbwsaizkwaykemxfolmmhvyzvrgnnh" \
+  --header "X-Timestamp: 15347569119413" \
+  --data "{\"amount\":100,\"currencyType\":\"MYR\",\"expiry\":{\"type\":\"PERMANENT\"},\"isPreFillAmount\":true,\"method\": [\"WECHATPAY\"],\"order\":{\"detail\":\"detail\",\"title\":\"title\"},\"redirectUrl\":\"https://www.baidu.com/\",\"storeId\":\"10946114768247530\",\"type\":\"DYNAMIC\"}"
+```
+
+### Response Parameters
+
+| Parameter | Type   | Description                                                                                               | Example                      |
+| --------- | ------ | --------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| `item`    | Object | Transaction object                                                                                        | (Refer to explanation below) |
+| `code`    | String | Successfully call this endpoint. If fail, will return error code object (Refer `Appendix 1: Error Codes`) | "SUCCESS"                    |
+
+<br />
+
+<strong>Transaction object (item):</strong>
+
+| Parameter         | Type     | Description                                                                            | Example                                                                                         |
+| ----------------- | -------- | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `store`           | Object   | Store object                                                                           | (Refer to explanation below)                                                                    |
+| `type`            | String   | "DYNAMIC" (days from now), "FIXED" (specific fixed date) or "PERMANENT" (never expire) | "PERMANENT"                                                                                     |
+| `isPreFillAmount` | Bool     | To indicate QR code has pre-fill amount                                                | true                                                                                            |
+| `currencyType`    | String   | Currency notation                                                                      | "MYR"                                                                                           |
+| `amount`          | Uint     | Amount of order in cent. Only required when "isPrefillAmount" = true.                  | 100                                                                                             |
+| `platform`        | String   | Currently only support "OPEN_API"                                                      | "OPEN_API"                                                                                      |
+| `method`          | []String | [RM currently supported method](../.././payment-method.mdx)                         | ["WECHATPAY_CN","WECHATPAY_MY", <br/> "BOOST_MY","ALIPAY_CN",<br/>"PRESTO_MY"] |
+| `expiry`          | Object   | Object of expiry                                                                       | (Refer to explanation above)                                                                    |
+| `code`            | String   | Embedded code in QR                                                                    | "c8ff3df0605a5f20cd6476661072eade"                                                              |
+| `status`          | String   | "VALID" (always valid for static QR) or "REDEEMED" (only applicable to dynamic QR)     | "VALID"                                                                                         |
+| `qrCodeUrl`       | String   | Embedded URL in QR                                                                     | "https://dev-rm-api.ap.ngrok.io/payment/unified?code=c8ff3df0605a5f20cd6476661072eade"          |
+| `redirectUrl`     | String   | Redirect URL after QR payment is made                                                  | "https://www.apple.com/my/iphone/"                                                              |
+| `order`           | Object   | Order object                                                                           | (Refer to explanation below)                                                                    |
+| `createdAt`       | DateTime | Creation date time of transaction                                                      | "2018-03-21T06:41:22Z"                                                                          |
+| `updatedAt`       | DateTime | Last update date time of transaction                                                   | "2018-03-21T06:41:22Z"                                                                          |
+
+<br />
+<strong>Store object (store):</strong>
+
+| Parameter      | Type              | Description                                     | Example                                             |
+| -------------- | ----------------- | ----------------------------------------------- | --------------------------------------------------- |
+| `id`           | String            | Store ID                                        | "6170506694335521334"                               |
+| `name`         | String            | Store Name                                      | "REVENUE MONSTER"                                   |
+| `addressLine1` | String            | Store Address 1                                 | "B-5-30, 5th Floor, Block Bougainvillea,"           |
+| `addressLine2` | String            | Store Address 2                                 | "PJU 6A, Lebuhraya SPRINT, 10 Boulevard,"           |
+| `postCode`     | String            | Postcode of store                               | "47400"                                             |
+| `city`         | String            | City of store                                   | "Petaling Jaya"                                     |
+| `state`        | String            | State of store                                  | "Selangor"                                          |
+| `country`      | String            | Country of store                                | "Malaysia"                                          |
+| `countryCode`  | String            | Country code of store contact number            | "60"                                                |
+| `phoneNumber`  | String            | Phone number of store                           | "377334080"                                         |
+| `geoLocation`  | Object of [Float] | Geo Location (latitude and longtitude) of store | {"latitude": 3.1349857, "longitude": 101.6136659 } |
+| `status`       | String            | Current status of store                         | "ACTIVE"                                            |
+| `createdAt`    | DateTime          | Creation date time of store                     | "2018-02-12T08:53:13Z"                              |
+| `updatedAt`    | DateTime          | Last update date time of store                  | "2018-02-12T08:53:13Z"                              |
+
+<br />
+
+<strong>Expiry object (expiry):</strong>
+
+| Parameter   | Type     | Description                                                                               | Example                            |
+| ----------- | -------- | ----------------------------------------------------------------------------------------- | ---------------------------------- |
+| `type`      | String   | "DYNAMIC" (days from now), "FIX" (specific fixed date) or "PERMANENT" (never expire)      | "PERMANENT"                        |
+| `day`       | Uint     | Only required by "DYNAMIC" expiry type. To indicate number of days from now until expiry. | 3                                  |
+| `expiredAt` | DateTime | Only required by "FIXED". To indicate specific expiry date.                               | "2020-10-07T17:44:26.679908+08:00" |
+
+<br />
+
+<strong>Order object (order):</strong>
+
+| Parameter        | Type   | Description                     | Example                                 |
+| ---------------- | ------ | ------------------------------- | --------------------------------------- |
+| `details`        | String | Order details, max: 600         | "1 x iPhone X; 2 x SAMSUNG S8"          |
+| `title`          | String | Order title, max: 32            | "Sales"                                 |
+| `additionalData` | String | Order additional data, max: 128 | "Sales for customer xxx at branch xxx." |
+
+> Example Response
+
+```json
+{
+  "item": {
+    "store": {
+      "id": "10946114768247530",
+      "name": "One Utama",
+      "addressLine1": "ANYTHING",
+      "addressLine2": "",
+      "postCode": "48484",
+      "city": "KUALA LUMPUR",
+      "state": "W.P. KUALA LUMPUR",
+      "country": "MALAYSIA",
+      "countryCode": "60",
+      "phoneNumber": "12312341234",
+      "geoLocation": {
+        "latitude": 0,
+        "longitude": 0
+      },
+      "status": "ACTIVE",
+      "createdAt": "2018-06-03T08:53:48Z",
+      "updatedAt": "2018-06-03T08:53:48Z"
+    },
+    "type": "DYNAMIC",
+    "isPreFillAmount": true,
+    "currencyType": "MYR",
+    "amount": 100,
+    "platform": "OPEN_API",
+    "method": ["WECHATPAY"],
+    "expiry": {
+      "type": "PERMANENT",
+      "day": 0,
+      "expiredAt": "2050-12-31T23:59:59Z"
+    },
+    "code": "237fff27513b29ddd364e595d6c2eaf2",
+    "status": "VALID",
+    "qrCodeUrl": "https://sb-api.revenuemonster.my/payment/unified?code=237fff27513b29ddd364e595d6c2eaf2",
+    "redirectUrl": "https://www.baidu.com/",
+    "order": {
+      "title": "title",
+      "detail": "detail"
+    },
+    "createdAt": "2018-08-20T09:27:47.68849666Z",
+    "updatedAt": "2018-08-20T09:27:47.688496777Z"
+  },
+  "code": "SUCCESS"
+}
+```
+
+:::note
+
+If you don't receive any response please ingestion **Query Status By Order ID**
+
+<Button
+  width="100%"
+  sx={{
+      ":hover": {
+        backgroundColor: "blue",
+      },
+      backgroundColor: "#528ef7",
+      borderRadius: 15,
+    }}
+  onClick={() => {
+    window.location.href = "./../query-status-by-order-id";
+  }}
+>
+  Query Status By Order ID
+</Button>
+
+:::

@@ -1,0 +1,85 @@
+---
+id: alipay-mini-program
+title: Alipay Mini Program
+sidebar_label: Alipay Mini Program
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+**Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
+URL : `https://open.revenuemonster.my/v3/payment/online/checkout`<br/>
+Sandbox URL : `https://sb-open.revenuemonster.my/v3/payment/online/checkout`
+
+:::note
+Create a payment in Alipay Mini Program
+:::
+
+### Request Parameters
+
+| Parameter    | Type   | Description                                                                                   | Example               |
+| ------------ | ------ | --------------------------------------------------------------------------------------------- | --------------------- |
+| `checkoutId` | String | refer to [web-payment](./webpayment/web-payment#response-parameters) to get your `checkoutId` | "1607935374438928096" |
+| `method`     | String | [RM currently supported method](../payment-method.mdx)                                        | "ALIPAY_CN"           |
+| `type`       | String | `MINI_PROGRAM`                                                                                | "MINI_PROGRAM"        |
+
+```json
+curl --location --request POST '{{open_base_path}}/v3/payment/online/checkout' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer {{clientToken}}' \
+--header 'X-Nonce-Str: XAYZRZNLGCKSTURRFKBIGYALUKLCLJOG' \
+--header 'X-Signature: sha256 RLHmhe9pvCnM6wbp2UcQcyyjBXKbVhlbshaZqUBdgxqdnbM6WsmQuQL1PwhsF6/uOxoXtoXaLIi18zN0IQp5MdxNSiq+6MPLZqmPpiWyJSXpzZsUVst43tKp+JZDF8AWXesrol5vj1RVbxOvCfnkmfghA83mlKc4scXIJkqXpFdyKcRmjT6Bsu9nlMh5IdyBSKv3goatgso/4IsEi8R220ZSHp2Ai//g9iKrKG3cgspM2Uj74ZXIrzt8IB+660btXyoanMuqgqirl1ulj59KciqLKqQMYoHfRywJTH0XLDtV1fQHO1FAECwmMd91Y63acnH3BOxo023tF7AXwNASsg==' \
+--header 'X-Timestamp: 1547643342' \
+--data-raw '{
+	"checkoutId": "1607935374438928096",
+	"method": "ALIPAY_CN",
+	"type": "MINI_PROGRAM"
+}'
+```
+
+### Response Parameters
+
+| Parameter | Type   | Description                                                                                   | Example                      |
+| --------- | ------ | --------------------------------------------------------------------------------------------- | ---------------------------- |
+| `item`    | Object | Object of refund details.                                                                     | (Refer to explanation below) |
+| `code`    | String | Status returned from Revenue Monster server, whether successfully called our endpoint or not. | "SUCCESS"                    |
+
+<br />
+
+<strong>Item Object (item):</strong>
+
+| Parameter | Type   | Description             | Example        |
+| --------- | ------ | ----------------------- | -------------- |
+| `type`    | String | `MINI_PROGRAM`          | "MINI_PROGRAM" |
+| `data`    | String | Is a base64 encode data | show as below  |
+
+> Example Response for URL
+
+```json
+{
+  "item": {
+    "data": "X2lucHV0X2NoYXJzZXQ9VVRGLTgmY3VycmVuY3k9VVNEJmZvcmV4X2Jpej1GUCZub3RpZnlfdXJsPWh0dHBzJTNBJTJGJTJGc2ItcGcucmV2ZW51ZW1vbnN0ZXIubXklMkZ3ZWJob29rJTJGYWxpcGF5LWNuJm91dF90cmFkZV9ubz0yMDEyMTQwODQzMTIzMTA0Mjk2ODM5MzQmcGFydG5lcj0yMDg4NTMxNzY2MTUyNTAxJnBheW1lbnRfdHlwZT0xJnByb2R1Y3RfY29kZT1ORVdfV0FQX09WRVJTRUFTX1NFTExFUiZyZXR1cm5fdXJsPWh0dHBzJTNBJTJGJTJGcmV2ZW51ZW1vbnN0ZXIubXkmc2Vjb25kYXJ5X21lcmNoYW50X2lkPTQxMTgxNjUyMDM2Nzk2Njg4ODUmc2Vjb25kYXJ5X21lcmNoYW50X2luZHVzdHJ5PTczOTkmc2Vjb25kYXJ5X21lcmNoYW50X25hbWU9VGVzdCslMjYrTWVyY2hhbnQmc2VsbGVyX2lkPTIwODg1MzE3NjYxNTI1MDEmc2VydmljZT1jcmVhdGVfZm9yZXhfdHJhZGVfd2FwJnNpZ249ZyUyQlUxSm8zU3pxaTdoMGdEN0dacmd5aVklMkZXcmwlMkZDdmFvT2hLUmhjZ2FTQThwYlRaTzJ3VmZiaElrT0Y3OEw3bXhMVzRpVnViNlJEYk9ySjVnRHNPRlR2akc5Nkw5WUJzTzl6WDBqNFpLcnJ3RkVpcmw4TllEN01KUWV2VmlDVEk3VEVEOGhNSXJUVUNtTnV6QnFrJTJCRkFxc3A5QUkxckdZSWhTZm9TN211ZGg5U1AlMkZoNnJKR29ZRlZEamJGVWg5amtCcGlyZUlYQVE0MzY4b2lWT1ZQT1RtMmtmallCY2xYYnNqJTJCOVRhaGhMa3hiUnV5TiUyRlNNb1AwMnZNQzd4c1FFeDhJbHZpeVVzSkx3d0JrUFhJT2N6REhjYWdseXM3bUxPeHN6dFlmWDJ6ZDZjSENjOEpidUp4UXlwR1NRbyUyRllCMG45cW4zUFZ0TXVnN20yQTlxM3M1QSUzRCUzRCZzaWduX3R5cGU9UlNBMiZzdWJqZWN0PWhlbGxvJnRvdGFsX2ZlZT0wLjAz",
+    "type": "MINI_PROGRAM"
+  },
+  "code": "SUCCESS"
+}
+```
+
+### Alipay Mini Program Side
+
+:::note
+
+Using **base64 decode** this data parameter, and pass in mini program:
+
+:::
+
+```json
+my.tradePay({
+orderStr: << decoded base64 from url parameter >>,
+success: (res) => {
+console.log("success", res)
+},
+fail:(res) =>{
+console.log("error", res)
+},
+});
+```

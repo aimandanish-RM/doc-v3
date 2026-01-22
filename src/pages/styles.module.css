@@ -1,0 +1,133 @@
+/* stylelint-disable docusaurus/copyright-header */
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.features {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  width: 100%;
+  margin-bottom: 100px;
+}
+
+.featureImage {
+  height: 200px;
+  width: 200px;
+}
+
+.text {
+  font-size: 20px;
+  text-align: center;
+  font-weight: 700;
+  background-color: primary;
+}
+
+.box {
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 2px;
+  border: 0.5px solid;
+  border-color: #e3e8ee;
+  transition: 0.3s;
+  padding-top: 17px;
+  height: 83px;
+}
+
+.box:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.boxes {
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 2px;
+  border: 0.5px solid;
+  border-color: #e3e8ee;
+  transition: 0.3s;
+  padding-top: 17px;
+  height: 100%;
+}
+
+.boxes:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.supportCard {
+  background-color: #87d068;
+  color: white;
+  text-align: center;
+}
+
+.noSupportCard {
+  background-color: #f50;
+  color: white;
+  text-align: center;
+}
+
+.title {
+  padding: 1px;
+  font-size: 12px;
+  color: black;
+  text-align: left;
+  padding-bottom: 25px;
+  padding-top: 25px;
+}
+
+.subtitle {
+  padding: 1px;
+  font-size: 12px;
+  color: black;
+  text-align: left;
+  padding-bottom: 10px;
+}
+
+.sdkBox {
+  cursor: pointer;
+  padding: 1px;
+  border-radius: 2px;
+  border: 0.5px solid;
+  border-color: #e3e8ee;
+  transition: 0.3s;
+}
+
+.sdkBox:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width: 966px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+/* product card styling */
+.products {
+  padding: 4rem 0;
+}
+
+.productCard {
+  height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.productCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}

@@ -1,0 +1,107 @@
+---
+id: reverse
+title: Reverse
+sidebar_label: Reverse
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+**Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
+URL : `https://open.revenuemonster.my/v3/payment/reverse`<br/>
+Sandbox URL : `https://sb-open.revenuemonster.my/v3/payment/reverse`
+
+:::note
+If a transaction is timed out, the merchant should perform a reverse order before creating a new transaction. This is to prevent a double charge.
+:::
+
+### Request Parameters
+
+| Parameter | Type   | Required | Description                       | Example              |
+| --------- | ------ | -------- | --------------------------------- | -------------------- |
+| `orderId` | String | Yes      | Order ID (from Merchant), max: 24 | "134850717797247290" |
+
+> Example Request
+
+```json
+curl --location --request POST "https://sb-open.revenuemonster.my/v3/payment/reverse" \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiKiJdLCJleHAiOjE1MjE2MjkyNTYsImlhdCI6MTUyMTYyMjA1NywiaXNzIjoiaHR0cHM6Ly9zYi1vYXV0aC5yZXZlbnVlbW9uc3Rlci5teSIsImp0aSI6IkVod0tFRTlCZFhSb1FXTmpaWE56Vkc5clpXNFF5cmYza3EzTDY4QnoiLCJuYmYiOjE1MjE2MjIwNTcsInN1YiI6IkVoUUtDRTFsY21Ob1lXNTBFSlhWemQzd3JhcVRPUklRQ2dSVmMyVnlFSXlKcUl6dnlNUFZjUSJ9.dJknY9MZHLNrKx1p7gZxS0_oA3uXLWplDU1r1dpwxIbmdB6yw4tQBTXKlWArDfKLlBDn6v22_gT5Px7sdCMj7e5M9eRoJoMnoPnslgYpmJJ5kjqAbKU7dUxKb1OzFLrvmtSK9r-FRLVtMFHioWYpwgSvSPBgZ6lAYkUyDzH7aKadFYtQcBuJR0hlq2CXtP0mzbHOeu2q6giONf3E5-XqS8lLRtuHPAbJ7_YFwo0Oe2zc6h05IOocmx_NvBVPfDBnuygTU063h70Q987MYeGDV_Os4N6N_I4b-GoHprEPtmntB1RJPrFrY28hvvoUfDHXHZVXT1GlrsozrkWV4EjbTw" \
+  --header "X-Signature: sha256 ZtQhyfkgMLY2FCxQeVQPljczzijPoC7zWH087erdAm1h2x2A0B+GQ9Fk89VbvMB9400m8SFBDRz5XgEVaqPh7Q==" \
+  --header "X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN" \
+  --header "X-Timestamp: 1527407052" \
+  --data "{
+  \"orderId\": \"12344333233404\"
+}"
+```
+
+### Response Parameters
+
+| Parameter | Type   | Description                                                                                               | Example                      |
+| --------- | ------ | --------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| `item`    | Object | Transaction object                                                                                        | (Refer to explanation below) |
+| `code`    | String | Successfully call this endpoint. If fail, will return error code object (Refer `Appendix 1: Error Codes`) | "SUCCESS"                    |
+
+<br />
+<strong>Transaction object (item):</strong>
+
+| Parameter       | Type     | Description                                          | Example                                    |
+| --------------- | -------- | ---------------------------------------------------- | ------------------------------------------ |
+| `referenceId`   | String   | Transaction ID (from WeChat server)                  | ""                                         |
+| `transactionId` | String   | Transaction ID (from RM server)                      | "152161448229438994"                       |
+| `order`         | Object   | Order object                                         | (Refer to explanation below)               |
+| `terminalId`    | String   | ID of terminal for payment                           | "19382734937293"                           |
+| `currencyType`  | String   | Currency notation                                    | "MYR"                                      |
+| `balanceAmount` | Uint     | Sales Amount                                         | 123                                        |
+| `payee`         | Object   | Object of userID made payment (payment sender)       | {"userId": "o74f0wjjzv9eKRu1fccrZswVFnOQ"} |
+| `platform`      | String   | Currently only support "OPEN_API"                    | "OPEN_API"                                 |
+| `method`        | String   | [RM currently supported method](../payment-method.mdx) | ALL                                        |
+| `type`          | String   | Currently only support "QUICKPAY"                    | "QUICKPAY"                                 |
+| `status`        | String   | Status returned from WeChat server                   | "SUCCESS"                                  |
+| `region`        | String   | Region of wallet, "MALAYSIA" or "CHINA"              | "MALAYSIA"                                 |
+| `transactionAt` | DateTime | Transaction date time (from wallet server)           | "2018-08-02T09:34:53Z"                     |
+| `createdAt`     | DateTime | Creation date time of transaction                    | "2018-03-21T06:41:22Z"                     |
+| `updatedAt`     | DateTime | Last update date time of transaction                 | "2018-03-21T06:41:22Z"                     |
+
+<br />
+
+
+<strong>Order object (order):</strong>
+
+| Parameter        | Type   | Description                       | Example                        |
+| ---------------- | ------ | --------------------------------- | ------------------------------ |
+| `id`             | String | Order ID (from Merchant), max: 24 | "134850717797247290"           |
+| `title`          | String | Order title, max: 32              | "Sales"                        |
+| `detail `        | String | Order details, max: 600           | "1 x iPhone X; 2 x SAMSUNG S8" |
+| `amount`         | Uint   | Amount of order in cent           | 100                            |
+
+> Example Response
+
+```json
+{
+  "item": {
+    "referenceId": "1010014200000026201807306110047699",
+    "transactionId": "180730103559010434619271",
+    "order": {
+      "id": "12344333233404",
+      "title": "title",
+      "detail": "desc",
+      "amount": 100
+    },
+    "terminalId": "19382734937293",
+    "payee": {
+      "userId": "o74f0wsssZBWis4rJWyDCWmEF-ig"
+    },
+    "currencyType": "MYR",
+    "balanceAmount": 0,
+    "platform": "OPEN_API",
+    "method": "WECHATPAY",
+    "transactionAt": "2018-07-30T10:36:01Z",
+    "type": "QUICK_PAY",
+    "status": "REVERSED",
+    "region": "MALAYSIA",
+    "createdAt": "2018-07-30T10:35:59Z",
+    "updatedAt": "2018-07-30T10:37:24.376379089Z"
+  },
+  "code": "SUCCESS"
+}
+```

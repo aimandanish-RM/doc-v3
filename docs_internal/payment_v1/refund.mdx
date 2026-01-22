@@ -1,0 +1,195 @@
+---
+id: refund
+title: Refund
+sidebar_label: Refund
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+**Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
+URL : `https://open.revenuemonster.my/v3/payment/refund`<br/>
+Sandbox URL : `https://sb-open.revenuemonster.my/v3/payment/refund`
+
+:::note
+Refund returns funds to the customer before settlement. <br/>(Before money is settled with the merchant.)
+:::
+
+### Example of Refund
+
+<Box
+  sx={{
+    width: "100%",
+    height: 0,
+    paddingBottom: 900 / 16 + "%",
+    position: "relative",
+    overflow: "hidden",
+    "& > iframe": {
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      top: 0,
+      bottom: 0,
+      left: 0,
+      border: 0,
+    },
+  }}
+>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/8oFnzmS3PHg"
+    frameBorder="0"
+    allowFullScreen
+  />
+</Box>
+
+### Request Parameters
+
+| Parameter       | Type   | Required | Description                                    | Example                      |
+| --------------- | ------ | -------- | ---------------------------------------------- | ---------------------------- |
+| `transactionId` | String | Yes      | Transaction ID generated from Revenue Monster. | "180730103903010431152179"   |
+| `refund`        | Object | Yes      | Object of refund                               | (Refer to explanation below) |
+| `reason`        | String | Yes      | Refund reason                                  | "Wrong Item"                 |
+
+<br />
+
+<strong>Refund object (refund):</strong>
+
+| Parameter      | Type   | Required | Description                                                             | Example |
+| -------------- | ------ | -------- | ----------------------------------------------------------------------- | ------- |
+| `type`         | String | Yes      | Fully refund.                                                           | "FULL"  |
+| `currencyType` | String | Yes      | Currency notation (currently only support `MYR`)                        | "MYR"   |
+| `amount`       | Uint   | Yes      | Amount of order in cent                                                 | 100     |
+
+> Example Request
+
+```json
+curl --location --request POST "https://sb-open.revenuemonster.my/v3/payment/refund" \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiKiJdLCJleHAiOjE1MjE2MjkyNTYsImlhdCI6MTUyMTYyMjA1NywiaXNzIjoiaHR0cHM6Ly9zYi1vYXV0aC5yZXZlbnVlbW9uc3Rlci5teSIsImp0aSI6IkVod0tFRTlCZFhSb1FXTmpaWE56Vkc5clpXNFF5cmYza3EzTDY4QnoiLCJuYmYiOjE1MjE2MjIwNTcsInN1YiI6IkVoUUtDRTFsY21Ob1lXNTBFSlhWemQzd3JhcVRPUklRQ2dSVmMyVnlFSXlKcUl6dnlNUFZjUSJ9.dJknY9MZHLNrKx1p7gZxS0_oA3uXLWplDU1r1dpwxIbmdB6yw4tQBTXKlWArDfKLlBDn6v22_gT5Px7sdCMj7e5M9eRoJoMnoPnslgYpmJJ5kjqAbKU7dUxKb1OzFLrvmtSK9r-FRLVtMFHioWYpwgSvSPBgZ6lAYkUyDzH7aKadFYtQcBuJR0hlq2CXtP0mzbHOeu2q6giONf3E5-XqS8lLRtuHPAbJ7_YFwo0Oe2zc6h05IOocmx_NvBVPfDBnuygTU063h70Q987MYeGDV_Os4N6N_I4b-GoHprEPtmntB1RJPrFrY28hvvoUfDHXHZVXT1GlrsozrkWV4EjbTw" \
+  --header "X-Signature: sha256 ZtQhyfkgMLY2FCxQeVQPljczzijPoC7zWH087erdAm1h2x2A0B+GQ9Fk89VbvMB9400m8SFBDRz5XgEVaqPh7Q==" \
+  --header "X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN" \
+  --header "X-Timestamp: 1527407052" \
+  --data "{
+  \"transactionId\": \"180730103903010431152179\",
+  \"refund\": {
+    \"type\": \"FULL\",
+    \"currencyType\": \"MYR\",
+    \"amount\": 100
+  },
+  \"reason\": \"test\"
+}"
+```
+
+### Response Parameters
+
+| Parameter | Type   | Description                                                                                               | Example                      |
+| --------- | ------ | --------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| `item`    | Object | Transaction object                                                                                        | (Refer to explanation below) |
+| `code`    | String | Successfully call this endpoint. If fail, will return error code object (Refer `Appendix 1: Error Codes`) | "SUCCESS"                    |
+
+<br />
+
+<strong>Transaction object (item):</strong>
+
+| Parameter       | Type     | Description                                          | Example                                    |
+| --------------- | -------- | ---------------------------------------------------- | ------------------------------------------ |
+| `store`         | Object   | Store object                                         | (Refer to explanation below)               |
+| `referenceId`   | String   | Transaction ID (from WeChat server)                  | ""                                         |
+| `transactionId` | String   | Transaction ID (from RM server)                      | "152161448229438994"                       |
+| `terminalId`    | String   | ID of terminal for payment                           | "19382734937293"                           |
+| `currencyType`  | String   | Currency notation                                    | "MYR"                                      |
+| `balanceAmount` | Uint     | Sales Amount                                         | 123                                        |
+| `order`         | Object   | Order object                                         | (Refer to explanation below)               |
+| `payee`         | Object   | Object of userID made payment (payment sender)       | {"userId": "o74f0wjjzv9eKRu1fccrZswVFnOQ"} |
+| `platform`      | String   | Currently only support "OPEN_API"                    | "OPEN_API"                                 |
+| `method`        | String   | [RM currently supported method](../payment-method.mdx) | ALL                                        |
+| `type`          | String   | Currently only support "QUICKPAY"                    | "QUICKPAY"                                 |
+| `status`        | String   | Status returned from WeChat server                   | "SUCCESS"                                  |
+| `region`        | String   | Region of wallet, "MALAYSIA" or "CHINA"              | "MALAYSIA"                                 |
+| `transactionAt` | DateTime | Transaction date time (from wallet server)           | "2018-08-02T09:34:53Z"                     |
+| `createdAt`     | DateTime | Creation date time of transaction                    | "2018-03-21T06:41:22Z"                     |
+| `updatedAt`     | DateTime | Last update date time of transaction                 | "2018-03-21T06:41:22Z"                     |
+
+<br />
+
+<strong>Store object (store):</strong>
+
+| Parameter      | Type              | Description                                     | Example                                             |
+| -------------- | ----------------- | ----------------------------------------------- | --------------------------------------------------- |
+| `id`           | String            | Store ID                                        | "6170506694335521334"                               |
+| `name`         | String            | Store Name                                      | "REVENUE MONSTER"                                   |
+| `addressLine1` | String            | Store Address 1                                 | "B-5-30, 5th Floor, Block Bougainvillea,"           |
+| `addressLine2` | String            | Store Address 2                                 | "PJU 6A, Lebuhraya SPRINT, 10 Boulevard,"           |
+| `postCode`     | String            | Postcode of store                               | "47400"                                             |
+| `city`         | String            | City of store                                   | "Petaling Jaya"                                     |
+| `state`        | String            | State of store                                  | "Selangor"                                          |
+| `country`      | String            | Country of store                                | "Malaysia"                                          |
+| `countryCode`  | String            | Country code of store contact number            | "60"                                                |
+| `phoneNumber`  | String            | Phone number of store                           | "377334080"                                         |
+| `geoLocation`  | Object of [Float] | Geo Location (latitude and longtitude) of store | {"latitude": 3.1349857, "longitude": 101.6136659 }  |
+| `status`       | String            | Current status of store                         | "ACTIVE"                                            |
+| `createdAt`    | DateTime          | Creation date time of store                     | "2018-02-12T08:53:13Z"                              |
+| `updatedAt`    | DateTime          | Last update date time of store                  | "2018-02-12T08:53:13Z"                              |
+
+<br />
+
+<strong>Order object (order):</strong>
+
+| Parameter        | Type   | Description                                      | Example                        |
+| ---------------- | ------ | ------------------------------------------------ | ------------------------------ |
+| `id`             | String | Order ID (from Merchant), max: 24                | "134850717797247290"           |
+| `title`          | String | Order title, max: 32                             | "Sales"                        |
+| `detail`         | String | Order details, max: 600                          | "1 x iPhone X; 2 x SAMSUNG S8" |
+| `amount`         | Uint   | Amount of order in cent                          | 100                            |
+
+> Example Response
+
+```json
+{
+  "item": {
+    "store": {
+      "id": "10946114768247530",
+      "name": "One Utama",
+      "addressLine1": "200, ABCD",
+      "addressLine2": "",
+      "postCode": "48482",
+      "city": "AMPANG",
+      "state": "W.P. KUALA LUMPUR",
+      "country": "MALAYSIA",
+      "countryCode": "60",
+      "phoneNumber": "12312341234",
+      "geoLocation": {
+        "latitude": 0,
+        "longitude": 0
+      },
+      "status": "ACTIVE",
+      "createdAt": "2018-06-28T03:24:52Z",
+      "updatedAt": "2018-06-28T03:24:52Z"
+    },
+    "referenceId": "1010014200000026201807306110047703",
+    "transactionId": "180730103903010431152179",
+    "order": {
+      "id": "12344333233414",
+      "title": "title",
+      "detail": "desc",
+      "amount": 100
+    },
+    "terminalId": "19382734937293",
+    "payee": {
+      "userId": "o74f0wsssZBWis4rJWyDCWmEF-ig"
+    },
+    "currencyType": "MYR",
+    "balanceAmount": 0,
+    "platform": "OPEN_API",
+    "method": "WECHATPAY",
+    "transactionAt": "2018-07-30T10:39:06Z",
+    "type": "QUICK_PAY",
+    "status": "FULL_REFUNDED",
+    "region": "MALAYSIA",
+    "createdAt": "2018-07-30T10:39:03Z",
+    "updatedAt": "2018-07-30T10:39:37.462943554Z"
+  },
+  "code": "SUCCESS"
+}
+```

@@ -1,0 +1,141 @@
+---
+id: get-transaction-qr-code-url
+title: Get Transaction QR Code/URL
+sidebar_label: Get Transaction QR Code/URL
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+**Method :** <span style={{ color: "green", fontWeight: "bold" }}>GET</span><br/>
+URL : `https://open.revenuemonster.my/v3/payment/transaction/qrcodes`<br/><br/>
+Sandbox URL : `https://sb-open.revenuemonster.my/v3/payment/transaction/qrcodes`<br/><br/>
+URL with Filter : `https://sb-open.revenuemonster.my/v3/payment/transaction/qrcodes?order[]=createdAt&limit=1&filter={"type":"STATIC", "expiry.type": "PERMANENT"}`
+
+:::note
+
+To get all previous QR Code(s) generated in the system.
+
+:::
+
+### Request Parameters
+
+
+:::note
+
+No request parameter is required for this endpoint.
+
+:::
+
+### Response Parameters
+
+| Parameter | Type     | Description                                                                                               | Example                      |
+| --------- | -------- | --------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| `items`   | []Object | Transaction object                                                                                        | (Refer to explanation below) |
+| `code`    | String   | Successfully call this endpoint. If fail, will return error code object (Refer `Appendix 1: Error Codes`) | "SUCCESS"                    |
+
+<br />
+<strong>Transaction object array (items):</strong>
+
+| Parameter         | Type     | Description                                                                              | Example                                                                                         |
+| ----------------- | -------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `storeId`         | String   | ID of store                                                                              | 10946114768247530                                                                               |
+| `type`            | String   | "DYNAMIC" (days from now), "FIXED" (specific fixed date) or "PERMANENT" (never expire)   | "PERMANENT"                                                                                     |
+| `isPreFillAmount` | Bool     | To indicate QR code has pre-fill amount                                                  | true                                                                                            |
+| `currencyType`    | String   | Currency notation                                                                        | "MYR"                                                                                           |
+| `amount`          | Uint     | Amount of order in cent. Only required when "isPrefillAmount" = true.                    | 100                                                                                             |
+| `platform`        | String   | "OPEN_API" (generated through API calls) or "PORTAL" (generated through merchant portal) | "PORTAL"                                                                                        |
+| `method`          | []String | [RM currently supported method](../.././payment-method.mdx)                           | ["WECHATPAY","WECHATPAY_MY", <br/> "WECHATPAY_CN","PRESTO_MY",<br/>"BOOST_MY",<br/>"ALIPAY_CN"] |
+| `expiry`          | Object   | Object of expiry                                                                         | (Refer to explanation above)                                                                    |
+| `code`            | String   | Embedded code in QR                                                                      | "c8ff3df0605a5f20cd6476661072eade"                                                              |
+| `status`          | String   | "VALID" (always valid for static QR) or "REDEEMED" (only applicable to dynamic QR)       | "VALID"                                                                                         |
+| `qrCodeUrl`       | String   | Embedded URL in QR                                                                       | "https://dev-rm-api.ap.ngrok.io/payment/unified?code=c8ff3df0605a5f20cd6476661072eade"          |
+| `redirectUrl`     | String   | Redirect URL after QR payment is made                                                    | "https://www.apple.com/my/iphone/"                                                              |
+| `createdAt`       | DateTime | Creation date time of transaction                                                        | "2018-03-21T06:41:22Z"                                                                          |
+| `updatedAt`       | DateTime | Last update date time of transaction                                                     | "2018-03-21T06:41:22Z"                                                                          |
+
+<br />
+
+<strong>Expiry object (expiry):</strong>
+
+| Parameter   | Type     | Description                                                                               | Example                            |
+| ----------- | -------- | ----------------------------------------------------------------------------------------- | ---------------------------------- |
+| `type`      | String   | "DYNAMIC" (days from now), "FIX" (specific fixed date) or "PERMANENT" (never expire)      | "PERMANENT"                        |
+| `day`       | Uint     | Only required by "DYNAMIC" expiry type. To indicate number of days from now until expiry. | 3                                  |
+| `expiredAt` | DateTime | Only required by "FIXED". To indicate specific expiry date.                               | "2020-10-07T17:44:26.679908+08:00" |
+
+<br />
+<strong>Database object (meta):</strong>
+
+| Parameter | Type | Description         | Example |
+| --------- | ---- | ------------------- | ------- |
+| `count`   | Uint  | Current page record | 1       |
+
+> Example Response
+
+```json
+{
+  "items": [
+    {
+      "storeId": "10946114768247530",
+      "type": "STATIC",
+      "isPreFillAmount": true,
+      "currencyType": "MYR",
+      "amount": 100,
+      "platform": "PORTAL",
+      "method": ["WECHATPAY"],
+      "expiry": {
+        "type": "PERMANENT",
+        "day": 0,
+        "expiredAt": "2050-12-31T23:59:59Z"
+      },
+      "code": "a669adc3b06fe5cef977cc762f40ce8c",
+      "status": "VALID",
+      "qrCodeUrl": "https://dev-rm-api.ap.ngrok.io/payment/unified?code=a669adc3b06fe5cef977cc762f40ce8c",
+      "createdAt": "2018-06-25T02:29:28Z",
+      "updatedAt": "2018-06-25T02:29:28Z"
+    },
+    {
+      "storeId": "10946114768247530",
+      "type": "STATIC",
+      "isPreFillAmount": true,
+      "currencyType": "MYR",
+      "amount": 100,
+      "platform": "PORTAL",
+      "method": ["WECHATPAY"],
+      "expiry": {
+        "type": "PERMANENT",
+        "day": 0,
+        "expiredAt": "2050-12-31T23:59:59Z"
+      },
+      "code": "d54b69122f59ea46ac3fced769854ec2",
+      "status": "VALID",
+      "qrCodeUrl": "https://dev-rm-api.ap.ngrok.io/payment/unified?code=d54b69122f59ea46ac3fced769854ec2",
+      "createdAt": "2018-06-25T02:29:53Z",
+      "updatedAt": "2018-06-25T02:29:53Z"
+    },
+    {
+      "storeId": "10946114768247530",
+      "type": "STATIC",
+      "isPreFillAmount": true,
+      "currencyType": "MYR",
+      "amount": 100,
+      "platform": "PORTAL",
+      "method": ["WECHATPAY"],
+      "expiry": {
+        "type": "PERMANENT",
+        "day": 0,
+        "expiredAt": "2050-12-31T23:59:59Z"
+      },
+      "code": "e794902fbcb62c59b8d9cf270a5e505a",
+      "status": "VALID",
+      "qrCodeUrl": "https://dev-rm-api.ap.ngrok.io/payment/unified?code=e794902fbcb62c59b8d9cf270a5e505a",
+      "createdAt": "2018-06-25T02:28:24Z",
+      "updatedAt": "2018-06-25T02:28:24Z"
+    }
+  ],
+  "code": "SUCCESS",
+  "meta": {
+    "count": 3
+  }
+}
+```

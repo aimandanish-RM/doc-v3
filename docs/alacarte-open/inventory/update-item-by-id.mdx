@@ -1,0 +1,249 @@
+---
+id: update-item-by-id
+title: Update Item By ID
+sidebar_label: Update Item By ID
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+**Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
+
+URL: `https://open.revenuemonster.my/v3/service`<br/>
+
+Sandbox URL: `https://sb-open.revenuemonster.my/v3/service`
+
+### Request Parameters
+
+| Parameter  | Type   | Description                       | Example                      |
+| ---------- | ------ | --------------------------------- | ---------------------------- |
+| `service`  | String | alacarte service                  | "alacarte"                   |
+| `version`  | String | Currently only support 'v1"       | "v1"                         |
+| `function` | String | Function that provide by alacarte | "update.items"               |
+| `request`  | Object | Refer to explanation below        | (Refer to explanation below) |
+
+| Parameter     | Type   | Description                               | Example                                                  |
+| ------------- | ------ | ----------------------------------------- | -------------------------------------------------------- |
+| `itemId`      | String | Item ID                                   | "5f698149585d7cc1ae35a395"                               |
+| `categoryId`  | Array  | Category ID                               | ["5eabf31ee0e9cd7b01a3a35e"]                             |
+| `name`        | String | Item name                                 | "Hainan Chicken Rice"                                    |
+| `description` | String | Item description                          | "yummz"                                                  |
+| `imageUrl`    | Array  | Input your image                          | []                                                       |
+| `isAvailable` | Bool   | Item available                            | true                                                     |
+| `price`       | Object | Refer to explanation below                | (Refer to explanation below)                             |
+| `quantity`    | Uint   | Item quantity                             | 380                                                      |
+| `sides`       | Array  | Refer to explanation below                | (Refer to explanation below)                             |
+| `preferences` | Array  | Refer to explanation below                | (Refer to explanation below)                             |
+| `schedules`   | Array  | Schedules <b>startAt</b> and <b>endAt</b> | ["2020-09-22T02:00:00.000Z", "2020-09-22T14:00:00.000Z"] |
+| `sku`         | String | Item SKU                                  | "fkj31i"                                                 |
+
+### Inside Sides (parameter)
+
+| Parameter     | Type   | Description                | Example                      |
+| ------------- | ------ | -------------------------- | ---------------------------- |
+| `name`        | String | Side Category name         | "Side Category 1"            |
+| `isAvailable` | Bool   | Side Category available    | true                         |
+| `minChoice`   | Uint   | Set minimum choice         | 1                            |
+| `maxChoice`   | Uint   | Set maximum choice         | 3                            |
+| `sideItems`   | Array  | Refer to explanation below | (Refer to explanation below) |
+
+### Inside Side Items (parameter)
+
+| Parameter         | Type   | Description                         | Example                         |
+| ----------------- | ------ | ----------------------------------- | ------------------------------- |
+| `referenceItemId` | String | Optional, Item reference ID         | "5eaa7b72e0e9cd7b01a3a2b2"      |
+| `id`              | String | Side Item ID                        | "5f698149585d7cc1ae35a392"      |
+| `name`            | String | Side Item name                      | "Coke"                          |
+| `price`           | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+| `isAvailable`     | Bool   | Side Item is available              | true                            |
+
+### Inside Price (parameter)
+
+| Parameter      | Type   | Description                                      | Example |
+| -------------- | ------ | ------------------------------------------------ | ------- |
+| `amount`       | Uint   | Amount in cent (min RM 0.10 <b>10 = RM 0.10</b>) | 100     |
+| `currencyType` | String | Current only support Ringgit Malaysia            | "MYR"   |
+
+### Inside Preferences (parameter)
+
+| Parameter   | Type   | Description                | Example                      |
+| ----------- | ------ | -------------------------- | ---------------------------- |
+| `id`        | String | Preferences ID             | "5f698149585d7cc1ae35a38d"   |
+| `name`      | String | Preferences name           | "Sweetness"                  |
+| `minChoice` | Uint   | Set minimum choice         | 1                            |
+| `maxChoice` | Uint   | Set maximum choice         | 3                            |
+| `labels`    | Array  | Refer to explanation below | (Refer to explanation below) |
+
+### Inside Labels (parameter)
+
+| Parameter | Type   | Description | Example                    |
+| --------- | ------ | ----------- | -------------------------- |
+| `id`      | String | Label ID    | "5f698149585d7cc1ae35a38e" |
+| `name`    | String | Label name  | "Basic"                    |
+
+> Example Request
+
+```bash
+curl --location --request POST 'https://sb-open.revenuemonster.my/v3/service' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVKTE42dFdBMG82MEx3Il0sImV4cCI6MTYwMzI1NDU2OSwiaWF0IjoxNjAwNjYyNTY5LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UTZNenR5b1RFckpzVyIsIm5iZiI6MTYwMDY2MjU2OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.H3G6UDX7sR9EXtTMNs4Q2OHdhUGIhhCfdlAeOpywH4rDuVOcWXXwzF4Imbx8E7I10vFAJpwYZrEkCWCdCCw-WV11y9VT5kP6k75CeS-ZPMOLcKnC5iFT7vEi07r6ovwty9erlcZeXrtrmEIn3rnLva-dxSg3vZ2MyymoNDk-kV7ltXnkoWW4jtXRls6siLhxeY__8kXn2qa0ojVX4Nm6HmzN_vgi-RKSmToMgsdzTF94Y61QVBWhZfolD2-JpHx4qNlklcUdv8HOJ1QHHWpyoJytaJmvr3GJ5G399LbcTLwxB1p2qPg7z4hpoGNu4AP-ybRJVC3P9q9OscQYDNX-dA' \
+--header 'X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==' \
+--header 'X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN' \
+--header 'X-Timestamp: 1528450585' \
+--data-raw '{
+  "service": "alacarte",
+  "version": "v1",
+  "function": "update.item",
+  "request": {
+  "itemId": "5eaeee9db07a77cef7caceb6",
+  "categoryId": ["5eabf31ee0e9cd7b01a3a35e"],
+  "name": "Hainan Chicken Rice",
+  "description": "yummz",
+  "imageUrl": [
+    "https://smart-cafe-sandbox.oss-ap-southeast-3.aliyuncs.com/images/4118165203679668885/3b198791-fedb-426e-98ef-adb8cd3d6718"
+  ],
+  "isAvailable": true,
+  "price": { "amount": 500, "currencyType": "MYR" },
+  "quantity": 380,
+  "sides": [
+    {
+      "name": "test",
+      "minChoice": 0,
+      "maxChoice": 1,
+      "isAvailable": true,
+      "items": [
+        {
+          "alaCarteFoodId": "5eaef304b07a77cef7cacee3",
+          "name": "Tandoori Chicken",
+          "price": { "amount": 1000, "currencyType": "MYR" },
+          "isAvailable": true
+        }
+      ]
+    }
+  ],
+  "preferences": [],
+  "schedules": [
+    ["2020-09-22T02:00:00.000Z", "2020-09-22T14:00:00.000Z"],
+    ["2020-09-22T15:00:00.000Z", "2020-09-22T15:45:00.000Z"]
+  ]
+  "sku": "fkj31i",
+}
+}'
+```
+
+### Response Parameters
+
+| Parameter      | Type     | Description                               | Example                                                  |
+| -------------- | -------- | ----------------------------------------- | -------------------------------------------------------- | --- |
+| `categoryId`   | String   | Category ID                               | ""                                                       |
+| `categoryName` | String   | Name of Category                          | ""                                                       |
+| `createdAt`    | DateTime | Creation date time                        | "2020-09-22T04:44:57.950398414Z"                         |
+| `description`  | String   | Description of the item                   | "Describe"                                               |
+| `imageUrl`     | Array    | Item image                                | []                                                       |
+| `isAvailable`  | Bool     | Item available                            | true                                                     |
+| `itemId`       | String   | Item ID                                   | "5f698149585d7cc1ae35a391"                               |
+| `name`         | String   | Item name                                 | "Test123"                                                |
+| `position`     | Uint     | Current position among item               | 2                                                        |
+| `preferences`  | Array    | Refer to explanation below                | (Refer to explanation below)                             |
+| `price`        | Object   | Refer to the <b>Price parameter</b>       | ( Refer to the Price parameter)                          |
+| `quantity`     | Uint     | Item quantity                             | 350                                                      |
+| `schedules`    | Array    | Schedules <b>startAt</b> and <b>endAt</b> | ["2020-09-22T02:00:00.000Z", "2020-09-22T14:00:00.000Z"] |
+| `sides`        | Array    | Refer to explanation below                | (Refer to explanation below)                             |
+| `sku`          | String   | Item SKU                                  | "fkj31i"                                                 |     |
+| `updatedAt`    | DateTime | Last update date time                     | "2020-09-22T04:44:57.950398414Z"                         |
+
+### Inside Sides (parameter)
+
+| Parameter     | Type   | Description                | Example                      |
+| ------------- | ------ | -------------------------- | ---------------------------- |
+| `id`          | String | Side Category ID           | "5f698149585d7cc1ae35a395"   |
+| `name`        | String | Side Category name         | "Side Category 1"            |
+| `isAvailable` | Bool   | Side Category available    | true                         |
+| `minChoice`   | Uint   | Set minimum choice         | 1                            |
+| `maxChoice`   | Uint   | Set maximum choice         | 3                            |
+| `sideItems`   | Array  | Refer to explanation below | (Refer to explanation below) |
+
+### Inside Side Items (parameter)
+
+| Parameter         | Type   | Description                         | Example                         |
+| ----------------- | ------ | ----------------------------------- | ------------------------------- |
+| `referenceItemId` | String | Optional, Item reference ID         | "5eaa7b72e0e9cd7b01a3a2b2"      |
+| `id`              | String | Side Item ID                        | "5f698149585d7cc1ae35a392"      |
+| `name`            | String | Side Item name                      | "Coke"                          |
+| `price`           | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+| `isAvailable`     | Bool   | Side Item is available              | true                            |
+
+### Inside Price (parameter)
+
+| Parameter      | Type   | Description                                      | Example |
+| -------------- | ------ | ------------------------------------------------ | ------- |
+| `amount`       | Uint   | Amount in cent (min RM 0.10 <b>10 = RM 0.10</b>) | 100     |
+| `currencyType` | String | Current only support Ringgit Malaysia            | "MYR"   |
+
+### Inside Preferences (parameter)
+
+| Parameter   | Type   | Description                | Example                      |
+| ----------- | ------ | -------------------------- | ---------------------------- |
+| `id`        | String | Preferences ID             | "5f698149585d7cc1ae35a38d"   |
+| `name`      | String | Preferences name           | "Sweetness"                  |
+| `minChoice` | Uint   | Set minimum choice         | 1                            |
+| `maxChoice` | Uint   | Set maximum choice         | 3                            |
+| `labels`    | Array  | Refer to explanation below | (Refer to explanation below) |
+
+### Inside Labels (parameter)
+
+| Parameter | Type   | Description | Example                    |
+| --------- | ------ | ----------- | -------------------------- |
+| `id`      | String | Label ID    | "5f698149585d7cc1ae35a38e" |
+| `name`    | String | Label name  | "Basic"                    |
+
+> Example Response
+
+```json
+{
+  "item": {
+    "categoryId": "5eabf31ee0e9cd7b01a3a35e",
+    "categoryName": "Chinese Cuisine ",
+    "createdAt": "0001-01-01T00:00:00Z",
+    "description": "yummz",
+    "imageUrl": [
+      "https://smart-cafe-sandbox.oss-ap-southeast-3.aliyuncs.com/images/4118165203679668885/3b198791-fedb-426e-98ef-adb8cd3d6718"
+    ],
+    "isAvailable": true,
+    "itemId": "5eaeee9db07a77cef7caceb6",
+    "name": "Hainan Chicken Rice",
+    "position": 11,
+    "preferences": [],
+    "price": {
+      "amount": 500,
+      "currencyType": "MYR"
+    },
+    "quantity": 380,
+    "schedules": [
+      ["2020-09-22T02:00:00.000Z", "2020-09-22T14:00:00.000Z"],
+      ["2020-09-22T15:00:00.000Z", "2020-09-22T15:45:00.000Z"]
+    ],
+    "sides": [
+      {
+        "id": "",
+        "isAvailable": true,
+        "maxChoice": 1,
+        "minChoice": 0,
+        "name": "test",
+        "sideItems": [
+          {
+            "id": "5f8672de72b118cb92ddf05d",
+            "isAvailable": false,
+            "name": "Tandoori Chicken",
+            "price": {
+              "amount": 1000,
+              "currencyType": "MYR"
+            }
+          }
+        ]
+      }
+    ],
+    "sku": "fkj31i",
+    "updatedAt": "2020-10-14T03:39:10.861054794Z"
+  }
+}
+```

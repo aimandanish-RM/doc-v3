@@ -1,0 +1,139 @@
+---
+id: get-transaction-by-code
+title: Get Transaction By Code
+sidebar_label: Get Transaction By Code
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+**Method :** <span style={{ color: "green", fontWeight: "bold" }}>GET</span><br/>
+URL : `https://open.revenuemonster.my/v3/payment/transaction/qrcode/5413b4583a9440dd351b2dde0c0ea166/transactions`<br/>
+Sandbox URL : `https://sb-open.revenuemonster.my/v3/payment/transaction/qrcode/5413b4583a9440dd351b2dde0c0ea166/transactions`
+
+:::note
+
+- To get all transactions under existing QR code, by inputting code in your query.
+- The URL is consists of `[base_URL]`/v3/payment/transaction/qrcode/`[code]`/transactions
+  :::
+
+### Request Parameters
+
+:::note
+No request parameter is required for this endpoint.
+:::
+
+### Response Parameters
+
+| Parameter | Type     | Description                                                                                               | Example                      |
+| --------- | -------- | --------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| `items`   | []Object | Transaction object                                                                                        | (Refer to explanation below) |
+| `code`    | String   | Successfully call this endpoint. If fail, will return error code object (Refer `Appendix 1: Error Codes`) | "SUCCESS"                    |
+
+<br />
+
+<strong>Transaction object array (items):</strong>
+
+| Parameter       | Type     | Description                                                                                                                                | Example                                                                                         |
+| --------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
+| `store`         | Object   | Store object                                                                                                                               | (Refer to explanation below)                                                                    |
+| `referenceId`   | String   | Transaction ID (from WeChat server)                                                                                                        | ""                                                                                              |
+| `transactionId` | String   | Transaction ID (from RM server)                                                                                                            | "152161448229438994"                                                                            |
+| `order`         | Object   | Order object                                                                                                                               | (Refer to explanation below)                                                                    |
+| `terminalId`    | String   | ID of terminal (Optional, if the payment is made through terminal)                                                                         | ""                                                                                              |
+| `currencyType`  | String   | Currency notation                                                                                                                          | "MYR"                                                                                           |
+| `balanceAmount` | Uint     | Total available amount (= total received amount - total refunded amount). In this case, amount 100 is failed, so no amount is received.    | 0                                                                                               |
+| `platform`      | String   | "OPEN_API" (generated through API calls) or "PORTAL" (generated through merchant portal)                                                   | "OPEN_API"                                                                                      |
+| `method`        | String   | [RM currently supported method](../.././payment-method.mdx)                                                                             | ["WECHATPAY","WECHATPAY_MY", <br/> "WECHATPAY_CN","PRESTO_MY",<br/>"BOOST_MY",<br/>"ALIPAY_CN"] |
+| `error`         | String   | Error message only if transaction failed (optional)                                                                                        | {message": "Payment timeout"}                                                                   |
+| `transactionAt` | DateTime | Transaction date time (from wallet server)                                                                                                 | "2018-08-02T09:34:53"                                                                           |
+| `type`          | String   | Can support "QUICK_PAY" , "QR_PAY"                                                                                                         | "QUICK_PAY" or "QR_PAY"                                                                         |
+| `status`        | String   | Transaction status returned from wallet server, "SUCCESS" or "IN_PROCESS" or "FAILED". "IN_PROCESS" means user scanned and making payment. | "FAILED"                                                                                        |
+| `region`        | String   | Region of wallet, "MALAYSIA" or "CHINA"                                                                                                    | "MALAYSIA"                                                                                      |
+| `createdAt`     | DateTime | Creation date time of transaction (from RM server)                                                                                         | "2018-08-02T09:34:53"                                                                           |
+| `updatedAt`     | DateTime | Last update date time of transaction                                                                                                       | "2018-08-02T09:34:53"                                                                           |
+
+<br />
+
+<strong>Store object (store):</strong>
+
+| Parameter      | Type               | Description                                     | Example                                   |
+| -------------- | ------------------ | ----------------------------------------------- | ----------------------------------------- |
+| `id`           | String             | Store ID                                        | "6170506694335521334"                     |
+| `name`         | String             | Store Name                                      | "REVENUE MONSTER"                         |
+| `addressLine1` | String             | Store Address 1                                 | "B-5-30, 5th Floor, Block Bougainvillea," |
+| `addressLine2` | String             | Store Address 2                                 | "PJU 6A, Lebuhraya SPRINT, 10 Boulevard," |
+| `postCode`     | String             | Postcode of store                               | "47400"                                   |
+| `city`         | String             | City of store                                   | "Petaling Jaya"                           |
+| `state`        | String             | State of store                                  | "Selangor"                                |
+| `country`      | String             | Country of store                                | "Malaysia"                                |
+| `countryCode`  | String             | Country code of store contact number            | "60"                                      |
+| `phoneNumber`  | String             | Phone number of store                           | "377334080"                               |
+| `geoLocation`  | Object of [Float]  | Geo Location (latitude and longtitude) of store | {"latitude": 3.1349857, "longitude": 101.6136659 } |
+| `status`       | String             | Current status of store                         | "ACTIVE"                                  |
+| `createdAt`    | DateTime           | Creation date time of store                     | "2018-02-12T08:53:13Z"                    |
+| `updatedAt`    | DateTime           | Last update date time of store                  | "2018-02-12T08:53:13Z"                    |
+
+<br />
+
+<strong>Database object (meta):</strong>
+
+| Parameter | Type | Description         | Example |
+| --------- | ---- | ------------------- | ------- |
+| `count`   | Uint | Current page record | 1       |
+
+> Example Response
+
+```json
+{
+  "items": [
+    {
+      "store": {
+        "id": "10946114768247530",
+        "name": "One Utama",
+        "addressLine1": "ANYTHING",
+        "addressLine2": "",
+        "postCode": "48484",
+        "city": "KUALA LUMPUR",
+        "state": "W.P. KUALA LUMPUR",
+        "country": "MALAYSIA",
+        "countryCode": "60",
+        "phoneNumber": "12312341234",
+        "geoLocation": {
+          "latitude": 0,
+          "longitude": 0
+        },
+        "status": "ACTIVE",
+        "createdAt": "2018-06-03T08:53:48Z",
+        "updatedAt": "2018-06-03T08:53:48Z"
+      },
+      "referenceId": "",
+      "transactionId": "180802093420010425899434",
+      "order": {
+        "id": "180802093420010425899434",
+        "title": "title",
+        "detail": "detail",
+        "additionalData": "",
+        "amount": 100
+      },
+      "terminalId": "",
+      "currencyType": "MYR",
+      "balanceAmount": 0,
+      "platform": "OPEN_API",
+      "method": "WECHATPAY",
+      "error": {
+        "message": "Payment timeout"
+      },
+      "transactionAt": "2018-08-02T09:34:53Z",
+      "type": "QUICK_PAY",
+      "status": "FAILED",
+      "region": "MALAYSIA",
+      "createdAt": "2018-08-02T09:34:20Z",
+      "updatedAt": "2018-08-02T09:34:53Z"
+    }
+  ],
+  "code": "SUCCESS",
+  "meta": {
+    "count": 1
+  }
+}
+```

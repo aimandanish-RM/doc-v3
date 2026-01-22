@@ -1,0 +1,143 @@
+---
+id: usecase
+title: Business Use Case
+sidebar_label: Business Use Case
+---
+
+import { Box, Heading, Card, Image, Button, Flex } from "rebass";
+import styles from "../../src/pages/styles.module.css";
+
+### Step 1 : Get Signature Algorithm
+
+Go through [Signature Algorithm](../quickstart/signature-algorithm) to see our signing mechanism before proceeding to call RM API endpoint(s). RM API have higher security requirements than the rest.
+
+### Step 2 : Select Revenue Monster (RM) API
+
+<Flex flexWrap="wrap" mx={-2}>
+  <Box p={2} width={[1, 1 / 3]}>
+    <Box
+      className={styles.box}
+      onClick={() => {
+        window.open(
+          "https://doc.revenuemonster.my/docs/v2/payment/quick-pay",
+          "_blank"
+        );
+      }}
+    >
+      <Text className={styles.text}>Payment</Text>
+    </Box>
+  </Box>
+  <Box p={2} width={[1, 1 / 3]}>
+    <Box
+      className={styles.box}
+      onClick={() => {
+        window.open(
+          "https://doc.revenuemonster.my/docs/campaign/loyalty/loyalty-point/give-loyalty-point/",
+          "_blank"
+        );
+      }}
+    >
+      <Text className={styles.text}>Loyalty</Text>
+    </Box>
+  </Box>
+  <Box p={2} width={[1, 1 / 3]}>
+    <Box
+      className={styles.box}
+      onClick={() => {
+        window.open(
+          "https://doc.revenuemonster.my/docs/campaign/voucher/overview/",
+          "_blank"
+        );
+      }}
+    >
+      <Text className={styles.text}>Voucher</Text>
+    </Box>
+  </Box>
+</Flex>
+
+<Flex flexWrap="wrap" mx={-2}>
+  <Box p={2} width={[1, 1 / 3]}>
+    <Box
+      className={styles.box}
+      onClick={() => {
+        window.open(
+          "https://doc.revenuemonster.my/docs/campaign/gourmet-card/",
+          "_blank"
+        );
+      }}
+    >
+      <Text className={styles.text}>Gourmet Card</Text>
+    </Box>
+  </Box>
+  <Box p={2} width={[1, 1 / 3]}>
+    <Box
+      className={styles.box}
+      onClick={() => {
+        window.open(
+          "https://doc.revenuemonster.my/docs/settings/store-detail/store-details/",
+          "_blank"
+        );
+      }}
+    >
+      <Text className={styles.text}> Merchant / Store / User Details</Text>
+    </Box>
+  </Box>
+  <Box p={2} width={[1, 1 / 3]}>
+    <Box
+      className={styles.box}
+      onClick={() => {
+        window.open(
+          "https://doc.revenuemonster.my/docs/quickstart/sdk/",
+          "_blank"
+        );
+      }}
+    >
+      <Text className={styles.text}>Software Development Kit (SDK)</Text>
+    </Box>
+  </Box>
+</Flex>
+
+<Flex flexWrap="wrap" mx={-2}>
+  <Box p={2} width={[1, 1 / 3]}>
+    <Box
+      className={styles.box}
+      onClick={() => {
+        window.open("https://doc.revenuemonster.my/docs/alacarte-open/introduction", "_blank");
+      }}
+    >
+      <Text className={styles.text}>à la carte</Text>
+    </Box>
+
+  </Box>
+  <Box p={2} width={[1, 1 / 3]}>
+    <Box
+      className={styles.box}
+      onClick={() => {
+        window.open("https://doc.revenuemonster.my/docs/v2/payment/terminal-integration/", "_blank");
+      }}
+    >
+      <Text className={styles.text}>POS Integration</Text>
+    </Box>
+
+  </Box>
+  <Box p={2} width={[1, 1 / 3]}>
+    <Box
+      className={styles.box}
+      onClick={() => {
+        window.open("https://doc.revenuemonster.my/docs/error-codes/", "_blank");
+      }}
+    >
+      <Text className={styles.text}>Error Codes</Text>
+    </Box>
+  </Box>
+  <Box p={2} width={[1, 1 / 3]}>
+    <Box
+      className={styles.box}
+      onClick={() => {
+        window.open("https://doc.revenuemonster.my/docs/push-notification/push-to-merchant/", "_blank");
+      }}
+    >
+      <Text className={styles.text}>Push Notification</Text>
+    </Box>
+  </Box>
+</Flex>

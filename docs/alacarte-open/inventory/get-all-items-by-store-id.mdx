@@ -1,0 +1,281 @@
+---
+id: get-all-items-by-store-id
+title: Get All Items By Store ID
+sidebar_label: Get All Items By Store ID
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+**Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
+
+URL: `https://open.revenuemonster.my/v3/service`<br/>
+
+Sandbox URL: `https://sb-open.revenuemonster.my/v3/service`
+
+:::note
+
+- Using `storeId` to get all items
+
+:::
+
+### Request Parameters
+
+| Parameter  | Type   | Description                       | Example                      |
+| ---------- | ------ | --------------------------------- | ---------------------------- |
+| `service`  | String | alacarte service                  | "alacarte"                   |
+| `version`  | String | Currently only support 'v1"       | "v1"                         |
+| `function` | String | Function that provide by alacarte | "get.store.items"            |
+| `request`  | Object | Refer to explanation below        | (Refer to explanation below) |
+
+| Parameter | Type   | Description                         | Example               |
+| --------- | ------ | ----------------------------------- | --------------------- |
+| `storeId` | String | ID of the Store that Create from RM | "1601912947341252990" |
+
+> Example Request
+
+```bash
+curl --location --request POST 'https://sb-open.revenuemonster.my/v3/service' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVKTE42dFdBMG82MEx3Il0sImV4cCI6MTYwMzI1NDU2OSwiaWF0IjoxNjAwNjYyNTY5LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UTZNenR5b1RFckpzVyIsIm5iZiI6MTYwMDY2MjU2OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.H3G6UDX7sR9EXtTMNs4Q2OHdhUGIhhCfdlAeOpywH4rDuVOcWXXwzF4Imbx8E7I10vFAJpwYZrEkCWCdCCw-WV11y9VT5kP6k75CeS-ZPMOLcKnC5iFT7vEi07r6ovwty9erlcZeXrtrmEIn3rnLva-dxSg3vZ2MyymoNDk-kV7ltXnkoWW4jtXRls6siLhxeY__8kXn2qa0ojVX4Nm6HmzN_vgi-RKSmToMgsdzTF94Y61QVBWhZfolD2-JpHx4qNlklcUdv8HOJ1QHHWpyoJytaJmvr3GJ5G399LbcTLwxB1p2qPg7z4hpoGNu4AP-ybRJVC3P9q9OscQYDNX-dA' \
+--header 'X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==' \
+--header 'X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN' \
+--header 'X-Timestamp: 1528450585' \
+--data-raw '{
+  "service": "alacarte",
+  "version": "v1",
+  "function": "get.store.items",
+  "request": {
+      "storeId": "1601912947341252990"
+  }
+}'
+```
+
+### Response Parameters
+
+| Parameter | Type   | Description                     | Example                      |
+| --------- | ------ | ------------------------------- | ---------------------------- |
+| `cursor`  | String | Optional, if pagination exists. | ""                           |
+| `count`   | Uint   | Current page record             | 7                            |
+| `items`   | Array  | Refer to explanation below      | (Refer to explanation below) |
+
+### Inside Items (parameter)
+
+| Parameter      | Type     | Description                               | Example                                                  |
+| -------------- | -------- | ----------------------------------------- | -------------------------------------------------------- |
+| `categoryId`   | String   | Category ID                               | "5f7b4195021ba83f52a0254d"                               |
+| `categoryName` | String   | Name of Category                          | "Halal cuisine"                                          |
+| `createdAt`    | DateTime | Creation date time                        | "2020-09-22T04:44:57.950398414Z"                         |
+| `description`  | String   | Description of the item                   | "Describe"                                               |
+| `imageUrl`     | Array    | Item image                                | []                                                       |
+| `isAvailable`  | Bool     | Item available                            | true                                                     |
+| `itemId`       | String   | Item ID                                   | "5f7b4195021ba83f52a02549"                               |
+| `name`         | String   | Item name                                 | "Lamb BBQ"                                               |
+| `position`     | Uint     | Current position among item               | 0                                                        |
+| `preferences`  | Array    | Refer to explanation below                | (Refer to explanation below)                             |
+| `price`        | Object   | Refer to the <b>Price parameter</b>       | ( Refer to the Price parameter)                          |
+| `quantity`     | Uint     | Item quantity                             | 350                                                      |
+| `schedules`    | Array    | Schedules <b>startAt</b> and <b>endAt</b> | ["2020-09-22T02:00:00.000Z", "2020-09-22T14:00:00.000Z"] |
+| `sides`        | Array    | Refer to explanation below                | (Refer to explanation below)                             |
+| `sku`          | String   | Item SKU                                  | "fkj31i"                                                 |
+| `updatedAt`    | DateTime | Last update date time                     | "2020-09-22T04:44:57.950398414Z"                         |
+
+### Inside Preferences (parameter)
+
+| Parameter   | Type   | Description                | Example                      |
+| ----------- | ------ | -------------------------- | ---------------------------- |
+| `id`        | String | Preferences ID             | "5f698149585d7cc1ae35a38d"   |
+| `name`      | String | Preferences name           | "Sweetness"                  |
+| `minChoice` | Uint   | Set minimum choice         | 1                            |
+| `maxChoice` | Uint   | Set maximum choice         | 3                            |
+| `labels`    | Array  | Refer to explanation below | (Refer to explanation below) |
+
+### Inside Labels (parameter)
+
+| Parameter | Type   | Description | Example                    |
+| --------- | ------ | ----------- | -------------------------- |
+| `id`      | String | Label ID    | "5f698149585d7cc1ae35a38e" |
+| `name`    | String | Label name  | "Basic"                    |
+
+### Inside Sides (parameter)
+
+| Parameter     | Type   | Description                | Example                      |
+| ------------- | ------ | -------------------------- | ---------------------------- |
+| `id`          | String | Side Category ID           | "5f698149585d7cc1ae35a395"   |
+| `name`        | String | Side Category name         | "Side Category 1"            |
+| `isAvailable` | Bool   | Side Category available    | true                         |
+| `minChoice`   | Uint   | Set minimum choice         | 1                            |
+| `maxChoice`   | Uint   | Set maximum choice         | 3                            |
+| `sideItems`   | Array  | Refer to explanation below | (Refer to explanation below) |
+
+### Inside Side Items (parameter)
+
+| Parameter         | Type   | Description                         | Example                         |
+| ----------------- | ------ | ----------------------------------- | ------------------------------- |
+| `referenceItemId` | String | Optional, Item reference ID         | "5eaa7b72e0e9cd7b01a3a2b2"      |
+| `id`              | String | Side Item ID                        | "5f698149585d7cc1ae35a392"      |
+| `name`            | String | Side Item name                      | "Coke"                          |
+| `price`           | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+| `isAvailable`     | Bool   | Side Item is available              | true                            |
+
+### Inside Price (parameter)
+
+| Parameter      | Type   | Description                                      | Example |
+| -------------- | ------ | ------------------------------------------------ | ------- |
+| `amount`       | Uint   | Amount in cent (min RM 0.10 <b>10 = RM 0.10</b>) | 100     |
+| `currencyType` | String | Current only support Ringgit Malaysia            | "MYR"   |
+
+> Example Response
+
+```json
+{
+  "count": 7,
+  "cursor": "",
+  "items": [
+    {
+      "categoryId": "5f7b4195021ba83f52a0254d",
+      "categoryName": "Halal cuisine",
+      "createdAt": "0001-01-01T00:00:00Z",
+      "description": "",
+      "imageUrl": [
+        "https://smart-cafe-sandbox.oss-ap-southeast-3.aliyuncs.com/images/4118165203679668885/d2192d9f-783c-4eeb-9903-9da5536f487f"
+      ],
+      "isAvailable": true,
+      "itemId": "5f7b4195021ba83f52a02549",
+      "name": "Lamb BBQ",
+      "position": 0,
+      "preferences": [
+        {
+          "id": "",
+          "labels": [
+            {
+              "id": "5f85699e1f278a78e317794c",
+              "name": "Average"
+            },
+            {
+              "id": "5f85699e1f278a78e317794d",
+              "name": "Very Spicy"
+            }
+          ],
+          "maxChoice": 1,
+          "minChoice": 1,
+          "name": "Spicy Level"
+        }
+      ],
+      "price": {
+        "amount": 100,
+        "currencyType": "MYR"
+      },
+      "quantity": null,
+      "schedules": [
+        ["2020-10-05T02:00:00.000Z", "2020-10-05T04:00:00.000Z"],
+        ["2020-10-05T09:45:00.000Z", "2020-10-05T14:00:00.000Z"]
+      ],
+      "sides": [
+        {
+          "id": "",
+          "isAvailable": true,
+          "maxChoice": 1,
+          "minChoice": 1,
+          "name": "Type of Drink",
+          "sideItems": [
+            {
+              "id": "5f85699e1f278a78e317794e",
+              "isAvailable": true,
+              "name": "Pepsi",
+              "price": {
+                "amount": 0,
+                "currencyType": "MYR"
+              }
+            },
+            {
+              "id": "5f85699e1f278a78e317794f",
+              "isAvailable": true,
+              "name": "Coca Cola",
+              "price": {
+                "amount": 0,
+                "currencyType": "MYR"
+              }
+            },
+            {
+              "id": "5f85699e1f278a78e3177950",
+              "isAvailable": true,
+              "name": "Ice Kacang (ABC)",
+              "price": {
+                "amount": 100,
+                "currencyType": "MYR"
+              },
+              "referenceItemId": "5f7b4195021ba83f52a02556"
+            }
+          ]
+        }
+      ],
+      "updatedAt": "2020-10-13T08:47:26.512Z"
+    },
+    {
+      "categoryId": "5f7b4195021ba83f52a02555",
+      "categoryName": "Chinese Cuisine ",
+      "createdAt": "0001-01-01T00:00:00Z",
+      "description": "yummz",
+      "imageUrl": [
+        "https://smart-cafe-sandbox.oss-ap-southeast-3.aliyuncs.com/images/4118165203679668885/3b198791-fedb-426e-98ef-adb8cd3d6718"
+      ],
+      "isAvailable": true,
+      "itemId": "5f7b4195021ba83f52a02550",
+      "name": "Hainan Chicken Rice",
+      "position": 11,
+      "preferences": [],
+      "price": {
+        "amount": 500,
+        "currencyType": "MYR"
+      },
+      "quantity": 481,
+      "schedules": null,
+      "sides": [
+        {
+          "id": "",
+          "isAvailable": true,
+          "maxChoice": 1,
+          "minChoice": 0,
+          "name": "test",
+          "sideItems": [
+            {
+              "id": "5f7b4195021ba83f52a02551",
+              "isAvailable": true,
+              "name": "Tandoori Chicken",
+              "price": {
+                "amount": 1000,
+                "currencyType": "MYR"
+              },
+              "referenceItemId": "5f7b4195021ba83f52a0254e"
+            }
+          ]
+        }
+      ],
+      "updatedAt": "2020-10-05T15:53:57.299Z"
+    },
+    {
+      "categoryId": "5f7b4195021ba83f52a02555",
+      "categoryName": "Chinese Cuisine ",
+      "createdAt": "0001-01-01T00:00:00Z",
+      "description": "",
+      "imageUrl": [
+        "https://smart-cafe-sandbox.oss-ap-southeast-3.aliyuncs.com/images/4118165203679668885/16af5d54-f96b-42eb-9d73-6cc9ff220d92"
+      ],
+      "isAvailable": true,
+      "itemId": "5f7b4195021ba83f52a02554",
+      "name": "Penang Char Kuey Teow",
+      "position": 12,
+      "preferences": [],
+      "price": {
+        "amount": 200,
+        "currencyType": "MYR"
+      },
+      "quantity": 492,
+      "schedules": null,
+      "sides": [],
+      "sku": "fkj31i",
+      "updatedAt": "2020-10-05T15:56:03.798Z"
+    }
+  ]
+}
+```

@@ -1,0 +1,237 @@
+---
+id: get-ekyc-result
+title: GET EKYC Result
+sidebar_label: GET EKYC Result
+---
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+:::note
+Prerequisite : Acquire requestID from mykad recognition response
+
+- RM eKYC Sequence Diagram
+
+<Flex justifyContent="center">
+  <Button
+    width="100%"
+    sx={{
+      ":hover": {
+        backgroundColor: "blue",
+      },
+      backgroundColor: "#528ef7",
+      borderRadius: 15,
+    }}
+    onClick={() => {
+      window.location.href =
+        "https://drive.google.com/drive/folders/1cNrEk5i2s_WnI9i8_WxQlwBw5ivqxY-g?usp=sharing";
+    }}
+  >
+    Click Here
+  </Button>
+</Flex>
+:::
+
+**Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
+
+URL: `https://open.revenuemonster.my/v3/service`<br/>
+
+Sandbox URL: `https://sb-open.revenuemonster.my/v3/service`
+
+### Request Parameters
+
+| Parameter  | Type   | Description                 | Example                      |
+| ---------- | ------ | --------------------------- | ---------------------------- |
+| `service`  | String | EKYC service                | "ekyc"                       |
+| `version`  | String | Currently only support 'v1" | "v1"                         |
+| `function` | String | Selected function           | "get-ekyc-result"            |
+| `request`  | Object | Refer to explanation below  | (Refer to explanation below) |
+
+| Parameter | Type   | Description                                | Example                    |
+| --------- | ------ | ------------------------------------------ | -------------------------- |
+| `id`      | String | Request ID from mykad recognition response | "62201d48a694817dede84b35" |
+
+> Example Request
+
+```bash
+curl --location --request POST 'https://sb-open.revenuemonster.my/v3/service' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVKTE42dFdBMG82MEx3Il0sImV4cCI6MTYwMzI1NDU2OSwiaWF0IjoxNjAwNjYyNTY5LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UTZNenR5b1RFckpzVyIsIm5iZiI6MTYwMDY2MjU2OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.H3G6UDX7sR9EXtTMNs4Q2OHdhUGIhhCfdlAeOpywH4rDuVOcWXXwzF4Imbx8E7I10vFAJpwYZrEkCWCdCCw-WV11y9VT5kP6k75CeS-ZPMOLcKnC5iFT7vEi07r6ovwty9erlcZeXrtrmEIn3rnLva-dxSg3vZ2MyymoNDk-kV7ltXnkoWW4jtXRls6siLhxeY__8kXn2qa0ojVX4Nm6HmzN_vgi-RKSmToMgsdzTF94Y61QVBWhZfolD2-JpHx4qNlklcUdv8HOJ1QHHWpyoJytaJmvr3GJ5G399LbcTLwxB1p2qPg7z4hpoGNu4AP-ybRJVC3P9q9OscQYDNX-dA' \
+--header 'X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==' \
+--header 'X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN' \
+--header 'X-Timestamp: 1528450585' \
+--data-raw '{
+    "service": "ekyc",
+    "version": "v1",
+    "function": "get-ekyc-result",
+    "request": {
+        "id": "62201d48a694817dede84b35"
+    }
+}'
+```
+
+### Response Parameters
+
+:::note
+
+- Current type in <b>Status</b> will be :-
+
+  - "SUCCESS" <br/>
+  - "MYKAD_NOT_FOUND" <br/>
+  - "MYKAD_SINGLE_NOT_FOUND" <br/>
+  - "MYKAD_FACE_NOT_FOUND" <br/>
+  - "INCOMPLETE" <br/>
+  - "OCR_ENGINE_ERROR" <br/>
+  - "OCR_ENGINE_CONNECTION" <br/>
+
+- Current type in <b>Action</b> will be :-
+  - "NONE_REQUIRED"<br/>
+  - "ATTENTION_REQUIRED"<br/>
+  - "INCONCLUSIVE"<br/>
+  - "RESOLVED"<br/>
+
+:::
+
+| Parameter              | Type     | Description                           | Example                      |
+| ---------------------- | -------- | ------------------------------------- | ---------------------------- |
+| `id`                   | String   | EKYC ID                               | "62201d48a694817dede84b35"   |
+| `verdict`              | String   | Action Required                       | NONE_REQUIRED                |
+| `status`               | String   | EKYC result status                    | SUCCESS                      |
+| `faceAction`           | String   | Action Required for Face Compare      | NONE_REQUIRED                |
+| `faceCompareRequestId` | String   | Face Compare Request ID               | 62201d51239b18052126e288     |
+| `faceResult`           | Object   | Refer to the <b>Face Result</b>       | (Refer to explanation below) |
+| `mykadAction`          | String   | Action Required for Mykad Recognition | NONE_REQUIRED                |
+| `mykadRequestId`       | String   | Detected Landmark                     | 62201d48a694817dede84b35     |
+| `reasons`              | Array    | Meesage from EKYC engine              | []                           |
+| `results`              | Array    | Refer to the <b>EKYC Result</b>       | (Refer to explanation below) |
+| `updatedAt`            | DateTime | Last update date time                 | "2022-03-03T01:43:46.155Z"   |
+| `createdAt`            | DateTime | Create date time                      | "2022-03-03T01:43:36.963Z"   |
+
+### Inside Face Result (parameter)
+
+| Parameter      | Type    | Description                        | Example |
+| -------------- | ------- | ---------------------------------- | ------- |
+| `isSamePerson` | Boolean | Check result which is same person  | false   |
+| `similarity`   | Float   | Similarity of face image and mykad | 0       |
+
+### Inside Results (parameter)
+
+| Parameter       | Type   | Description                               | Example                      |
+| --------------- | ------ | ----------------------------------------- | ---------------------------- |
+| `duration`      | Float  | Mykad Recognition Duration                | 3.2886                       |
+| `data`          | Object | Refer to the <b>Results Data</b>          | (Refer to explanation below) |
+| `faces`         | Array  | Refer to the <b>Results Faces</b>         | (Refer to explanation below) |
+| `object`        | Object | Refer to the <b>Results Object</b>        | (Refer to explanation below) |
+| `scores`        | Object | Refer to the <b>Results Scores</b>        | (Refer to explanation below) |
+
+### Inside Results Data (parameter)
+
+| Parameter  | Type    | Description                 | Example                      |
+| ---------- | ------- | --------------------------- | ---------------------------- |
+| `address`  | Object  | Refer to the <b>Address</b> | (Refer to explanation below) |
+| `gender`   | String  | Gender information of mykad | "MALE"                       |
+| `ic`       | String  | Mykad ID                    | "550106-12-5821"             |
+| `isMuslim` | Boolean | Is muslim                   | false                        |
+| `name`     | String  | Name in the mykad           | "ROWAN SEBASTIAN ATKINSON"   |
+
+### Inside Address (parameter)
+
+| Parameter      | Type   | Description            | Example                |
+| -------------- | ------ | ---------------------- | ---------------------- |
+| `addressLine1` | String | First line of address  | "GDW KAMPUNG BAYANGAN" |
+| `addressLine2` | String | Second line of address | "80000 KENINGAU"       |
+| `addressLine3` | String | Third line of address  | "SABAH"                |
+| `city`         | String | City name              | "KENINGAU"             |
+| `postcode`     | String | Postcode               | "80000"                |
+| `state`        | String | State name             | "SABAH"                |
+
+
+### Inside Results Faces (parameter)
+
+| Parameter    | Type  | Description                 | Example |
+| ------------ | ----- | --------------------------- | ------- |
+| `boxes`      | Array | Refer to the <b>boxes</b>   | []      |
+| `confidence` | Float | Confidence of detected face | 1       |
+
+### Inside Results Object (parameter)
+
+| Parameter    | Type   | Description                  | Example      |
+| ------------ | ------ | ---------------------------- | ------------ |
+| `confidence` | Float  | Confidence of detected mykad | 0.9609       |
+| `prediction` | String | Type of mykad                | "ic_1_front" |
+
+### Inside Results Scores (parameter)
+
+| Parameter   | Type  | Description          | Example |
+| ----------- | ----- | -------------------- | ------- |
+| `landmarks` | Float | Landmark score       | 0.5441  |
+| `ocr`       | Float | OCR score            | 0.9033  |
+| `searcher`  | Float | Mykad searcher score | 0.9     |
+| `total`     | Float | Total score          | 0.8295  |
+
+> Example Response
+
+```json
+{
+	"item": {
+		"createdAt": "2022-03-03T01:43:46.155000",
+		"faceAction": "NONE_REQUIRED",
+		"faceCompareRequestId": "62201d51239b18052126e288",
+		"faceResult": {
+			"isSamePerson": false,
+			"similarity": 32
+		},
+		"id": "62201d52239b18052126e289",
+		"mykadAction": "NONE_REQUIRED",
+		"mykadRequestId": "62201d48a694817dede84b35",
+		"reasons": [
+			"Face and liveness verification was unsuccessful"
+		],
+		"results": [
+			{
+				"data": {
+					"address": {
+						"addressLine1": "GDW KAMPUNG BAYANGAN",
+						"addressLine2": "80000 KENINGAU",
+						"addressLine3": "SABAH",
+						"city": "KENINGAU",
+						"postcode": "80000",
+						"state": "SABAH"
+					},
+					"gender": "Not found",
+					"ic": "550106-12-5821",
+					"isMuslim": false,
+					"name": "ROWAN SEBASTIAN ATKINSON"
+				},
+				"duration": 1.8658,
+				"faces": [
+					{
+						"boxes": [
+							{
+								"x": 428,
+								"y": 137
+							},
+							{
+								"x": 372,
+								"y": 272
+							}
+						],
+						"confidence": 1
+					}
+				],
+				"object": {
+					"confidence": 0.709,
+					"prediction": "ic_1_front"
+				},
+				"scores": {
+					"landmarks": 0.5443,
+					"ocr": 0.9562,
+					"searcher": 0.9,
+					"total": 0.8401
+				}
+			}
+		],
+		"status": "SUCCESS",
+		"updatedAt": "2022-03-03T01:43:46.155000",
+		"verdict": "ATTENTION_REQUIRED"
+	}
+}
+```

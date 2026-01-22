@@ -1,0 +1,111 @@
+---
+id: get-store-by-id
+title: Get Store By ID
+sidebar_label: Get Store By ID
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+**Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
+
+URL: `https://open.revenuemonster.my/v3/service`<br/>
+
+Sandbox URL: `https://sb-open.revenuemonster.my/v3/service`
+
+:::note
+
+- Using `storeId` to get your store detail.
+
+:::
+
+### Request Parameters
+
+| Parameter  | Type   | Description                       | Example                      |
+| ---------- | ------ | --------------------------------- | ---------------------------- |
+| `service`  | String | alacarte service                  | "alacarte"                   |
+| `version`  | String | Currently only support 'v1"       | "v1"                         |
+| `function` | String | Function that provide by alacarte | "get.store.settings"         |
+| `request`  | Object | Refer to explanation below        | (Refer to explanation below) |
+
+| Parameter | Type   | Description                         | Example               |
+| --------- | ------ | ----------------------------------- | --------------------- |
+| `storeId` | String | ID of the Store that Create from RM | "2808912573238362402" |
+
+> Example Request
+
+```bash
+curl --location --request POST 'https://sb-open.revenuemonster.my/v3/service' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVKTE42dFdBMG82MEx3Il0sImV4cCI6MTYwMzI1NDU2OSwiaWF0IjoxNjAwNjYyNTY5LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UTZNenR5b1RFckpzVyIsIm5iZiI6MTYwMDY2MjU2OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.H3G6UDX7sR9EXtTMNs4Q2OHdhUGIhhCfdlAeOpywH4rDuVOcWXXwzF4Imbx8E7I10vFAJpwYZrEkCWCdCCw-WV11y9VT5kP6k75CeS-ZPMOLcKnC5iFT7vEi07r6ovwty9erlcZeXrtrmEIn3rnLva-dxSg3vZ2MyymoNDk-kV7ltXnkoWW4jtXRls6siLhxeY__8kXn2qa0ojVX4Nm6HmzN_vgi-RKSmToMgsdzTF94Y61QVBWhZfolD2-JpHx4qNlklcUdv8HOJ1QHHWpyoJytaJmvr3GJ5G399LbcTLwxB1p2qPg7z4hpoGNu4AP-ybRJVC3P9q9OscQYDNX-dA' \
+--header 'X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==' \
+--header 'X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN' \
+--header 'X-Timestamp: 1528450585' \
+--data-raw '{
+  "service": "alacarte",
+  "version": "v1",
+  "function": "get.store.settings",
+  "request": {
+    "storeId": "2808912573238362402"
+  }
+}'
+```
+
+### Response Parameters
+
+| Parameter        | Type     | Description                       | Example                                        |
+| ---------------- | -------- | --------------------------------- | ---------------------------------------------- |
+| `closedUntil`    | DateTime | Set when your store will close    | "2020-09-22T05:00:06.741Z"                     |
+| `supportedTypes` | Array    | We have 4 type for user to choose | ["DELIVERY", "DINEIN", "DRIVE_THRU", "PICKUP"] |
+| `delivery`       | Object   | Refer to explanation below        | (Refer to explanation below)                   |
+| `updatedAt`      | DateTime | Last update date time             | "2020-09-22T04:44:57.950398414Z"               |
+
+### Inside Delivery (parameter)
+
+| Parameter | Type   | Description                                                                        | Example                      |
+| --------- | ------ | ---------------------------------------------------------------------------------- | ---------------------------- |
+| `method`  | String | Current delivery service for merchant to select "OWN" , "MRSPEEDY" , "GRABEXPRESS" | "OWN"                        |
+| `cost`    | Array  | Refer to explanation below                                                         | (Refer to explanation below) |
+
+### Inside Cost (parameter)
+
+| Parameter              | Type   | Description                     | Example |
+| ---------------------- | ------ | ------------------------------- | ------- |
+| `type`                 | String | we have "DYNAMIC" , "FIXED"     | "FIXED" |
+| `startDistanceInMeter` | Uint   | Set a Start Distance (In Meter) | 0       |
+| `endDistanceInMeter`   | Uint   | Set a End Distance (In Meter)   | 5000    |
+| `amount`               | Uint   | Set Distance amount             | 0       |
+
+> Example Response
+
+```json
+{
+  "item": {
+    "closedUntil": "2020-09-22T05:00:06.741Z",
+    "supportedTypes": ["DELIVERY", "DINEIN", "DRIVE_THRU", "PICKUP"],
+    "delivery": {
+      "method": "OWN",
+      "cost": [
+        {
+          "type": "FIXED",
+          "startDistanceInMeter": 0,
+          "endDistanceInMeter": 5000,
+          "amount": 0
+        },
+        {
+          "type": "DYNAMIC",
+          "startDistanceInMeter": 5000,
+          "endDistanceInMeter": 10000,
+          "amount": 0
+        },
+        {
+          "type": "DYNAMIC",
+          "startDistanceInMeter": 10000,
+          "endDistanceInMeter": 1000000,
+          "amount": 0
+        }
+      ]
+    },
+    "updatedAt": "2020-09-23T00:54:05.811779863Z"
+  }
+}
+```

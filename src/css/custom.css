@@ -1,0 +1,123 @@
+/* stylelint-disable docusaurus/copyright-header */
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+
+
+:root {
+  --ifm-color-primary: #0000ff;
+  --ifm-color-primary-dark: rgb(33, 175, 144);
+  --ifm-color-primary-darker: rgb(31, 165, 136);
+  --ifm-color-primary-darkest: rgb(26, 136, 112);
+  --ifm-color-primary-light: rgb(70, 203, 174);
+  --ifm-color-primary-lighter: rgb(102, 212, 189);
+  --ifm-color-primary-lightest: rgb(146, 224, 208);
+  --ifm-code-font-size: 95%;
+}
+
+.footer.footer--dark {
+  --ifm-footer-background-color: #0000ff;
+  --ifm-footer-color: var(--ifm-footer-link-color);
+  --ifm-footer-link-color: var(--ifm-color-secondary);
+  --ifm-footer-title-color: var(--ifm-color-white);
+  background-color: var(--ifm-footer-background-color);
+  color: var(--ifm-footer-color);
+  height: auto;
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgb(72, 77, 91);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+.button {
+  color: #0000ff !important;
+}
+
+.button:hover {
+  color: black !important;
+}
+
+.menu.menu--responsive .menu__button {
+  color: black !important;
+}
+
+.navbar .navbar__items {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  width: 20%;
+}
+
+.navbar .navbar__search .navbar__search-input {
+  width: 6.5rem;
+  /* -webkit-transition: width 0.4s ease-in-out; */
+  animation-timing-function: width 0.2s ease-in-out;
+  /* transition-timing-function: cubic-bezier(0.42, 0, 0.58, 1); */
+}
+
+.navbar .navbar__search .navbar__search-input:focus {
+  background-color: aliceblue;
+  width: 100%;
+}
+
+.button.button--secondary.button--outline:not(.button--active):not(:hover) {
+  color: var(--ifm-font-color-base);
+  background-color: aqua;
+  border-radius: 20px;
+  border: none;
+}
+
+.button.button--secondary {
+  --ifm-button-border-color: var(--ifm-color-secondary);
+  border-radius: 20px;
+}
+
+.hero.hero--primary {
+  --ifm-hero-background-image: url("/img/background.jpg");
+  --ifm-hero-text-color: var(--ifm-font-color-base-inverse);
+  background-image: url("/img/background.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: var(--ifm-hero-text-color);
+}
+
+.hero .hero__subtitle {
+  color: #00ffff;
+}
+
+@media screen and (max-width: 966px) {
+  .navbar .navbar__search .navbar__search-input:focus {
+    background-color: aliceblue;
+    width: 25%;
+    position: absolute;
+    right: 1px;
+    left: 1px;
+    top: 15px;
+    z-index: 1;
+  }
+
+  .hero .hero__title {
+    font-size: 2rem;
+  }
+
+  .hero .hero__subtitle {
+    font-size: 1rem;
+  }
+
+  .navbar .navbar__search .navbar__search-input:focus {
+    background-color: aliceblue;
+    width: 100%;
+  }
+
+}
+
+@import "./api-playground.css";
+

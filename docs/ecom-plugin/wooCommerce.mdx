@@ -1,0 +1,53 @@
+---
+id: wooCommerce
+title: WooCommerce
+sidebar_label: WooCommerce
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+:::note
+Enable RM payment for WooCommerce
+:::
+
+### Step 1 : Install RM in WooCommerce
+
+Go to this link [Install RM payment gateway](https://github.com/RevenueMonster/woocommerce-revenuemonster-payment-gateway) > Code > Download ZIP<br/>
+
+![image](/img/gif/install-woocommerce.png)
+
+### Step 2 : Plugin RM in WooCommerce
+
+Go to Plugins > Add New > Upload Plugin > Choose file > Upload the Zip file<br/>
+
+![image](/img/gif/install-RM.png)
+
+### Step 3 : Enable RM plug-in
+
+![image](/img/gif/woocommerce-guide.gif)<br/>
+Go to WooCommerce > Settings > Payments > <b>(Enable)</b> RevenueMonster Checkout
+
+### Step 4 : Setup Payment Gateway
+
+| Title              | Example                                                                                                                         |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| Title              | RM Gateway                                                                                                                      |
+| Description        | RM Gateway                                                                                                                      |
+| Logo               | [Revenue Monster Logo](https://drive.google.com/file/d/1AFS5P_qgNsWHDKBMaok51tbcVDfKIU41/view?usp=sharing)                      |
+| Store ID           | [RM Merchant portal](https://merchant.revenuemonster.my/) > Store Management > Store ID                                         |
+| Client ID          | <a href="https://doc.revenuemonster.my/docs/quickstart/signature-algorithm#step-1--create-new-application">Get Client ID</a>    |
+| Client Secret      | <a href="https://doc.revenuemonster.my/docs/quickstart/signature-algorithm#step-2--obtain-credential">Get Client Secret</a>     |
+| Client Private Key | <a href="https://doc.revenuemonster.my/docs/quickstart/signature-algorithm#generate-rsa-keys">Get Client Private Key</a>        |
+| Server Public Key  | <a href="https://doc.revenuemonster.my/docs/quickstart/signature-algorithm#step-2--obtain-credential">Get Server Public Key</a> |
+
+After done all the flow click **Save Changes**
+
+### Example of Payment
+
+<b>Web view</b> <br />
+
+![image](/img/gif/woocommerce-demo.gif) <br />
+
+<b>Mobile view</b> <br />
+
+![image](/img/gif/woocommerce-mobile-demo.gif)

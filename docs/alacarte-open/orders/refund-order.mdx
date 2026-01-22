@@ -1,0 +1,390 @@
+---
+id: refund-order
+title: Refund Order
+sidebar_label: Refund Order
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+**Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
+
+URL: `https://open.revenuemonster.my/v3/service`<br/>
+
+Sandbox URL: `https://sb-open.revenuemonster.my/v3/service`
+
+:::note
+
+- Using `orderId` to refund the order.
+
+:::
+
+### Request Parameters
+
+| Parameter  | Type   | Description                       | Example                      |
+| ---------- | ------ | --------------------------------- | ---------------------------- |
+| `service`  | String | alacarte service                  | "alacarte"                   |
+| `version`  | String | Currently only support 'v1"       | "v1"                         |
+| `function` | String | Function that provide by alacarte | "refund.store.order"         |
+| `request`  | Object | Refer to explanation below        | (Refer to explanation below) |
+
+| Parameter | Type   | Description | Example                     |
+| --------- | ------ | ----------- | --------------------------- |
+| `orderId` | String | Order Id    | "25f6984d6585d7cc1ae35a39c" |
+
+> Example Request
+
+```bash
+curl --location --request POST 'https://sb-open.revenuemonster.my/v3/service' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVKTE42dFdBMG82MEx3Il0sImV4cCI6MTYwMzI1NDU2OSwiaWF0IjoxNjAwNjYyNTY5LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UTZNenR5b1RFckpzVyIsIm5iZiI6MTYwMDY2MjU2OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.H3G6UDX7sR9EXtTMNs4Q2OHdhUGIhhCfdlAeOpywH4rDuVOcWXXwzF4Imbx8E7I10vFAJpwYZrEkCWCdCCw-WV11y9VT5kP6k75CeS-ZPMOLcKnC5iFT7vEi07r6ovwty9erlcZeXrtrmEIn3rnLva-dxSg3vZ2MyymoNDk-kV7ltXnkoWW4jtXRls6siLhxeY__8kXn2qa0ojVX4Nm6HmzN_vgi-RKSmToMgsdzTF94Y61QVBWhZfolD2-JpHx4qNlklcUdv8HOJ1QHHWpyoJytaJmvr3GJ5G399LbcTLwxB1p2qPg7z4hpoGNu4AP-ybRJVC3P9q9OscQYDNX-dA' \
+--header 'X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==' \
+--header 'X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN' \
+--header 'X-Timestamp: 1528450585' \
+--data-raw '{
+    "service": "alacarte",
+    "version": "v1",
+    "function": "refund.store.order",
+    "request": {
+        "storeId": "2808912573238362402",
+        "orderId":"5f6984d6585d7cc1ae35a39c"
+    }
+}'
+```
+
+### Response Parameters
+
+:::note
+
+- Current type in <b>Status</b> will be :-
+
+  - "EMPTY"<br/>
+  - "WAITING_FOR_PAYMENT"<br/>
+  - "WAIT_FOR_CONFIRMATION"<br/>
+  - "CANCELLED"<br/>
+  - "PROGRESSING"<br/>
+  - "WAITING_FOR_COURIER"<br/>
+  - "FINDING_COURIER"<br/>
+  - "SHIPPING"<br/>
+  - "COMPLETED"<br/>
+  - "DELAYED"<br/>
+  - "REJECTED"<br/>
+
+- Current type in <b>State</b> will be :-
+
+  - "ACCEPTED" , "REJECTED" , "CANCELED" , "REFUNDED"
+
+- Current type in <b>Type</b> will be :-
+
+  - "DINEIN" , "DELIVERY" , "PICKUP", "DRIVE_THRU"
+
+:::
+
+| Parameter    | Type     | Description                          | Example                          |
+| ------------ | -------- | ------------------------------------ | -------------------------------- |
+| `createdAt`  | DateTime | Creation date time of store          | "2020-09-22T04:44:57.950398414Z" |
+| `customer`   | Object   | Refer to explanation below           | (Refer to explanation below)     |
+| `delivery`   | Object   | Refer to explanation below           | (Refer to explanation below)     |
+| `deliveryAt` | String   | When and what time the order deliver | "2020-10-01T08:35:22.525Z"       |
+| `driveThru`  | Object   | Refer to explanation below           | (Refer to explanation below)     |
+| `items`      | Array    | Refer to explanation below           | (Refer to explanation below)     |
+| `orderId`    | String   | Order ID                             | "5f7596e066ef1c1a4f9807f4"       |
+| `payment`    | Object   | Refer to explanation below           | (Refer to explanation below)     |
+| `quantity`   | Uint     | Quantity of the item                 | 1                                |
+| `queueNo`    | Uint     | Queue number of the item             | 0                                |
+| `state`      | String   | State of the item                    | "REFUNDED"                       |
+| `status`     | String   | Status of the item                   | "CANCELLED"                      |
+| `storeId`    | String   | ID of the Store that Create from RM  | "10946114768247530"              |
+| `table`      | Object   | Refer to explanation below           | (Refer to explanation below)     |
+| `type`       | String   | Type of the item                     | "DELIVERY"                       |
+| `updatedAt`  | DateTime | Last update date time                | "2020-10-01T08:44:16.863Z"       |
+
+### Inside Customer (parameter)
+
+| Parameter     | Type   | Description             | Example                    |
+| ------------- | ------ | ----------------------- | -------------------------- |
+| `countryCode` | String | Country Code            | "60"                       |
+| `email`       | String | Customer Email          | "bassem@revenuemosnter.my" |
+| `name`        | String | Customer Name           | "Bassem AlSabbagh"         |
+| `phoneNumber` | String | Customer contact number | "1123621544"               |
+| `id`          | String | Customer ID             | "5f63082ae9c755d6ba3122ac" |
+
+### Inside Delivery (parameter)
+
+| Parameter         | Type   | Description                  | Example                      |
+| ----------------- | ------ | ---------------------------- | ---------------------------- |
+| `address`         | String | Refer to explanation below   | (Refer to explanation below) |
+| `courier`         | String | Refer to explanation below   | (Refer to explanation below) |
+| `distanceInMeter` | Int    | Delivery Distance (In Meter) | 17446                        |
+| `id`              | String | Customer contact number      | "5f815e2c3c6920f1233a540f"   |
+| `method`          | String | Customer ID                  | "OWN"                        |
+| `vendorId`        | String | Customer ID                  | "5f815e2c3c6920f1233a540f"   |
+
+### Inside Address (parameter)
+
+| Parameter      | Type   | Description                  | Example |
+| -------------- | ------ | ---------------------------- | ------- |
+| `addressLine1` | String | AddressLine1                 | ""      |
+| `addressLine2` | String | AddressLine2                 | ""      |
+| `city`         | String | City                         | ""      |
+| `country`      | String | Country                      | ""      |
+| `latitude`     | Float  | Address latitude (In Meter)  | 0       |
+| `longitude`    | Float  | Address longitude (In Meter) | 0       |
+| `name`         | String | Customer Name                | ""      |
+| `postCode`     | String | Customer Remark              | ""      |
+| `remark`       | String | Customer Remark              | ""      |
+| `state`        | String | Address State                | ""      |
+| `unit`         | String | Address Unit                 | ""      |
+
+### Inside Courier (parameter)
+
+:::note
+
+- If Courier don't have `name` and `phone` will display as **null**
+
+:::
+
+| Parameter   | Type   | Description                  | Example      |
+| ----------- | ------ | ---------------------------- | ------------ |
+| `id`        | String | Courier ID                   | ""           |
+| `latitude`  | Float  | Address latitude (In Meter)  | 0            |
+| `longitude` | Float  | Address longitude (In Meter) | 0            |
+| `name`      | String | Courier Name                 | "Testing123" |
+| `phone`     | String | Courier Contact Number       | "163698122"  |
+| `photoURL`  | String | Courier Image                | ""           |
+| `surname`   | String | Courier Surname              | ""           |
+
+### Inside Drive Thru (parameter)
+
+:::note
+
+- If not Drive Thru will display **null**
+
+:::
+
+| Parameter            | Type   | Description         | Example   |
+| -------------------- | ------ | ------------------- | --------- |
+| `vehicleDescription` | String | Vehicle description | ""        |
+| `vehicleNo`          | String | Vehicle Number      | "TLA3202" |
+
+### Inside Items (parameter)
+
+| Parameter     | Type   | Description                               | Example                              |
+| ------------- | ------ | ----------------------------------------- | ------------------------------------ |
+| `description` | String | Item description                          | "got Nasi gt lemak"                  |
+| `imageUrl`    | Array  | Item Image                                | []                                   |
+| `itemId`      | String | Item ID                                   | "5f69a41f212de28db36031d6"           |
+| `name`        | String | Item Name                                 | "Nasi lemak & Lemak"                 |
+| `preferences` | Array  | Refer to the <b>Preferences parameter</b> | (Refer to the Preferences parameter) |
+| `price`       | Object | Refer to the <b>Price parameter</b>       | ( Refer to the Price parameter)      |
+| `quantity`    | Uint   | Item Quantity                             | 1                                    |
+| `remark`      | String | Customer Remark                           | ""                                   |
+| `sides`       | Array  | Refer to the <b>Sides parameter</b>       | ( Refer to the Sides parameter)      |
+
+### Inside Preferences (parameter)
+
+:::note
+
+- Will display **Empty Array** when don't have preferences
+
+:::
+
+| Parameter   | Type   | Description                | Example                      |
+| ----------- | ------ | -------------------------- | ---------------------------- |
+| `name`      | String | Preferences name           | "Sweetness"                  |
+| `minChoice` | Uint   | Set minimum choice         | 1                            |
+| `maxChoice` | Uint   | Set maximum choice         | 3                            |
+| `labels`    | Array  | Refer to explanation below | (Refer to explanation below) |
+
+### Inside Sides (parameter)
+
+:::note
+
+- Will display **Empty Array** when don't have sides
+
+:::
+
+| Parameter   | Type   | Description                             | Example                                 |
+| ----------- | ------ | --------------------------------------- | --------------------------------------- |
+| `id`        | String | Side ID                                 | ""                                      |
+| `name`      | String | Side Name                               | "test"                                  |
+| `sideItems` | Array  | Refer to the <b>SideItems parameter</b> | Refer to the <b>SideItems parameter</b> |
+
+### Inside SideItems (parameter)
+
+| Parameter | Type   | Description                         | Example                             |
+| --------- | ------ | ----------------------------------- | ----------------------------------- |
+| `id`      | String | Side ID                             | "5f7b4195021ba83f52a02551"          |
+| `name`    | String | Side Name                           | "Hainan Chicken Rice"               |
+| `price`   | Object | Refer to the <b>Price parameter</b> | Refer to the <b>Price parameter</b> |
+
+### Inside Payment (parameter)
+
+:::note
+
+Current type in <b>Payment</b> will be :-
+
+"PAID" , "NOTPAID" , "PENDING" , "REFUNDED"
+
+:::
+
+| Parameter             | Type   | Description                         | Example                         |
+| --------------------- | ------ | ----------------------------------- | ------------------------------- |
+| `deliveryFee`         | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+| `rounding`            | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+| `serviceFee`          | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+| `serviceTax`          | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+| `status`              | String | Payment Status                      | "NOTPAID"                       |
+| `subTotal`            | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+| `totalAfterRounding`  | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+| `totalBeforeRounding` | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+
+### Inside Price (parameter)
+
+:::note
+
+Only `serviceFee` and `serviceTax` have <b>percentage</b>
+
+:::
+
+| Parameter      | Type   | Description                                      | Example |
+| -------------- | ------ | ------------------------------------------------ | ------- |
+| `amount`       | Uint   | Amount in cent (min RM 0.10 <b>10 = RM 0.10</b>) | 100     |
+| `currencyType` | String | Current only support Ringgit Malaysia            | "MYR"   |
+| `percentage`   | Uint   | precentage will be divide 100 eg: 1300/100       | 1300    |
+
+### Inside Table (parameter)
+
+| Parameter     | Type   | Description    | Example                    |
+| ------------- | ------ | -------------- | -------------------------- |
+| `id`          | String | Table ID       | "5e86af7ef9e6794801df3302" |
+| `isAvailable` | Bool   | Vehicle Number | true                       |
+| `isDefault`   | Bool   | Vehicle Number | true                       |
+| `name`        | String | Table Name     | "Default Table"            |
+
+> Example Response
+
+```json
+{
+  "item": {
+    "createdAt": "2020-10-10T07:09:32.349Z",
+    "customer": {
+      "countryCode": "60",
+      "email": "edwin@revenuemonster.my",
+      "id": "5f7e7c38397dc15895356b3c",
+      "name": "Edwin",
+      "phoneNumber": "163699187"
+    },
+    "delivery": {
+      "address": {
+        "addressLine1": "",
+        "addressLine2": "Lebuh Bandar Utama",
+        "city": "Petaling Jaya",
+        "country": "",
+        "latitude": 0,
+        "longitude": 0,
+        "name": "",
+        "postCode": "47800",
+        "remark": "",
+        "state": "Selangor",
+        "unit": ""
+      },
+      "courier": {
+        "id": "",
+        "latitude": 0,
+        "longitude": 0,
+        "name": "Testing123",
+        "phone": "163698122",
+        "photoUrl": "",
+        "surname": ""
+      },
+      "distanceInMeter": 17446,
+      "id": "5f815e2c3c6920f1233a540f",
+      "method": "OWN",
+      "vendorId": "5f815e2c3c6920f1233a540f"
+    },
+    "deliveryAt": "2020-10-10T08:44:28.878Z",
+    "driveThru": null,
+    "items": [
+      {
+        "description": "",
+        "imageUrl": [
+          "https://smart-cafe-sandbox.oss-ap-southeast-3.aliyuncs.com/images/4118165203679668885/4f062980-a5be-4e33-961c-ae37f1a22fb1"
+        ],
+        "itemId": "5f7b4195021ba83f52a02556",
+        "name": "Ice Kacang (ABC)",
+        "preferences": [],
+        "price": {
+          "amount": 100,
+          "currencyType": "MYR"
+        },
+        "quantity": 1,
+        "remark": "",
+        "sides": []
+      },
+      {
+        "description": "",
+        "imageUrl": [
+          "https://smart-cafe-sandbox.oss-ap-southeast-3.aliyuncs.com/images/4118165203679668885/52bd3e20-6dea-45ba-a58e-f044688253e1"
+        ],
+        "itemId": "5f7b4195021ba83f52a02557",
+        "name": "Cendol",
+        "preferences": [],
+        "price": {
+          "amount": 50,
+          "currencyType": "MYR"
+        },
+        "quantity": 1,
+        "remark": "",
+        "sides": []
+      }
+    ],
+    "orderId": "5f815e2c3c6920f1233a540f",
+    "payment": {
+      "deliveryFee": {
+        "amount": 0,
+        "currencyType": "MYR"
+      },
+      "rounding": {
+        "amount": -2,
+        "currencyType": "MYR"
+      },
+      "serviceFee": {
+        "amount": 63,
+        "currencyType": "MYR",
+        "percentage": 600
+      },
+      "serviceTax": {
+        "amount": 74,
+        "currencyType": "MYR",
+        "percentage": 700
+      },
+      "status": "REFUNDED",
+      "subTotal": {
+        "amount": 1050,
+        "currencyType": "MYR"
+      },
+      "totalAfterRounding": {
+        "amount": 1185,
+        "currencyType": "MYR"
+      },
+      "totalBeforeRounding": {
+        "amount": 1187,
+        "currencyType": "MYR"
+      }
+    },
+    "quantity": 11,
+    "queueNo": 2,
+    "state": "REFUNDED",
+    "status": "CANCELLED",
+    "storeId": "1601912947341252990",
+    "table": {
+      "id": "5f7b40d0021ba83f52a02547",
+      "isActive": true,
+      "isDefault": true,
+      "name": "Default Table"
+    },
+    "type": "DELIVERY",
+    "updatedAt": "2020-10-10T07:23:15.062108233Z"
+  }
+}
+```

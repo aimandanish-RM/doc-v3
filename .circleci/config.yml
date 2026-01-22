@@ -1,0 +1,56 @@
+version: 2.1
+
+orbs:
+  kubernetes: circleci/kubernetes@1.3.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.12.7-node
+    working_directory: /go/src/github.com/RevenueMonster/doc-v2
+    environment:
+      ENVIRONMENT: ''
+      GOOGLE_APPLICATION_CREDENTIALS: /home/circleci/gcp-key.json
+      KUBECONFIG: /home/circleci/config
+      DOCKER_IMAGE: ''
+      PRIVATE_DOCKER_IMAGE: ''
+    steps:
+      - checkout
+      - setup_remote_docker
+      - kubernetes/install-kubectl:
+        kubectl-version: v1.14.8
+
+      - run:
+          name: Set Environment
+          command: |
+            echo 'export DOCKER_IMAGE=asia.gcr.io/rm-srv-sb/rm-api/sandbox/gateway/rm-doc-v2' >> $BASH_ENV
+
+      - run:
+          name: Docker Login and Set Kubectl Credential
+          command: |
+            echo ${GOOGLE_GCLOUD_SERVICE_KEY} | base64 --decode --ignore-garbage > ${GOOGLE_APPLICATION_CREDENTIALS}
+            echo ${ALIYUN_CREDENTIAL_KEY} | base64 --decode --ignore-garbage > ${KUBECONFIG}
+            docker login -u _json_key --password-stdin https://asia.gcr.io < ${GOOGLE_APPLICATION_CREDENTIALS}
+
+      - run:
+          name: Docker Build and Push to Container Registry
+          command: |
+            docker build -t ${DOCKER_IMAGE}:${CIRCLE_SHA1} -t ${DOCKER_IMAGE}:latest . -f deployment/Dockerfile
+            docker push ${DOCKER_IMAGE}:${CIRCLE_SHA1}
+            docker push ${DOCKER_IMAGE}:latest
+
+      - deploy:
+          name: Set New Image to Deployment
+          command: |
+            kubectl apply -f deployment/deployment.yaml
+            kubectl set image deployment rm-doc-v2 rm-doc-v2=${DOCKER_IMAGE}:${CIRCLE_SHA1} --namespace=sandbox
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master

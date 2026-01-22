@@ -1,0 +1,83 @@
+---
+id: set-notification
+title: Set Notification
+sidebar_label: Set Notification
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+**Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
+
+URL: `https://open.revenuemonster.my/v3/service`<br/>
+
+Sandbox URL: `https://sb-open.revenuemonster.my/v3/service`
+
+:::note
+
+- Using WebHook URL to send a notification to your server
+
+:::
+
+### Request Parameters
+
+| Parameter  | Type   | Description                       | Example                      |
+| ---------- | ------ | --------------------------------- | ---------------------------- |
+| `service`  | String | alacarte service                  | "alacarte"                   |
+| `version`  | String | Currently only support 'v1"       | "v1"                         |
+| `function` | String | Function that provide by alacarte | "set.notification.webhook"   |
+| `request`  | Object | Refer to explanation below        | (Refer to explanation below) |
+
+| Parameter          | Type  | Required | Description                       | Example                                                       |
+| ------------------ | ----- | -------- | --------------------------------- | ------------------------------------------------------------- |
+| `notificationUrls` | Array | Yes      | Maximum webhook url is 3          | ["https://webhook.site/2688336e-7b61-4cd2-b2bb-40592a3e353a"] |
+| `storeIds`         | Array | Optional | Merchant can set multi `storeIds` | ["5eabf31ee0e9cd7b01a3a35e"]                                  |
+
+> Example Request
+
+```bash
+curl --location --request POST 'https://sb-open.revenuemonster.my/v3/service' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVKTE42dFdBMG82MEx3Il0sImV4cCI6MTYwMzI1NDU2OSwiaWF0IjoxNjAwNjYyNTY5LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UTZNenR5b1RFckpzVyIsIm5iZiI6MTYwMDY2MjU2OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.H3G6UDX7sR9EXtTMNs4Q2OHdhUGIhhCfdlAeOpywH4rDuVOcWXXwzF4Imbx8E7I10vFAJpwYZrEkCWCdCCw-WV11y9VT5kP6k75CeS-ZPMOLcKnC5iFT7vEi07r6ovwty9erlcZeXrtrmEIn3rnLva-dxSg3vZ2MyymoNDk-kV7ltXnkoWW4jtXRls6siLhxeY__8kXn2qa0ojVX4Nm6HmzN_vgi-RKSmToMgsdzTF94Y61QVBWhZfolD2-JpHx4qNlklcUdv8HOJ1QHHWpyoJytaJmvr3GJ5G399LbcTLwxB1p2qPg7z4hpoGNu4AP-ybRJVC3P9q9OscQYDNX-dA' \
+--header 'X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==' \
+--header 'X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN' \
+--header 'X-Timestamp: 1528450585' \
+--data-raw '{
+    "service": "alacarte",
+    "version": "v1",
+    "function": "set.notification.webhook",
+    "request": {
+        "notificationUrls": ["https://webhook.site/2688336e-7b61-4cd2-b2bb-40592a3e353a","https://webhook.site/2688336e-7b61-4cd2-b2bb-40592a3e353a","https://webhook.site/2688336e-7b61-4cd2-b2bb-40592a3e353a"]
+
+    }
+}'
+```
+
+### Response Parameters
+
+| Parameter          | Type     | Description                                              | Example                                                       |
+| ------------------ | -------- | -------------------------------------------------------- | ------------------------------------------------------------- |
+| `clientId`         | String   | Client ID                                                | "3416044707690227346"                                         |
+| `createdAt`        | DateTime | Creation date time                                       | "2020-09-22T04:44:57.950398414Z"                              |
+| `merchantId`       | String   | Merchant ID                                              | "Describe"                                                    |
+| `notificationUrls` | Array    | Maximum webhook url is 3                                 | ["https://webhook.site/2688336e-7b61-4cd2-b2bb-40592a3e353a"] |
+| `storeIds`         | Array    | When store ID's is **null** mean will apply to all store | null                                                          |
+| `updatedAt`        | DateTime | Last update date time                                    | "2020-09-22T04:44:57.950398414Z"                              |
+
+> Example Response
+
+```json
+{
+  "item": {
+    "clientId": "3416044707690227346",
+    "createdAt": "2020-10-06T09:50:01.168Z",
+    "merchantId": "4118165203679668885",
+    "notificationUrls": [
+      "https://webhook.site/2688336e-7b61-4cd2-b2bb-40592a3e353a",
+      "https://webhook.site/2688336e-7b61-4cd2-b2bb-40592a3e353a",
+      "https://webhook.site/2688336e-7b61-4cd2-b2bb-40592a3e353a"
+    ],
+    "storeIds": null,
+    "updatedAt": "2020-10-14T04:26:00.568826611Z"
+  }
+}
+```

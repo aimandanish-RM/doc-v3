@@ -1,0 +1,76 @@
+---
+id: enroll-card
+title: Enroll Card
+sidebar_label: Enroll Card
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+**Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
+URL : `https://open.revenuemonster.my/v3/vop/enroll-card`<br/>
+Sandbox URL : `https://sb-open.revenuemonster.my/v3/vop/enroll-card`
+
+:::note
+
+- Enroll card to Visa's VOP with RM.
+
+:::
+
+### Request Parameters
+
+| Parameter | Type   | Required | Description                              | Example                |
+| --------- | ------ | -------- | ---------------------------------------- | ---------------------- |
+| `userId`  | String | Yes      | User ID provided by us during enrollment | "1699331101742889953"  |
+| `cardPan` | String | Yes      | Card number of the user                  | "4364484100392451"     |
+| `name`    | String | Yes      | Name of the card                         | "Ambank Visa Infinite" |
+
+<br />
+
+> Example Request
+
+```json
+
+curl --location --request POST "https://sb-open.revenuemonster.my/v3/vop/enroll-card" \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiKiJdLCJleHAiOjE1MjE2MjkyNTYsImlhdCI6MTUyMTYyMjA1NywiaXNzIjoiaHR0cHM6Ly9zYi1vYXV0aC5yZXZlbnVlbW9uc3Rlci5teSIsImp0aSI6IkVod0tFRTlCZFhSb1FXTmpaWE56Vkc5clpXNFF5cmYza3EzTDY4QnoiLCJuYmYiOjE1MjE2MjIwNTcsInN1YiI6IkVoUUtDRTFsY21Ob1lXNTBFSlhWemQzd3JhcVRPUklRQ2dSVmMyVnlFSXlKcUl6dnlNUFZjUSJ9.dJknY9MZHLNrKx1p7gZxS0_oA3uXLWplDU1r1dpwxIbmdB6yw4tQBTXKlWArDfKLlBDn6v22_gT5Px7sdCMj7e5M9eRoJoMnoPnslgYpmJJ5kjqAbKU7dUxKb1OzFLrvmtSK9r-FRLVtMFHioWYpwgSvSPBgZ6lAYkUyDzH7aKadFYtQcBuJR0hlq2CXtP0mzbHOeu2q6giONf3E5-XqS8lLRtuHPAbJ7_YFwo0Oe2zc6h05IOocmx_NvBVPfDBnuygTU063h70Q987MYeGDV_Os4N6N_I4b-GoHprEPtmntB1RJPrFrY28hvvoUfDHXHZVXT1GlrsozrkWV4EjbTw" \
+  --header "X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==" \
+  --header "X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN" \
+  --header "X-Timestamp: 1528450585" \
+  --data "{
+    "userId": "1699331101742889953",
+    "cardPan": "4364484100392451",
+    "name": "Ambank Visa Infinite"
+}"
+```
+
+### Response Parameters
+
+| Parameter          | Type   | Description                  | Example                |
+| ------------------ | ------ | ---------------------------- | ---------------------- |
+| `item.id`          | String | RM VOP Card ID               | "1699331146943520156"  |
+| `item.userId`      | String | RM VOP User ID               | "1699331101742889953"  |
+| `item.name`        | String | Name of the card             | "Ambank Visa Infinite" |
+| `item.panLastFour` | String | Last four number of the card | "2451"                 |
+| `item.type`        | String | Type of card                 | "CREDIT"               |
+| `item.createdAt`   | String | User Enrolled Time           | "2023-11-07T04:25:46Z" |
+| `item.updatedAt`   | String | User Enrolled Time           | "2023-11-07T04:25:46Z" |
+| `code`             | String | Status of the enrollment     | "SUCCESS"              |
+
+<br />
+
+> Example Response
+
+```json
+{
+  "item": {
+    "id": "1699331146943520156",
+    "userId": "1699331101742889953",
+    "name": "Ambank Visa Infinite",
+    "panLastFour": "2451",
+    "type": "CREDIT",
+    "createdAt": "2023-11-07T04:25:46Z",
+    "updatedAt": "2023-11-07T04:25:46Z"
+  },
+  "code": "SUCCESS"
+}
+```

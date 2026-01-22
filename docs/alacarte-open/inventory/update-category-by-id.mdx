@@ -1,0 +1,91 @@
+---
+id: update-category-by-id
+title: Update Category By ID
+sidebar_label: Update Category By ID
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+**Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
+
+URL: `https://open.revenuemonster.my/v3/service`<br/>
+
+Sandbox URL: `https://sb-open.revenuemonster.my/v3/service`
+
+:::note
+
+- Update the category **name** , **status** and **positionChange**
+
+:::
+
+### Request Parameters
+
+| Parameter  | Type   | Description                       | Example                      |
+| ---------- | ------ | --------------------------------- | ---------------------------- |
+| `service`  | String | alacarte service                  | "alacarte"                   |
+| `version`  | String | Currently only support 'v1"       | "v1"                         |
+| `function` | String | Function that provide by alacarte | "update.category"            |
+| `request`  | Object | Refer to explanation below        | (Refer to explanation below) |
+
+| Parameter        | Type   | Description                                                | Example                    |
+| ---------------- | ------ | ---------------------------------------------------------- | -------------------------- |
+| `categoryId`     | String | ID of the Category                                         | "5f68485ccb3285b9d3955696" |
+| `name`           | String | Category name                                              | "Drinks"                   |
+| `status`         | String | Status of Category **"ACTIVE"** and **"INACTIVE"**         | "ACTIVE"                   |
+| `positionChange` | Int    | Move **UP** or **DOWN** the position using **-1** or **1** | 1                          |
+
+> Example Request
+
+```bash
+curl --location --request POST 'https://sb-open.revenuemonster.my/v3/service' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVKTE42dFdBMG82MEx3Il0sImV4cCI6MTYwMzI1NDU2OSwiaWF0IjoxNjAwNjYyNTY5LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UTZNenR5b1RFckpzVyIsIm5iZiI6MTYwMDY2MjU2OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.H3G6UDX7sR9EXtTMNs4Q2OHdhUGIhhCfdlAeOpywH4rDuVOcWXXwzF4Imbx8E7I10vFAJpwYZrEkCWCdCCw-WV11y9VT5kP6k75CeS-ZPMOLcKnC5iFT7vEi07r6ovwty9erlcZeXrtrmEIn3rnLva-dxSg3vZ2MyymoNDk-kV7ltXnkoWW4jtXRls6siLhxeY__8kXn2qa0ojVX4Nm6HmzN_vgi-RKSmToMgsdzTF94Y61QVBWhZfolD2-JpHx4qNlklcUdv8HOJ1QHHWpyoJytaJmvr3GJ5G399LbcTLwxB1p2qPg7z4hpoGNu4AP-ybRJVC3P9q9OscQYDNX-dA' \
+--header 'X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==' \
+--header 'X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN' \
+--header 'X-Timestamp: 1528450585' \
+--data-raw '{
+  "service": "alacarte",
+  "version": "v1",
+  "function": "update.category",
+  "request": {
+    "categoryId": "5f68485ccb3285b9d3955696",
+    "name": "Drinks",
+    "status": "ACTIVE",
+    "positionChange": 1
+  }
+}'
+```
+
+### Response Parameters
+
+| Parameter | Type   | Description                  | Example                      |
+| --------- | ------ | ---------------------------- | ---------------------------- |
+| `item`    | Object | (Refer to explanation below) | (Refer to explanation below) |
+
+| Parameter    | Type     | Description                         | Example                          |
+| ------------ | -------- | ----------------------------------- | -------------------------------- |
+| `categoryId` | String   | Category ID                         | "5f68485ccb3285b9d3955696"       |
+| `storeId`    | String   | ID of the Store that Create from RM | "10946114768247530"              |
+| `itemIds`    | Array    | Category Items                      | null                             |
+| `name`       | String   | Item Name                           | "Drinks"                         |
+| `status`     | String   | Status of Item                      | "ACTIVE"                         |
+| `position`   | Uint     | Current position among Category     | 1                                |
+| `createdAt`  | DateTime | Creation date time                  | "2020-09-22T04:25:23.684330293Z" |
+| `updatedAt`  | DateTime | Last update date time               | "2020-09-22T04:25:23.684330293Z" |
+
+> Example Response
+
+```json
+{
+  "item": {
+    "categoryId": "5f68485ccb3285b9d3955696",
+    "storeId": "10946114768247530",
+    "itemIds": null,
+    "name": "Drinks",
+    "status": "ACTIVE",
+    "position": 1,
+    "createdAt": "2020-09-22T04:25:23.684330293Z",
+    "updatedAt": "2020-09-22T04:25:23.684330293Z"
+  }
+}
+```

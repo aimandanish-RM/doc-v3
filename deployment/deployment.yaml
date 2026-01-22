@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: sandbox
+  name: rm-doc-v2
+  labels:
+    app: rm-doc-v2
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: rm-doc-v2
+  type: NodePort
+  selector:
+    app: rm-doc-v2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: sandbox
+  name: rm-doc-v2
+  labels:
+    app: rm-doc-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rm-doc-v2
+  template:
+    metadata:
+      labels:
+        app: rm-doc-v2
+    spec:
+      imagePullSecrets:
+        - name: gcr-registry
+      containers:
+        - name: rm-doc-v2
+          image: asia.gcr.io/rm-srv-sb/rm-api/sandbox/gateway/rm-doc-v2
+          imagePullPolicy: 'Always'

@@ -1,0 +1,41 @@
+---
+id: webhook
+title: Transaction Webhook
+sidebar_label: Transaction Webhook
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+:::note
+
+- Send transaction webhook to merchant.
+
+:::
+
+### Request Parameters
+
+| Parameter              | Type   | Required | Description                 | Example               |
+| ---------------------- | ------ | -------- | --------------------------- | --------------------- |
+| `userId`               | String | Yes      | User ID                     | "1693590750219574539" |
+| `cardId`               | String | Yes      | User Card ID                | "1693590754940319811" |
+| `transactionId`        | String | Yes      | Transaction ID              | "1693591501957443719" |
+| `transactionAt`        | String | Yes      | Transaction Time (ISO 8601) | "2023-08-30T09:39:15" |
+| `amount`               | uint64 | Yes      | Transaction Amount          | 1128                  |
+| `currency`             | String | Yes      | Transaction Amount          | "840"                 |
+| `merchantCategoryCode` | String | Yes      | Merchant Category Code      | "0000"                |
+
+<br />
+
+> Example Request
+
+```json
+{
+  "userId": "1693590750219574539",
+  "cardId": "1693590754940319811",
+  "transactionId": "1693591501957443719",
+  "transactionAt": "2023-08-30T09:39:15",
+  "amount": 1128,
+  "currency": "840",
+  "merchantCategoryCode": "0000"
+}
+```

@@ -1,0 +1,92 @@
+---
+id: overview
+title: Overview
+sidebar_label: Overview
+---
+
+import { Heading, Text, Card, Image, Button } from "rebass";
+import styles from "../../src/pages/styles.module.css";
+import { Flex, Box } from "reflexbox";
+
+## Integrate payments using RM APIs.
+
+- #### Step 1 : Generate Access Token
+
+Go to [Client Credentials](https://doc.revenuemonster.my/docs/quickstart/accesstoken/client-credentials) to get `Access Token`
+
+- #### Step 2 : Start with a guide
+
+<Flex flexWrap="wrap" mx={-2}>
+  <Box p={2} width={[1, 1 / 3]}>
+    <Box
+      className={styles.boxes}
+      onClick={() => {
+        window.location.href =
+          "https://doc.revenuemonster.my/docs/payment/quick-pay";
+      }}
+    >
+      <Text className={styles.text}>Quick Pay</Text>
+      <Text className={styles.title}>
+        <b> Merchant Scans User</b>
+      </Text>
+      <Text className={styles.subtitle}>
+        Scan user eWallet QR code with RM terminal or RM Application.
+      </Text>
+    </Box>
+  </Box>
+  <Box p={2} width={[1, 1 / 3]}>
+    <Box
+      className={styles.boxes}
+      onClick={() => {
+        window.location.href =
+          "https://doc.revenuemonster.my/docs/payment/transactionQR/transaction-qr";
+      }}
+    >
+      <Text className={styles.text}>Transaction QR</Text>
+      <Text className={styles.title}>
+        <b> User Scans Merchant </b>
+      </Text>
+      <Text className={styles.subtitle}>
+        Merchant displays QR code for user to scan and pay.
+      </Text>
+    </Box>
+  </Box>
+  <Box p={2} width={[1, 1 / 3]}>
+    <Box
+      className={styles.boxes}
+      onClick={() => {
+        window.location.href =
+          "https://doc.revenuemonster.my/docs/payment/webpayment/web-payment";
+      }}
+    >
+      <Text className={styles.text}>Web Payment</Text>
+      <Text className={styles.title}>
+        <b> Online acceptance eWallet and Credit card payment </b>
+      </Text>
+      <Text className={styles.subtitle}>
+        Used by e-commerce and SaaS business platform.
+      </Text>
+    </Box>
+  </Box>
+</Flex>
+
+### Payment Sequence Diagram
+
+<Flex justifyContent="center">
+  <Button
+    width="100%"
+    sx={{
+      ":hover": {
+        backgroundColor: "blue",
+      },
+      backgroundColor: "#528ef7",
+      borderRadius: 15,
+    }}
+    onClick={() => {
+      window.location.href =
+        "https://drive.google.com/drive/folders/1nvDlHpGcu7cOD6Zv6bRfh6cBN9aIXO9Z?usp=sharing";
+    }}
+  >
+    Our Payment Sequence Diagram
+  </Button>
+</Flex>

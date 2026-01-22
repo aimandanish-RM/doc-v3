@@ -1,0 +1,47 @@
+---
+id: payment-method
+title: Payment Method
+sidebar_label: Payment Method
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex, Table } from "rebass";
+import styles from "../src/pages/styles.module.css"
+import payments from "../src/config/payment-method.js"
+
+
+:::note
+**For online web & mobile web payments.**<br/>
+You will need append region name to system method. Example malaysia will be 'MY' and full method name will be `ALIPAYPLUS_MY`
+:::
+
+### Method Avaibility Table
+
+<table>
+  <tr>
+    <th>Method</th>
+    <th>Region</th>
+    <th>System Method</th>
+    <th>Quick Pay</th>
+    <th>Web Payment</th>
+    <th>Mobile Web Payment</th>
+    <th>Transaction QR</th>
+    <th>Retail QR</th>
+  </tr>
+{
+  payments.map((payment) => {
+    return (
+        <tr>
+            <td>{payment.method}</td>
+            <td>{payment.region}</td>
+            <td>{payment.systemMethod}</td>
+            <td>{payment.quickPay && "✅"}</td>
+            <td>{payment.web && "✅"}</td>
+            <td>{payment.mobileWeb && "✅"}</td>
+            <td>{payment.transactionQR && "✅"}</td>
+            <td>{payment.retailQR && "✅"}</td>
+        </tr>
+    )
+})
+}
+
+</table>

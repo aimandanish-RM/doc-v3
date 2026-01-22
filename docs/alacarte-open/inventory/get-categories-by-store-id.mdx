@@ -1,0 +1,101 @@
+---
+id: get-categories-by-store-id
+title: Get Categories By Store ID
+sidebar_label: Get Categories By Store ID
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+**Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
+
+URL: `https://open.revenuemonster.my/v3/service`<br/>
+
+Sandbox URL: `https://sb-open.revenuemonster.my/v3/service`
+
+:::note
+
+- Using `storeId` to get categories
+
+:::
+
+### Request Parameters
+
+| Parameter  | Type   | Description                       | Example                      |
+| ---------- | ------ | --------------------------------- | ---------------------------- |
+| `service`  | String | alacarte service                  | "alacarte"                   |
+| `version`  | String | Currently only support 'v1"       | "v1"                         |
+| `function` | String | Function that provide by alacarte | "get.category"               |
+| `request`  | Object | Refer to explanation below        | (Refer to explanation below) |
+
+| Parameter | Type   | Description                         | Example               |
+| --------- | ------ | ----------------------------------- | --------------------- |
+| `storeId` | String | ID of the Store that Create from RM | "1556079400120532579" |
+
+> Example Request
+
+```bash
+curl --location --request POST 'https://sb-open.revenuemonster.my/v3/service' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVKTE42dFdBMG82MEx3Il0sImV4cCI6MTYwMzI1NDU2OSwiaWF0IjoxNjAwNjYyNTY5LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UTZNenR5b1RFckpzVyIsIm5iZiI6MTYwMDY2MjU2OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.H3G6UDX7sR9EXtTMNs4Q2OHdhUGIhhCfdlAeOpywH4rDuVOcWXXwzF4Imbx8E7I10vFAJpwYZrEkCWCdCCw-WV11y9VT5kP6k75CeS-ZPMOLcKnC5iFT7vEi07r6ovwty9erlcZeXrtrmEIn3rnLva-dxSg3vZ2MyymoNDk-kV7ltXnkoWW4jtXRls6siLhxeY__8kXn2qa0ojVX4Nm6HmzN_vgi-RKSmToMgsdzTF94Y61QVBWhZfolD2-JpHx4qNlklcUdv8HOJ1QHHWpyoJytaJmvr3GJ5G399LbcTLwxB1p2qPg7z4hpoGNu4AP-ybRJVC3P9q9OscQYDNX-dA' \
+--header 'X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==' \
+--header 'X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN' \
+--header 'X-Timestamp: 1528450585' \
+--data-raw '{
+  "service": "alacarte",
+  "version": "v1",
+  "function": "get.categories",
+  "request": {
+      "storeId": "1556079400120532579"
+  }
+}'
+```
+
+### Response Parameters
+
+| Parameter | Type   | Description                     | Example                      |
+| --------- | ------ | ------------------------------- | ---------------------------- |
+| `items`   | Array  | (Refer to explanation below)    | (Refer to explanation below) |
+| `cursor`  | String | Optional, if pagination exists. | "0"                          |
+| `count`   | Uint   | Current page record             | 2                            |
+
+| Parameter    | Type     | Description                                        | Example                      |
+| ------------ | -------- | -------------------------------------------------- | ---------------------------- |
+| `categoryId` | String   | Category ID                                        | "5f68485ccb3285b9d3955696"   |
+| `storeId`    | String   | ID of the Store that Create from RM                | "1556079400120532579"        |
+| `itemIds`    | Array    | Category Items                                     | ["5f68485ccb3285b9d3955699"] |
+| `name`       | String   | Item Name                                          | "Drinks"                     |
+| `status`     | String   | Status of Category **"ACTIVE"** and **"INACTIVE"** | "ACTIVE"                     |
+| `position`   | Uint     | Current position among Category                    | 0                            |
+| `createdAt`  | DateTime | Creation date time                                 | "2020-09-21T06:29:48.839Z"   |
+| `updatedAt`  | DateTime | Last update date time                              | "2020-09-21T06:29:48.839Z"   |
+
+> Example Response
+
+```json
+{
+  "items": [
+    {
+      "categoryId": "5f68485ccb3285b9d3955696",
+      "storeId": "1556079400120532579",
+      "itemIds": ["5f68485ccb3285b9d3955699"],
+      "name": "Drinks",
+      "status": "ACTIVE",
+      "position": 0,
+      "createdAt": "2020-09-21T06:29:48.839Z",
+      "updatedAt": "2020-09-21T06:29:48.839Z"
+    },
+    {
+      "categoryId": "5f684d01adbcf0b592bc012f",
+      "storeId": "1556079400120532579",
+      "itemIds": ["5f684d01adbcf0b592bc0129"],
+      "name": "Asian Cuisine",
+      "status": "ACTIVE",
+      "position": 1,
+      "createdAt": "2020-04-14T07:17:00.377Z",
+      "updatedAt": "2020-09-21T06:49:37.309Z"
+    }
+  ],
+  "cursor": "0",
+  "count": 2
+}
+```

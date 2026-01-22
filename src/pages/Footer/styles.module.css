@@ -1,0 +1,69 @@
+.footerLogoLink {
+  opacity: 0.75;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.footerLogoLink:hover {
+  opacity: 1;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.rightContainer {
+  text-align: right;
+}
+
+.font {
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #77edd7;
+}
+
+.privacyFont {
+  width: 82px;
+  height: 19px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #00ffff;
+}
+
+.privacyFont:hover {
+  color: #ffffff;
+}
+
+.privacy {
+  margin-top: 15px;
+}
+
+.socialMedia {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.copyright {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+@media screen and (max-width: 966px) {
+  .container {
+    display: inline-block;
+    text-align: center;
+    justify-content: center;
+    margin-left: 10px;
+  }
+
+  .rightContainer {
+    text-align: center;
+    justify-content: center;
+  }
+}

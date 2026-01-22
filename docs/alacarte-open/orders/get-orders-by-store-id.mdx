@@ -1,0 +1,441 @@
+---
+id: get-orders-by-store-id
+title: Get Orders By Store ID
+sidebar_label: Get Orders By Store ID
+---
+
+import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
+
+**Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
+
+URL: `https://open.revenuemonster.my/v3/service`<br/>
+
+Sandbox URL: `https://sb-open.revenuemonster.my/v3/service`
+
+:::note
+
+- Get orders by `storeId`.
+
+:::
+
+### Request Parameters
+
+:::note
+
+- Current type in <b>paymentStatus</b> will be :-
+
+  - "PROGRESSING" , "FINDING_COURIER" , "SHIPPING" , "COMPLETED" , "REJECTED"
+
+- Current type in <b>deliveryStatus</b> will be :-
+
+  - "EMPTY"<br/>
+  - "WAITING_FOR_PAYMENT"<br/>
+  - "WAIT_FOR_CONFIRMATION"<br/>
+  - "CANCELLED"<br/>
+  - "PROGRESSING"<br/>
+  - "WAITING_FOR_COURIER"<br/>
+  - "FINDING_COURIER"<br/>
+  - "SHIPPING"<br/>
+  - "COMPLETED"<br/>
+  - "DELAYED"<br/>
+  - "REJECTED"<br/>
+
+- Current type in <b>type</b> will be :-
+
+  - "DINEIN" , "DELIVERY" , "PICKUP", "DRIVE_THRU"
+
+:::
+
+| Parameter  | Type   | Description                       | Example                      |
+| ---------- | ------ | --------------------------------- | ---------------------------- |
+| `service`  | String | alacarte service                  | "alacarte"                   |
+| `version`  | String | Currently only support 'v1"       | "v1"                         |
+| `function` | String | Function that provide by alacarte | "get.store.orders"           |
+| `request`  | Object | Refer to explanation below        | (Refer to explanation below) |
+
+| Parameter         | Type     | Required | Description                                                                               | Example                                     |
+| ----------------- | -------- | -------- | ----------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `storeId`         | String   | Yes      | ID of the Store that Create from RM                                                       | "2808912573238362402"                       |
+| `orderId`         | String   | Optional | Filter by part of Order ID                                                                | "610a61722c0efd453116420c"                  |
+| `shortOrderId`    | String   | Optional | Filter by part of short order ID                                                          | "jm9espv4"                                  |
+| `cursor`          | String   | Optional | Filter by cursor                                                                          | ""                                          |
+| `paymentStatus`   | Array    | Optional | Filter by Payment Status                                                                  | ["COMPLETED"]                               |
+| `startOrderAt`    | DateTime | Optional | Filter by Start Order At                                                                  | "2020-09-22T02:00:00.000Z"                  |
+| `endOrderAt`      | DateTime | Optional | Filter by End Order At                                                                    | "2020-09-22T02:00:00.000Z"                  |
+| `startDeliveryAt` | DateTime | Optional | Filter by Start Delivery At                                                               | "2020-09-22T02:00:00.000Z"                  |
+| `endDeliveryAt`   | DateTime | Optional | Filter by End Delivery At                                                                 | "2020-09-22T02:00:00.000Z"                  |
+| `type`            | Array    | Optional | Filter by Type                                                                            | ["DINEIN","DELIVERY"]                       |
+| `deliveryStatus`  | Array    | Optional | Filter by Delivery Status                                                                 | ["WAIT_FOR_CONFIRMATION","FINDING_COURIER"] |
+| `sort`            | Array    | Optional | Filter by Sort **"deliveryAt"** or **"orderAt"** ("-" mean descending "+" mean ascending) | ["-deliveryAt"]                             |
+
+Optional
+
+> Example Request
+
+```bash
+curl --location --request POST 'https://sb-open.revenuemonster.my/v3/service' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVKTE42dFdBMG82MEx3Il0sImV4cCI6MTYwMzI1NDU2OSwiaWF0IjoxNjAwNjYyNTY5LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UTZNenR5b1RFckpzVyIsIm5iZiI6MTYwMDY2MjU2OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.H3G6UDX7sR9EXtTMNs4Q2OHdhUGIhhCfdlAeOpywH4rDuVOcWXXwzF4Imbx8E7I10vFAJpwYZrEkCWCdCCw-WV11y9VT5kP6k75CeS-ZPMOLcKnC5iFT7vEi07r6ovwty9erlcZeXrtrmEIn3rnLva-dxSg3vZ2MyymoNDk-kV7ltXnkoWW4jtXRls6siLhxeY__8kXn2qa0ojVX4Nm6HmzN_vgi-RKSmToMgsdzTF94Y61QVBWhZfolD2-JpHx4qNlklcUdv8HOJ1QHHWpyoJytaJmvr3GJ5G399LbcTLwxB1p2qPg7z4hpoGNu4AP-ybRJVC3P9q9OscQYDNX-dA' \
+--header 'X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==' \
+--header 'X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN' \
+--header 'X-Timestamp: 1528450585' \
+--data-raw '{
+    "service": "alacarte",
+    "version": "v1",
+    "function": "get.store.orders",
+    "request": {
+        "storeId": "2808912573238362402",
+        "shortOrderId":"spv4",
+        "cursor": "",
+        "paymentStatus": ["COMPLETED"],
+        "startOrderAt": "2020-09-22T02:00:00.000Z",
+        "endOrderAt": "2020-09-22T02:00:00.000Z",
+        "startDeliveryAt": "2020-09-22T02:00:00.000Z",
+        "endDeliveryAt": "2020-09-22T02:00:00.000Z",
+        "type": ["DINEIN","DELIVERY"],
+        "deliveryStatus": ["WAIT_FOR_CONFIRMATION","FINDING_COURIER"],
+        "sort": ["-deliveryAt"]
+    }
+}'
+```
+
+### Response Parameters
+
+:::note
+
+- Current type in <b>Status</b> will be :-
+
+  - "EMPTY"<br/>
+  - "WAITING_FOR_PAYMENT"<br/>
+  - "WAIT_FOR_CONFIRMATION"<br/>
+  - "CANCELLED"<br/>
+  - "PROGRESSING"<br/>
+  - "WAITING_FOR_COURIER"<br/>
+  - "FINDING_COURIER"<br/>
+  - "SHIPPING"<br/>
+  - "COMPLETED"<br/>
+  - "DELAYED"<br/>
+  - "REJECTED"<br/>
+
+- Current type in <b>State</b> will be :-
+
+  - "ACCEPTED" , "REJECTED" , "CANCELED" , "REFUNDED"
+
+- Current type in <b>Type</b> will be :-
+
+  - "DINEIN" , "DELIVERY" , "PICKUP", "DRIVE_THRU"
+
+:::
+
+| Parameter | Type   | Description                     | Example                      |
+| --------- | ------ | ------------------------------- | ---------------------------- |
+| `cursor`  | String | Optional, if pagination exists. | "3235"                       |
+| `count`   | Uint   | Current page record             | 25                           |
+| `items`   | Array  | Refer to explanation below      | (Refer to explanation below) |
+
+### Inside Items (parameter)
+
+| Parameter    | Type     | Description                          | Example                          |
+| ------------ | -------- | ------------------------------------ | -------------------------------- |
+| `createdAt`  | DateTime | Creation date time of store          | "2020-09-22T04:44:57.950398414Z" |
+| `customer`   | Object   | Refer to explanation below           | (Refer to explanation below)     |
+| `delivery`   | Object   | Refer to explanation below           | (Refer to explanation below)     |
+| `deliveryAt` | String   | When and what time the order deliver | "2020-10-01T08:35:22.525Z"       |
+| `driveThru`  | Object   | Refer to explanation below           | (Refer to explanation below)     |
+| `items`      | Array    | Refer to explanation below           | (Refer to explanation below)     |
+| `orderId`    | String   | Order ID                             | "5f7596e066ef1c1a4f9807f4"       |
+| `payment`    | Object   | Refer to explanation below           | (Refer to explanation below)     |
+| `quantity`   | Uint     | Quantity of the item                 | 1                                |
+| `queueNo`    | Uint     | Queue number of the item             | 0                                |
+| `state`      | String   | State of the item                    | "ACCEPTED"                       |
+| `status`     | String   | Status of the item                   | "EMPTY"                          |
+| `storeId`    | String   | ID of the Store that Create from RM  | "10946114768247530"              |
+| `table`      | Object   | Refer to explanation below           | (Refer to explanation below)     |
+| `type`       | String   | Type of the item                     | ""                               |
+| `updatedAt`  | DateTime | Last update date time                | "2020-10-01T08:44:16.863Z"       |
+
+### Inside Customer (parameter)
+
+| Parameter     | Type   | Description             | Example                    |
+| ------------- | ------ | ----------------------- | -------------------------- |
+| `countryCode` | String | Country Code            | "60"                       |
+| `email`       | String | Customer Email          | "bassem@revenuemosnter.my" |
+| `name`        | String | Customer Name           | "Bassem AlSabbagh"         |
+| `phoneNumber` | String | Customer contact number | "1123621544"               |
+| `id`          | String | Customer ID             | "5f63082ae9c755d6ba3122ac" |
+
+### Inside Delivery (parameter)
+
+| Parameter         | Type   | Description                  | Example                      |
+| ----------------- | ------ | ---------------------------- | ---------------------------- |
+| `address`         | String | Refer to explanation below   | (Refer to explanation below) |
+| `courier`         | String | Refer to explanation below   | (Refer to explanation below) |
+| `distanceInMeter` | Int    | Delivery Distance (In Meter) | 17446                        |
+| `id`              | String | Customer contact number      | "5f815e2c3c6920f1233a540f"   |
+| `method`          | String | Customer ID                  | "OWN"                        |
+| `vendorId`        | String | Customer ID                  | "5f815e2c3c6920f1233a540f"   |
+
+### Inside Address (parameter)
+
+| Parameter      | Type   | Description                  | Example |
+| -------------- | ------ | ---------------------------- | ------- |
+| `addressLine1` | String | AddressLine1                 | ""      |
+| `addressLine2` | String | AddressLine2                 | ""      |
+| `city`         | String | City                         | ""      |
+| `country`      | String | Country                      | ""      |
+| `latitude`     | Float  | Address latitude (In Meter)  | 0       |
+| `longitude`    | Float  | Address longitude (In Meter) | 0       |
+| `name`         | String | Customer Name                | ""      |
+| `postCode`     | String | Customer Remark              | ""      |
+| `remark`       | String | Customer Remark              | ""      |
+| `state`        | String | Address State                | ""      |
+| `unit`         | String | Address Unit                 | ""      |
+
+### Inside Courier (parameter)
+
+:::note
+
+- If Courier don't have `name` and `phone` will display as **null**
+
+:::
+
+| Parameter   | Type   | Description                  | Example      |
+| ----------- | ------ | ---------------------------- | ------------ |
+| `id`        | String | Courier ID                   | ""           |
+| `latitude`  | Float  | Address latitude (In Meter)  | 0            |
+| `longitude` | Float  | Address longitude (In Meter) | 0            |
+| `name`      | String | Courier Name                 | "Testing123" |
+| `phone`     | String | Courier Contact Number       | "163698122"  |
+| `photoURL`  | String | Courier Image                | ""           |
+| `surname`   | String | Courier Surname              | ""           |
+
+### Inside Drive Thru (parameter)
+
+:::note
+
+- If not Drive Thru will display **null**
+
+:::
+
+| Parameter            | Type   | Description         | Example   |
+| -------------------- | ------ | ------------------- | --------- |
+| `vehicleDescription` | String | Vehicle description | ""        |
+| `vehicleNo`          | String | Vehicle Number      | "TLA3202" |
+
+### Inside Items (parameter)
+
+| Parameter     | Type   | Description                               | Example                              |
+| ------------- | ------ | ----------------------------------------- | ------------------------------------ |
+| `description` | String | Item description                          | "got Nasi gt lemak"                  |
+| `imageUrl`    | Array  | Item Image                                | []                                   |
+| `itemId`      | String | Item ID                                   | "5f69a41f212de28db36031d6"           |
+| `name`        | String | Item Name                                 | "Nasi lemak & Lemak"                 |
+| `preferences` | Array  | Refer to the <b>Preferences parameter</b> | (Refer to the Preferences parameter) |
+| `price`       | Object | Refer to the <b>Price parameter</b>       | ( Refer to the Price parameter)      |
+| `quantity`    | Uint   | Item Quantity                             | 1                                    |
+| `remark`      | String | Customer Remark                           | ""                                   |
+| `sides`       | Array  | Refer to the <b>Sides parameter</b>       | ( Refer to the Sides parameter)      |
+
+### Inside Preferences (parameter)
+
+:::note
+
+- Will display **Empty Array** when don't have preferences
+
+:::
+
+| Parameter   | Type   | Description                | Example                      |
+| ----------- | ------ | -------------------------- | ---------------------------- |
+| `id`        | String | Preferences ID             | "5f698149585d7cc1ae35a38d"   |
+| `name`      | String | Preferences name           | "Sweetness"                  |
+| `minChoice` | Uint   | Set minimum choice         | 1                            |
+| `maxChoice` | Uint   | Set maximum choice         | 3                            |
+| `labels`    | Array  | Refer to explanation below | (Refer to explanation below) |
+
+### Inside Labels (parameter)
+
+| Parameter | Type   | Description | Example                    |
+| --------- | ------ | ----------- | -------------------------- |
+| `id`      | String | Label ID    | "5f698149585d7cc1ae35a38e" |
+| `name`    | String | Label name  | "Basic"                    |
+
+### Inside Sides (parameter)
+
+:::note
+
+- Will display **Empty Array** when don't have sides
+
+:::
+
+| Parameter   | Type   | Description                             | Example                                 |
+| ----------- | ------ | --------------------------------------- | --------------------------------------- |
+| `id`        | String | Side ID                                 | ""                                      |
+| `name`      | String | Side Name                               | "test"                                  |
+| `sideItems` | Array  | Refer to the <b>SideItems parameter</b> | Refer to the <b>SideItems parameter</b> |
+
+### Inside SideItems (parameter)
+
+| Parameter | Type   | Description                         | Example                             |
+| --------- | ------ | ----------------------------------- | ----------------------------------- |
+| `id`      | String | Side ID                             | "5f7b4195021ba83f52a02551"          |
+| `name`    | String | Side Name                           | "Hainan Chicken Rice"               |
+| `price`   | Object | Refer to the <b>Price parameter</b> | Refer to the <b>Price parameter</b> |
+
+### Inside Payment (parameter)
+
+:::note
+
+Current type in <b>Payment</b> will be :-
+
+"PAID" , "NOTPAID" , "PENDING" , "REFUNDED"
+
+:::
+
+| Parameter             | Type   | Description                         | Example                         |
+| --------------------- | ------ | ----------------------------------- | ------------------------------- |
+| `deliveryFee`         | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+| `rounding`            | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+| `serviceFee`          | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+| `serviceTax`          | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+| `status`              | String | Payment Status                      | "NOTPAID"                       |
+| `subTotal`            | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+| `totalAfterRounding`  | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+| `totalBeforeRounding` | Object | Refer to the <b>Price parameter</b> | ( Refer to the Price parameter) |
+
+### Inside Price (parameter)
+
+:::note
+
+Only `serviceFee` and `serviceTax` have <b>percentage</b>
+
+:::
+
+| Parameter      | Type   | Description                                      | Example |
+| -------------- | ------ | ------------------------------------------------ | ------- |
+| `amount`       | Uint   | Amount in cent (min RM 0.10 <b>10 = RM 0.10</b>) | 100     |
+| `currencyType` | String | Current only support Ringgit Malaysia            | "MYR"   |
+| `percentage`   | Uint   | precentage will be divide 100 eg: 1300/100       | 1300    |
+
+### Inside Table (parameter)
+
+| Parameter     | Type   | Description    | Example                    |
+| ------------- | ------ | -------------- | -------------------------- |
+| `id`          | String | Table ID       | "5e86af7ef9e6794801df3302" |
+| `isAvailable` | Bool   | Vehicle Number | true                       |
+| `isDefault`   | Bool   | Vehicle Number | true                       |
+| `name`        | String | Table Name     | "Default Table"            |
+
+> Example Response
+
+```json
+{
+  "count": 25,
+  "cursor": "3235",
+  "items": [
+    {
+      "createdAt": "2019-04-26T05:14:27.414Z",
+      "customer": {
+        "countryCode": "",
+        "email": "",
+        "id": "5cb8412365e8e5c23a16fc77",
+        "name": "",
+        "phoneNumber": ""
+      },
+      "delivery": null,
+      "deliveryAt": "0001-01-01T00:00:00Z",
+      "driveThru": null,
+      "items": [
+        {
+          "description": "Char Ho Fan is the best.",
+          "imageUrl": [
+            "https://d2wu471yepgs9e.cloudfront.net/menu-item/default/5caafa0f1d27bc1843ed6b6c.jpeg"
+          ],
+          "itemId": "5cc26d323347c8c07b5f6ab2",
+          "name": "Char Ho Fan",
+          "preferences": [
+            {
+              "id": "",
+              "labels": [
+                {
+                  "id": "5cc26d323347c8c07b5f6aa7",
+                  "name": "Average"
+                }
+              ],
+              "name": "Spicy Level"
+            }
+          ],
+          "price": {
+            "amount": 100,
+            "currencyType": "MYR"
+          },
+          "quantity": 1,
+          "remark": "",
+          "sides": [
+            {
+              "id": "",
+              "name": "Type of Drink",
+              "sideItems": [
+                {
+                  "id": "5cc26d323347c8c07b5f6ab0",
+                  "name": "Char Ho Fan",
+                  "price": {
+                    "amount": 100,
+                    "currencyType": "MYR"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "orderId": "5cc293b36ab3f021ecbc9639",
+      "payment": {
+        "deliveryFee": {
+          "amount": 0,
+          "currencyType": ""
+        },
+        "rounding": {
+          "amount": 0,
+          "currencyType": "MYR"
+        },
+        "serviceFee": {
+          "amount": 0,
+          "currencyType": "",
+          "percentage": 0
+        },
+        "serviceTax": {
+          "amount": 0,
+          "currencyType": "",
+          "percentage": 0
+        },
+        "status": "NOTPAID",
+        "subTotal": {
+          "amount": 200,
+          "currencyType": "MYR"
+        },
+        "totalAfterRounding": {
+          "amount": 200,
+          "currencyType": "MYR"
+        },
+        "totalBeforeRounding": {
+          "amount": 200,
+          "currencyType": "MYR"
+        }
+      },
+      "quantity": 2,
+      "queueNo": 0,
+      "state": "ACCEPTED",
+      "status": "EMPTY",
+      "storeId": "10946114768247530",
+      "table": {
+        "id": "5cbd816ced1c1a83b063ae8d",
+        "isActive": true,
+        "isDefault": false,
+        "name": "Table A1"
+      },
+      "type": "",
+      "updatedAt": "2019-06-10T09:16:12.073Z"
+    }
+  ]
+}
+```

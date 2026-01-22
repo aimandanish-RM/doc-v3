@@ -1,0 +1,474 @@
+---
+id: get-mykad-result
+title: GET Mykad Result
+sidebar_label: GET Mykad Result
+---
+
+:::note
+Prerequisite : Acquire requestID from mykad recognition response
+:::
+
+**Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
+
+URL: `https://open.revenuemonster.my/v3/service`<br/>
+
+Sandbox URL: `https://sb-open.revenuemonster.my/v3/service`
+
+### Request Parameters
+
+| Parameter  | Type   | Description                 | Example                      |
+| ---------- | ------ | --------------------------- | ---------------------------- |
+| `service`  | String | EKYC service                | "ekyc"                       |
+| `version`  | String | Currently only support 'v1" | "v1"                         |
+| `function` | String | Selected function           | "get-mykad-result"           |
+| `request`  | Object | Refer to explanation below  | (Refer to explanation below) |
+
+| Parameter | Type   | Description                                | Example                    |
+| --------- | ------ | ------------------------------------------ | -------------------------- |
+| `id`      | String | Request ID from mykad recognition response | "62201d48a694817dede84b35" |
+
+> Example Request
+
+```bash
+curl --location --request POST 'https://sb-open.revenuemonster.my/v3/service' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVKTE42dFdBMG82MEx3Il0sImV4cCI6MTYwMzI1NDU2OSwiaWF0IjoxNjAwNjYyNTY5LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UTZNenR5b1RFckpzVyIsIm5iZiI6MTYwMDY2MjU2OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.H3G6UDX7sR9EXtTMNs4Q2OHdhUGIhhCfdlAeOpywH4rDuVOcWXXwzF4Imbx8E7I10vFAJpwYZrEkCWCdCCw-WV11y9VT5kP6k75CeS-ZPMOLcKnC5iFT7vEi07r6ovwty9erlcZeXrtrmEIn3rnLva-dxSg3vZ2MyymoNDk-kV7ltXnkoWW4jtXRls6siLhxeY__8kXn2qa0ojVX4Nm6HmzN_vgi-RKSmToMgsdzTF94Y61QVBWhZfolD2-JpHx4qNlklcUdv8HOJ1QHHWpyoJytaJmvr3GJ5G399LbcTLwxB1p2qPg7z4hpoGNu4AP-ybRJVC3P9q9OscQYDNX-dA' \
+--header 'X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==' \
+--header 'X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN' \
+--header 'X-Timestamp: 1528450585' \
+--data-raw '{
+    "service": "ekyc",
+    "version": "v1",
+    "function": "get-mykad-result",
+    "request": {
+        "id": "62201d48a694817dede84b35"
+    }
+}'
+```
+
+### Response Parameters
+
+:::note
+
+- Current type in <b>Status</b> will be :-
+
+  - "SUCCESS" <br/>
+  - "MYKAD_NOT_FOUND" <br/>
+  - "MYKAD_SINGLE_NOT_FOUND" <br/>
+  - "MYKAD_FACE_NOT_FOUND" <br/>
+  - "INCOMPLETE" <br/>
+  - "OCR_ENGINE_ERROR" <br/>
+  - "OCR_ENGINE_CONNECTION" <br/>
+
+- Current type in <b>Action</b> will be :-
+  - "NONE_REQUIRED"<br/>
+  - "ATTENTION_REQUIRED"<br/>
+  - "INCONCLUSIVE"<br/>
+  - "RESOLVED"<br/>
+
+:::
+
+| Parameter    | Type     | Description               | Example                      |
+| ------------ | -------- | ------------------------- | ---------------------------- |
+| `id`         | String   | Table ID                  | "60f79b737b03abf23ad65206"   |
+| `action`     | String   | Action Required           | NONE_REQUIRED                |
+| `clientId`   | String   | Client ID                 | ""                           |
+| `merchantId` | String   | Merchant ID               | ""                           |
+| `status`     | String   | Recognition Status        | SUCCESS                      |
+| `duration`   | Float    | Recognition Duration      | 3.3465                       |
+| `objects`    | Object   | Detected Landmark         | (Refer to explanation below) |
+| `results`    | Array    | Mykad Recognition Results | (Refer to explanation below) |
+| `updatedAt`  | DateTime | Last update date time     | "2022-03-03T01:43:36.963Z"   |
+| `createdAt`  | DateTime | Create date time          | "2022-03-03T01:43:36.963Z"   |
+
+### Inside Objects (parameter)
+
+| Parameter  | Type  | Description                      | Example |
+| ---------- | ----- | -------------------------------- | ------- |
+| `data`     | Array | Refer to the <b>Objects Data</b> | []      |
+| `duration` | Float | Landmark Detection Duration      | 0.0165  |
+
+### Inside Objects Data (parameter)
+
+| Parameter    | Type   | Description                     | Example         |
+| ------------ | ------ | ------------------------------- | --------------- |
+| `boxes`      | Array  | Refer to the <b>boxes</b>       | []              |
+| `confidence` | Float  | Confidence of detected landmark | 0.9609          |
+| `prediction` | String | Prediction of detected landmark | "hibiscus_logo" |
+
+### Inside Boxes (parameter)
+
+| Parameter | Type | Description                         | Example |
+| --------- | ---- | ----------------------------------- | ------- |
+| `x`       | Int  | x-coordinate of object in the image | 196     |
+| `y`       | Int  | y-coordinate of object in the image | 200     |
+
+### Inside Results (parameter)
+
+| Parameter       | Type   | Description                               | Example                      |
+| --------------- | ------ | ----------------------------------------- | ---------------------------- |
+| `duration`      | Float  | Mykad Recognition Duration                | 3.2886                       |
+| `colour`        | Object | Refer to the <b>Results Colour</b>        | (Refer to explanation below) |
+| `data`          | Object | Refer to the <b>Results Data</b>          | (Refer to explanation below) |
+| `faces`         | Array  | Refer to the <b>Results Faces</b>         | (Refer to explanation below) |
+| `glare`         | Object | Refer to the <b>Results Glare</b>         | (Refer to explanation below) |
+| `meta`          | Object | Refer to the <b>Results Meta</b>          | (Refer to explanation below) |
+| `object`        | Object | Refer to the <b>Results Object</b>        | (Refer to explanation below) |
+| `ocrRequestIds` | Object | Refer to the <b>Results OcrRequestIds</b> | (Refer to explanation below) |
+| `scores`        | Object | Refer to the <b>Results Scores</b>        | (Refer to explanation below) |
+| `tamperCheck`   | Object | Refer to the <b>Results TamperCheck</b>   | (Refer to explanation below) |
+
+### Inside Results Colour (parameter)
+
+| Parameter    | Type   | Description                       | Example |
+| ------------ | ------ | --------------------------------- | ------- |
+| `detected`   | String | Colour detected                   | "BLUE"  |
+| `percentage` | Float  | Percentage of colour in the image | 0.6008  |
+
+### Inside Results Data (parameter)
+
+| Parameter  | Type    | Description                 | Example                      |
+| ---------- | ------- | --------------------------- | ---------------------------- |
+| `address`  | Object  | Refer to the <b>Address</b> | (Refer to explanation below) |
+| `gender`   | String  | Gender information of mykad | "MALE"                       |
+| `ic`       | String  | Mykad ID                    | "550106-12-5821"             |
+| `isMuslim` | Boolean | Is muslim                   | false                        |
+| `name`     | String  | Name in the mykad           | "ROWAN SEBASTIAN ATKINSON"   |
+
+### Inside Address (parameter)
+
+| Parameter      | Type   | Description            | Example                |
+| -------------- | ------ | ---------------------- | ---------------------- |
+| `addressLine1` | String | First line of address  | "GDW KAMPUNG BAYANGAN" |
+| `addressLine2` | String | Second line of address | "80000 KENINGAU"       |
+| `addressLine3` | String | Third line of address  | "SABAH"                |
+| `city`         | String | City name              | "KENINGAU"             |
+| `postcode`     | String | Postcode               | "80000"                |
+| `state`        | String | State name             | "SABAH"                |
+
+### Inside Results Faces (parameter)
+
+| Parameter    | Type  | Description                 | Example |
+| ------------ | ----- | --------------------------- | ------- |
+| `boxes`      | Array | Refer to the <b>boxes</b>   | []      |
+| `confidence` | Float | Confidence of detected face | 1       |
+
+### Inside Results Glare (parameter)
+
+| Parameter | Type    | Description                   | Example |
+| --------- | ------- | ----------------------------- | ------- |
+| `details` | Array   | Detailed information of glare | []      |
+| `present` | Boolean | Present of glare              | false   |
+
+### Inside Results Meta (parameter)
+
+| Parameter     | Type  | Description                        | Example |
+| ------------- | ----- | ---------------------------------- | ------- |
+| `resizeScale` | Float | Resize scale of mykad in the image | 0       |
+
+### Inside Results Object (parameter)
+
+| Parameter    | Type   | Description                  | Example      |
+| ------------ | ------ | ---------------------------- | ------------ |
+| `confidence` | Float  | Confidence of detected mykad | 0.9609       |
+| `prediction` | String | Type of mykad                | "ic_1_front" |
+
+### Inside Results ocrRequestIds (parameter)
+
+| Parameter | Type | Description | Example |
+| --------- | ---- | ----------- | ------- |
+| region1 | String | ID of region 1 | "62201d4b4fddc13446bd6d0e" |
+| region2 | String | ID of region 2 | "62201d4b4fddc13446bd6d0f" |
+| region3 | String | ID of region 3 | "62201d4b4fddc13446bd6d10" |
+
+### Inside Results Scores (parameter)
+
+| Parameter   | Type  | Description          | Example |
+| ----------- | ----- | -------------------- | ------- |
+| `landmarks` | Float | Landmark score       | 0.5441  |
+| `ocr`       | Float | OCR score            | 0.9033  |
+| `searcher`  | Float | Mykad searcher score | 0.9     |
+| `total`     | Float | Total score          | 0.8295  |
+
+### Inside TamperCheck (parameter)
+
+| Parameter          | Type   | Description                              | Example                      |
+| ------------------ | ------ | ---------------------------------------- | ---------------------------- |
+| `faceVerification` | Object | Refer to the <b>TamperCheck Face Verification Result</b>   | (Refer to explanation below) |
+| `frontalFace`      | Object | Refer to the <b>TamperCheck Result</b>   | (Refer to explanation below) |
+| `physical`         | Object | Refer to the <b>TamperCheck Physical</b> | (Refer to explanation below) |
+| `prediction`       | String | Prediction of tamper check               | "ORIGINAL"                   |
+| `region1`          | Object | Refer to the <b>TamperCheck Result</b>   | (Refer to explanation below) |
+| `region2`          | Object | Refer to the <b>TamperCheck Result</b>   | (Refer to explanation below) |
+| `region3`          | Object | Refer to the <b>TamperCheck Result</b>   | (Refer to explanation below) |
+
+### Inside TamperCheck Face Verification Response (parameter)
+
+| Parameter | Type    | Description                                               | Example                      |
+| --------- | ------- | --------------------------------------------------------- | ---------------------------- |
+| `message` | String  | Message from tamper check response                        | ""                           |
+| `result`  | Object  | Refer to the <b>Tamper Check Face Verification Result</b> | (Refer to explanation below) |
+| `success` | Boolean | Success status of tamper check                            | false                        |
+
+### Inside TamperCheck Face Verification Result (parameter)
+
+| Parameter      | Type    | Description                       | Example |
+| -------------- | ------- | --------------------------------- | ------- |
+| `isSamePerson` | Boolean | Check result which is same person | false   |
+| `similarity`   | Float   | Similarity of two faces           | 0       |
+
+### Inside TamperCheck Response (parameter)
+
+| Parameter | Type    | Description                             | Example                      |
+| --------- | ------- | --------------------------------------- | ---------------------------- |
+| `message` | String  | Message from tamper check response      | ""                           |
+| `result`  | Object  | Refer to the <b>Tamper Check Result</b> | (Refer to explanation below) |
+| `success` | Boolean | Success status of tamper check          | false                        |
+
+### Inside TamperCheck Result (parameter)
+
+| Parameter    | Type    | Description                            | Example    |
+| ------------ | ------- | -------------------------------------- | ---------- |
+| `alternated` | Boolean | Alternated trace of tamper check       | false      |
+| `confidence` | Float   | Confidence score of tamperCheck result | 0.9999     |
+| `prediction` | String  | Prediction of tamper check             | "ORIGINAL" |
+
+### Inside TamperCheck Physical (parameter)
+
+| Parameter    | Type    | Description                              | Example    |
+| ------------ | ------- | ---------------------------------------- | ---------- |
+| `confidence` | Float   | Confidence score of tamperCheck physical | 0          |
+| `prediction` | String  | Prediction of tamper check               | "ORIGINAL" |
+| `success`    | Boolean | Success status of tamper check physical  | false      |
+
+> Example Response
+
+```json
+{
+  "item": {
+    "action": "NONE_REQUIRED",
+    "clientId": "1626834435437339931",
+    "createdAt": "2022-03-03T01:43:36.963Z",
+    "duration": 3.9828,
+    "id": "62201d48a694817dede84b35",
+    "merchantId": "4118165203679668885",
+    "objects": {
+      "data": [
+        {
+          "boxes": [
+            {
+              "x": 196,
+              "y": 200
+            },
+            {
+              "x": 332,
+              "y": 274
+            }
+          ],
+          "confidence": 0.9614,
+          "prediction": "hibiscus_logo"
+        },
+        {
+          "boxes": [
+            {
+              "x": 254,
+              "y": 12
+            },
+            {
+              "x": 318,
+              "y": 71
+            }
+          ],
+          "confidence": 0.9608,
+          "prediction": "mykad_logo"
+        },
+        {
+          "boxes": [
+            {
+              "x": 321,
+              "y": 18
+            },
+            {
+              "x": 407,
+              "y": 64
+            }
+          ],
+          "confidence": 0.9603,
+          "prediction": "malaysia_flag"
+        },
+        {
+          "boxes": [
+            {
+              "x": 280,
+              "y": 64
+            },
+            {
+              "x": 409,
+              "y": 239
+            }
+          ],
+          "confidence": 0.9571,
+          "prediction": "face_image"
+        },
+        {
+          "boxes": [
+            {
+              "x": 52,
+              "y": 22
+            },
+            {
+              "x": 225,
+              "y": 60
+            }
+          ],
+          "confidence": 0.9488,
+          "prediction": "front_upper_left_text"
+        },
+        {
+          "boxes": [
+            {
+              "x": 144,
+              "y": 63
+            },
+            {
+              "x": 252,
+              "y": 130
+            }
+          ],
+          "confidence": 0.9438,
+          "prediction": "msc_logo"
+        },
+        {
+          "boxes": [
+            {
+              "x": 0,
+              "y": 5
+            },
+            {
+              "x": 432,
+              "y": 273
+            }
+          ],
+          "confidence": 0.709,
+          "prediction": "ic_1_front"
+        }
+      ],
+      "duration": 1.9634
+    },
+    "results": [
+      {
+        "colour": {
+          "detected": "BLUE",
+          "percentage": 0.6008
+        },
+        "data": {
+          "address": {
+            "addressLine1": "GDW KAMPUNG BAYANGAN",
+            "addressLine2": "80000 KENINGAU",
+            "addressLine3": "SABAH",
+            "city": "KENINGAU",
+            "postcode": "80000",
+            "state": "SABAH"
+          },
+          "gender": "Not found",
+          "ic": "550106-12-5821",
+          "isMuslim": false,
+          "name": "ROWAN SEBASTIAN ATKINSON"
+        },
+        "duration": 1.8658,
+        "faces": [
+          {
+            "boxes": [
+              {
+                "x": 428,
+                "y": 137
+              },
+              {
+                "x": 372,
+                "y": 272
+              }
+            ],
+            "confidence": 1
+          }
+        ],
+        "glare": {
+          "details": [],
+          "present": false
+        },
+        "meta": {
+          "resizeScale": 1.39
+        },
+        "object": {
+          "confidence": 0.709,
+          "prediction": "ic_1_front"
+        },
+        "ocrRequestIds": {
+          "region1": "62201d4b4fddc13446bd6d0e",
+          "region2": "62201d4b4fddc13446bd6d0f",
+          "region3": "62201d4b4fddc13446bd6d10"
+        },
+        "scores": {
+          "landmarks": 0.5442817296300616,
+          "ocr": 0.956196536620458,
+          "searcher": 0.9,
+          "total": 0.840095653250104
+        },
+        "tamperCheck": {
+          "faceVerification": {
+            "message": "Ghost face not found",
+            "result": {
+              "isSamePerson": false,
+              "similarity": 0
+            },
+            "success": false
+          },
+          "frontalFace": {
+            "message": "Success",
+            "result": {
+              "alternated": false,
+              "confidence": 0.9987,
+              "prediction": "ORIGINAL"
+            },
+            "success": true
+          },
+          "physical": {
+            "confidence": 0,
+            "prediction": "",
+            "success": false
+          },
+          "prediction": "ORIGINAL",
+          "region1": {
+            "message": "Success",
+            "result": {
+              "alternated": false,
+              "confidence": 0.9998,
+              "prediction": "ORIGINAL"
+            },
+            "success": true
+          },
+          "region2": {
+            "message": "Success",
+            "result": {
+              "alternated": false,
+              "confidence": 1,
+              "prediction": "ORIGINAL"
+            },
+            "success": true
+          },
+          "region3": {
+            "message": "Success",
+            "result": {
+              "alternated": false,
+              "confidence": 1,
+              "prediction": "ORIGINAL"
+            },
+            "success": true
+          }
+        }
+      }
+    ],
+    "status": "SUCCESS",
+    "updatedAt": "2022-03-03T01:43:40.978Z",
+  }
+}
+```
