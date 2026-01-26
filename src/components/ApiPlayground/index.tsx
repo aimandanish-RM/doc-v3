@@ -96,7 +96,7 @@ export default function ApiPlayground(props: Props) {
       {/* ================= PLAYGROUND ================= */}
       {activeTab === "playground" && (
         <>
-          {props.presets?.length && (
+{props.presets && props.presets.length > 0 && (
             <section>
               <h4>Examples</h4>
               <select

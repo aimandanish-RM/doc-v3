@@ -6,6 +6,8 @@ import type { ComponentProps } from "react";
 type PreProps = ComponentProps<"pre">;
 
 export default {
+  ApiPlayground, 
+  
   pre: (props: PreProps) => {
     const child = props.children as any;
 

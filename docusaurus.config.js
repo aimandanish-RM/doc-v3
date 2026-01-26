@@ -1,3 +1,5 @@
+import apiPlaygroundRemark from "./src/remark/apiPlayground";
+
 const path = require("path");
 module.exports = {
   title: "Revenue Monster",
@@ -86,6 +88,8 @@ module.exports = {
       "@docusaurus/preset-classic",
       {
         docs: {
+            remarkPlugins: [apiPlaygroundRemark],
+
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           showLastUpdateAuthor: true,
