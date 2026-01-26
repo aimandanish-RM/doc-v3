@@ -2,7 +2,18 @@
 id: client-credentials
 title: Client Credentials
 sidebar_label: Client Credentials
+
+api:
+  method: POST
+  url: https://sb-oauth.revenuemonster.my/v1/token
+  headers:
+    Content-Type: application/json
+  body: |
+    {
+      "grantType": "client_credentials"
+    }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

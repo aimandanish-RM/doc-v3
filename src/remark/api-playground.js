@@ -1,16 +1,16 @@
-import yaml from "js-yaml";
+const yaml = require("js-yaml");
 
-export default function apiPlaygroundRemark() {
-  return (tree: any) => {
-    tree.children = tree.children.flatMap((node: any) => {
+module.exports = function apiPlaygroundRemark() {
+  return (tree) => {
+    tree.children = tree.children.flatMap((node) => {
       if (node.type === "code" && node.lang === "api-playground") {
-        const config = yaml.load(node.value) as any;
+        const config = yaml.load(node.value);
 
         return [
           {
             type: "mdxJsxFlowElement",
             name: "ApiPlayground",
-            attributes: Object.entries(config).map(([key, value]) => ({
+            attributes: Object.entries(config || {}).map(([key, value]) => ({
               type: "mdxJsxAttribute",
               name: key,
               value:
@@ -25,8 +25,7 @@ export default function apiPlaygroundRemark() {
           },
         ];
       }
-
       return [node];
     });
   };
-}
+};
