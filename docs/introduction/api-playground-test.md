@@ -2,6 +2,8 @@
 
 Below is a live API playground rendered from a code block.
 
+
+
 ```api-playground
 method: POST
 title: Create Payment
@@ -14,7 +16,7 @@ body: |
       "id": "test-order-123",
       "title": "Test Order",
       "currencyType": "MYR",
-      "amount": 100
+      "amount": 150
     }
   }
 ```
