@@ -8,16 +8,28 @@ type Preset = {
   body?: string;
 };
 
+type UrlConfig =
+  | string
+  | {
+      sandbox: string;
+      prod: string;
+    };
+
 type Props = {
   method: string;
   title?: string;
-  url: string;
+  url: UrlConfig;
   headers?: Record<string, string>;
   body?: string;
   presets?: Preset[];
 };
 
 export default function ApiPlayground(props: Props) {
+  const [env, setEnv] = useState<"sandbox" | "prod">("sandbox");
+
+  const resolvedUrl =
+    typeof props.url === "string" ? props.url : props.url[env];
+
   const [token, setTokenState] = useState<string>(() => getToken() ?? "");
   const [headers, setHeaders] = useState<Record<string, string>>(
     props.headers ?? {}
@@ -52,7 +64,7 @@ export default function ApiPlayground(props: Props) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          url: props.url,
+          url: resolvedUrl,
           method: props.method,
           headers: {
             ...headers,
@@ -77,10 +89,22 @@ export default function ApiPlayground(props: Props) {
       {/* ✅ HEADER */}
       <header className="api-header">
         <strong>{props.method}</strong>
-        <span className="api-url">{props.url}</span>
+        <span className="api-url">{resolvedUrl}</span>
       </header>
 
-      {/* ✅ TABS (STEP 7) */}
+      {/* ✅ ENV TOGGLE (only if sandbox/prod exists) */}
+      {typeof props.url !== "string" && (
+        <div style={{ marginBottom: 8 }}>
+          <button onClick={() => setEnv("sandbox")} disabled={env === "sandbox"}>
+            Sandbox
+          </button>
+          <button onClick={() => setEnv("prod")} disabled={env === "prod"}>
+            Prod
+          </button>
+        </div>
+      )}
+
+      {/* ✅ TABS */}
       <div className="api-tabs">
         {["playground", "curl", "fetch"].map((tab) => (
           <button
@@ -96,7 +120,7 @@ export default function ApiPlayground(props: Props) {
       {/* ================= PLAYGROUND ================= */}
       {activeTab === "playground" && (
         <>
-{props.presets && props.presets.length > 0 && (
+          {props.presets && props.presets.length > 0 && (
             <section>
               <h4>Examples</h4>
               <select
@@ -154,9 +178,7 @@ export default function ApiPlayground(props: Props) {
             {loading ? "Sending..." : "▶ Send Request"}
           </button>
 
-          {status && (
-            <pre>{JSON.stringify(response, null, 2)}</pre>
-          )}
+          {status && <pre>{JSON.stringify(response, null, 2)}</pre>}
         </>
       )}
 
@@ -165,7 +187,7 @@ export default function ApiPlayground(props: Props) {
         <pre>
           {generateCurl({
             method: props.method,
-            url: props.url,
+            url: resolvedUrl,
             headers,
             body,
             token,
@@ -178,7 +200,7 @@ export default function ApiPlayground(props: Props) {
         <pre>
           {generateFetch({
             method: props.method,
-            url: props.url,
+            url: resolvedUrl,
             headers,
             body,
             token,
