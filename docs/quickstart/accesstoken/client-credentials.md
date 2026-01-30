@@ -20,7 +20,9 @@ This is for the scenario that merchant's trusted developer is provided with **Cl
 
 ```api-playground
 method: POST
-url: https://sb-oauth.revenuemonster.my/v1/token
+url: 
+    sandbox: https://sb-oauth.revenuemonster.my/v1/token
+    prod: https://oauth.revenuemonster.my/v1/token
 headers:
   Content-Type: application/json
   Authorization: Basic <BASE64_CLIENT_ID_AND_SECRET>
