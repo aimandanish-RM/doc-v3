@@ -10,9 +10,9 @@ title: Create Payment
 url: 
     sandbox: https://sb-open.revenuemonster.my/v3/payment/online
     prod: https://open.revenuemonster.my/v3/payment/online
-headers:
+headers: 
   Content-Type: application/json
-body: |
+body: | 
   {
     "order": {
       "id": "test-order-123",
