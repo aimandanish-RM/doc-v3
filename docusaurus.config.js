@@ -1,7 +1,6 @@
-
-
 const path = require("path");
 const apiPlaygroundRemark = require("./src/remark/apiPlayground");
+
 module.exports = {
   title: "Revenue Monster",
   tagline:
@@ -16,6 +15,9 @@ module.exports = {
   plugins: [
     path.resolve(__dirname, "./node_modules/docusaurus-lunr-search/"),
   ],
+
+
+
 
   themeConfig: {
     metadata: [
@@ -124,7 +126,7 @@ module.exports = {
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
 
-          // ✅ THIS IS THE ONLY REQUIRED ADDITION
+          // ✅ already correct
           remarkPlugins: [apiPlaygroundRemark],
         },
 
