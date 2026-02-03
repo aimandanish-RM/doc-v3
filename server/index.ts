@@ -1,24 +1,17 @@
 import express from "express";
 import cors from "cors";
-import fetch from "node-fetch";
+import path from "path";
 
 const app = express();
+const PORT = 3000;
 
+// ---- middleware ----
 app.use(cors());
 app.use(express.json());
 
-app.post("/proxy", async (req, res) => {
-  const {
-    url,
-    method,
-    headers,
-    body,
-  }: {
-    url: string;
-    method: string;
-    headers?: Record<string, string>;
-    body?: string;
-  } = req.body;
+// ---- API PROXY ----
+app.post("/api/proxy", async (req, res) => {
+  const { url, method, headers, body } = req.body;
 
   try {
     const response = await fetch(url, {
@@ -28,13 +21,21 @@ app.post("/proxy", async (req, res) => {
     });
 
     const text = await response.text();
-
     res.status(response.status).send(text);
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }
 });
 
-app.listen(5050, () => {
-  console.log("🚀 API Proxy running on http://localhost:5050");
+// ---- SERVE DOCUSAURUS BUILD ----
+const docsPath = path.join(__dirname, "..", "build");
+app.use(express.static(docsPath));
+
+app.get("*", (_, res) => {
+  res.sendFile(path.join(docsPath, "index.html"));
+});
+
+// ---- START SERVER ----
+app.listen(PORT, () => {
+  console.log(`🚀 Docs + API running at http://localhost:${PORT}`);
 });

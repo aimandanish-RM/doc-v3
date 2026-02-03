@@ -26,6 +26,11 @@ type Props = {
 
 export default function ApiPlayground(props: Props) {
   const [env, setEnv] = useState<"sandbox" | "prod">("sandbox");
+  const [prodConfirmed, setProdConfirmed] = useState(false);
+
+  useEffect(() => {
+    setProdConfirmed(false);
+  }, [env]);
 
   const resolvedUrl =
     typeof props.url === "string" ? props.url : props.url[env];
@@ -45,7 +50,6 @@ export default function ApiPlayground(props: Props) {
     "playground" | "curl" | "fetch"
   >("playground");
 
-  // ✅ APPLY PRESET
   useEffect(() => {
     if (!props.presets?.length) return;
 
@@ -60,19 +64,23 @@ export default function ApiPlayground(props: Props) {
     setStatus(null);
 
     try {
-      const res = await fetch("http://localhost:5050/proxy", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          url: resolvedUrl,
-          method: props.method,
-          headers: {
-            ...headers,
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
-          },
-          body: props.method !== "GET" ? body : undefined,
-        }),
-      });
+      const res = await fetch(
+  "https://rm-api-proxy.aiman-danish.workers.dev",
+  {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      url: resolvedUrl,
+      method: props.method,
+      headers: {
+        ...headers,
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: props.method !== "GET" ? body : undefined,
+    }),
+  }
+);
+
 
       setStatus(res.status);
       const data = await res.json();
@@ -86,25 +94,52 @@ export default function ApiPlayground(props: Props) {
 
   return (
     <div className="api-playground">
-      {/* ✅ HEADER */}
       <header className="api-header">
         <strong>{props.method}</strong>
         <span className="api-url">{resolvedUrl}</span>
       </header>
 
-      {/* ✅ ENV TOGGLE (only if sandbox/prod exists) */}
       {typeof props.url !== "string" && (
-        <div style={{ marginBottom: 8 }}>
-          <button onClick={() => setEnv("sandbox")} disabled={env === "sandbox"}>
-            Sandbox
-          </button>
-          <button onClick={() => setEnv("prod")} disabled={env === "prod"}>
-            Prod
-          </button>
-        </div>
+        <section>
+          <strong>Environment</strong>
+          <div>
+            <label>
+              <input
+                type="radio"
+                checked={env === "sandbox"}
+                onChange={() => setEnv("sandbox")}
+              />
+              Sandbox
+            </label>
+
+            <label style={{ marginLeft: 12 }}>
+              <input
+                type="radio"
+                checked={env === "prod"}
+                onChange={() => setEnv("prod")}
+              />
+              Production
+            </label>
+          </div>
+        </section>
       )}
 
-      {/* ✅ TABS */}
+      {env === "prod" && (
+        <section style={{ border: "1px solid red", padding: 8 }}>
+          <p style={{ color: "red", fontWeight: "bold" }}>
+            ⚠ This will send a REAL production request
+          </p>
+          <label>
+            <input
+              type="checkbox"
+              checked={prodConfirmed}
+              onChange={(e) => setProdConfirmed(e.target.checked)}
+            />
+            I understand this affects real data
+          </label>
+        </section>
+      )}
+
       <div className="api-tabs">
         {["playground", "curl", "fetch"].map((tab) => (
           <button
@@ -117,7 +152,6 @@ export default function ApiPlayground(props: Props) {
         ))}
       </div>
 
-      {/* ================= PLAYGROUND ================= */}
       {activeTab === "playground" && (
         <>
           {props.presets && props.presets.length > 0 && (
@@ -174,7 +208,14 @@ export default function ApiPlayground(props: Props) {
             </section>
           )}
 
-          <button onClick={send} disabled={loading || !!headerError}>
+          <button
+            onClick={send}
+            disabled={
+              loading ||
+              !!headerError ||
+              (env === "prod" && !prodConfirmed)
+            }
+          >
             {loading ? "Sending..." : "▶ Send Request"}
           </button>
 
@@ -182,7 +223,6 @@ export default function ApiPlayground(props: Props) {
         </>
       )}
 
-      {/* ================= CURL ================= */}
       {activeTab === "curl" && (
         <pre>
           {generateCurl({
@@ -195,7 +235,6 @@ export default function ApiPlayground(props: Props) {
         </pre>
       )}
 
-      {/* ================= FETCH ================= */}
       {activeTab === "fetch" && (
         <pre>
           {generateFetch({
