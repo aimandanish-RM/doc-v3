@@ -1,0 +1,131 @@
+/* -------------------------
+   Hamburger
+-------------------------- */
+.hamburger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hamburger span {
+  width: 24px;
+  height: 2px;
+  background: var(--ifm-navbar-link-color);
+  transition: transform 0.35s ease, opacity 0.25s ease;
+  transform-origin: center;
+}
+
+/* morph to X */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* -------------------------
+   Overlay
+-------------------------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 6, 20, 0.6);
+  backdrop-filter: blur(8px);
+  z-index: 999;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* -------------------------
+   Menu
+-------------------------- */
+.menu {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 24px;
+  padding: 32px;
+
+  transform: translateY(20px) scale(0.96);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.overlay.open .menu {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* -------------------------
+   Cards
+-------------------------- */
+.card {
+  background: #0d0716;
+  color: white;
+  border-radius: 16px;
+  padding: 20px;
+
+  opacity: 0;
+  transform: translateY(12px);
+  animation: cardIn 0.45s ease forwards;
+}
+
+@keyframes cardIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card h3 {
+  margin-bottom: 12px;
+}
+
+.card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.card li {
+  margin-bottom: 8px;
+}
+
+.card a {
+  color: #cbbcff;
+  text-decoration: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.card a:hover {
+  opacity: 0.8;
+  transform: translateX(2px);
+}
+
+/* -------------------------
+   Accessibility
+-------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

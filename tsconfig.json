@@ -1,13 +1,17 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["DOM", "ES2017"],
-    "jsx": "react",
-    "moduleResolution": "node",
-    "allowJs": true,
+    "lib": ["DOM", "ESNext"],
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "jsx": "react-jsx",
+
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+
     "strict": false,
-    "noEmit": true,
-    "esModuleInterop": true
+    "skipLibCheck": true,
+    "types": []
   },
   "include": ["src"]
 }

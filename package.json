@@ -17,10 +17,12 @@
     "docusaurus-lunr-search": "^2.1.10",
     "emotion-theming": "^10.0.27",
     "express": "^5.2.1",
+    "gsap": "^3.14.2",
     "js-yaml": "^4.1.1",
     "node-fetch": "^3.3.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-icons": "^5.5.0",
     "rebass": "^4.0.7",
     "reflexbox": "^4.0.6",
     "unist-util-visit": "^5.1.0"

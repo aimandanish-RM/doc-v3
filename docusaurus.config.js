@@ -91,24 +91,29 @@ module.exports = {
         src: "/img/rm-logo.svg",
         href: "https://revenuemonster.my",
       },
-      items: [
-        {
-          to: "docs/introduction/overview",
-          activeBasePath: "docs",
-          label: "Docs",
-          position: "right",
-        },
-        {
-          to: "/docs/quickstart/sdk",
-          label: "SDK",
-          position: "right",
-        },
-        {
-          to: "https://github.com/RevenueMonster",
-          label: "GitHub",
-          position: "right",
-        },
-      ],
+items: [
+  {
+    to: "docs/introduction/overview",
+    activeBasePath: "docs",
+    label: "Docs",
+    position: "right",
+  },
+
+  {
+    to: "/docs/quickstart/sdk",
+    label: "SDK",
+    position: "right",
+  },
+
+ 
+
+  {
+    to: "https://github.com/RevenueMonster",
+    label: "GitHub",
+    position: "right",
+  },
+],
+
     },
 
     footer: {

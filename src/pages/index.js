@@ -8,6 +8,7 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 import styles from "./styles.module.css";
 import products from "../config/products";
 
+
 const features = [
   {
     title: <h3 style={{ textAlign: "center" }}>Unified Payment</h3>,
@@ -56,21 +57,24 @@ function Feature({ imageUrl, title, description }) {
 }
 
 // Product Card Component
-function ProductCard({ title, description, to }) {
-  return (
-    <div className="col col--4 margin-bottom--lg">
-      <Link
-        to={to}
-        className={classnames("card", styles.productCard)}
-      >
-        <div className="card__body">
-          <h3>{title}</h3>
-          <p>{description}</p>
-        </div>
-      </Link>
-    </div>
-  );
-}
+// function ProductCard({ title, description, to }) {
+//   return (
+//     <div className="col col--4 margin-bottom--lg">
+//       <Link
+//         to={to}
+//         className={classnames("card", styles.productCard)}
+//       >
+//         <div className="card__body">
+//           <h3>{title}</h3>
+//           <p>{description}</p>
+//         </div>
+//       </Link>
+//     </div>
+//   );
+// }
+
+
+
 
 
 function Home() {
@@ -81,6 +85,9 @@ function Home() {
       title={`Hello from ${siteConfig.title}`}
       description="Description will go into a meta tag in <head />"
     >
+
+
+
       <header className={classnames("hero hero--primary", styles.heroBanner)}>
         <div className="container">
           <h1 className="hero__title">{siteConfig.title}</h1>
@@ -114,14 +121,14 @@ function Home() {
       <main>
   <section className={styles.products}>
     <div className="container">
-      <h2 className="text--center margin-bottom--lg">
+      {/* <h2 className="text--center margin-bottom--lg">
         Choose a Product
-      </h2>
-      <div className="row">
+      </h2> */}
+      {/* <div className="row">
         {products.map((product) => (
           <ProductCard key={product.key} {...product} />
         ))}
-      </div>
+      </div> */}
     </div>
   </section>
 </main>
