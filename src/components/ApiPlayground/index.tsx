@@ -18,13 +18,18 @@ type UrlConfig =
 type Props = {
   method: string;
   title?: string;
-  url: UrlConfig;
+  url?: UrlConfig; // ⬅️ optional (IMPORTANT)
   headers?: Record<string, string>;
   body?: string;
   presets?: Preset[];
 };
 
 export default function ApiPlayground(props: Props) {
+  // ✅ HARD GUARD — prevents ALL crashes
+  if (!props || !props.url) {
+    return null;
+  }
+
   const [env, setEnv] = useState<"sandbox" | "prod">("sandbox");
   const [prodConfirmed, setProdConfirmed] = useState(false);
 
@@ -33,7 +38,14 @@ export default function ApiPlayground(props: Props) {
   }, [env]);
 
   const resolvedUrl =
-    typeof props.url === "string" ? props.url : props.url[env];
+    typeof props.url === "string"
+      ? props.url
+      : props.url?.[env];
+
+  // ✅ SECOND GUARD
+  if (!resolvedUrl) {
+    return null;
+  }
 
   const [token, setTokenState] = useState<string>(() => getToken() ?? "");
   const [headers, setHeaders] = useState<Record<string, string>>(
@@ -65,22 +77,21 @@ export default function ApiPlayground(props: Props) {
 
     try {
       const res = await fetch(
-  "https://rm-api-proxy.aiman-danish.workers.dev",
-  {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      url: resolvedUrl,
-      method: props.method,
-      headers: {
-        ...headers,
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      },
-      body: props.method !== "GET" ? body : undefined,
-    }),
-  }
-);
-
+        "https://rm-api-proxy.aiman-danish.workers.dev",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            url: resolvedUrl,
+            method: props.method,
+            headers: {
+              ...headers,
+              ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            },
+            body: props.method !== "GET" ? body : undefined,
+          }),
+        }
+      );
 
       setStatus(res.status);
       const data = await res.json();
@@ -154,7 +165,7 @@ export default function ApiPlayground(props: Props) {
 
       {activeTab === "playground" && (
         <>
-          {props.presets && props.presets.length > 0 && (
+          {props.presets?.length > 0 && (
             <section>
               <h4>Examples</h4>
               <select

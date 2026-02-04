@@ -2,7 +2,20 @@
 id: client-credentials
 title: Client Credentials
 sidebar_label: Client Credentials
+api:
+  method: POST
+  url:
+    sandbox: https://sb-oauth.revenuemonster.my/v1/token
+    prod: https://oauth.revenuemonster.my/v1/token
+  headers:
+    Content-Type: application/json
+    Authorization: Basic <BASE64_CLIENT_ID_AND_SECRET>
+  body: |
+    {
+      "grantType": "client_credentials"
+    }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 
@@ -18,7 +31,7 @@ This is for the scenario that merchant's trusted developer is provided with **Cl
 
 ## Get Access Token (Client Credentials)
 
-```api-playground
+<!-- ```api-playground
 method: POST
 url: 
     sandbox: https://sb-oauth.revenuemonster.my/v1/token
@@ -30,8 +43,7 @@ body: |
   {
     "grantType": "client_credentials"
   }
-```
-
+``` -->
 To start with, you will need to get OAuth 2.0 client credentials you need (`client_id` and `client_secret`) from your [RM Merchant Portal](https://merchant.revenuemonster.my/).
 Request an **Access Token** from RM `Authorisation Server`, and you will get a response consistsing of an **Access Token** and a **Refresh Token**. Use the **Access Token** to call the Revenue Monster API that you want to access. Refresh tokens can be stored to get new access tokens.
 

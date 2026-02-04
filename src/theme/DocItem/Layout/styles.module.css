@@ -1,0 +1,14 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 2rem;
+}
+
+.api {
+  position: sticky;
+  top: 4rem;
+  height: calc(100vh - 4rem);
+  overflow: auto;
+  border-left: 1px solid var(--ifm-color-emphasis-300);
+  padding-left: 1rem;
+}
