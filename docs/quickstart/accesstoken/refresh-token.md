@@ -2,7 +2,22 @@
 id: refresh-token
 title: Refresh Token
 sidebar_label: Refresh Token
+api:
+  method: POST
+  url:
+    sandbox: https://sb-oauth.revenuemonster.my/v1/token
+    prod: https://oauth.revenuemonster.my/v1/token
+  headers:
+    Content-Type: application/json
+    Authorization: Basic <BASE64_CLIENT_ID_AND_SECRET>
+  body: |
+    {
+      "grantType": "refresh_token",
+      "refreshToken": "YOUR_REFRESH_TOKEN"
+    }
 ---
+
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

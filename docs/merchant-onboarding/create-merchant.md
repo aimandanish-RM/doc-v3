@@ -2,7 +2,28 @@
 id: create-merchant
 title: Create Merchant
 sidebar_label: Create Merchant
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/partner/merchant
+    prod: https://open.revenuemonster.my/v3/partner/merchant
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {
+      "companyName": "Revenue Monster",
+      "countryCode": "60",
+      "email": "rmtesting@gmail.com",
+      "firstName": "Edwin",
+      "lastName": "Testing",
+      "phoneNumber": "164699177"
+    }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

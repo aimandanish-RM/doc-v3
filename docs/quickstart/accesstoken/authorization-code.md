@@ -2,7 +2,22 @@
 id: authorization-code
 title: Authorization Code
 sidebar_label: Authorization Code
+api:
+  method: POST
+  url:
+    sandbox: https://sb-oauth.revenuemonster.my/v1/token
+    prod: https://oauth.revenuemonster.my/v1/token
+  headers:
+    Content-Type: application/json
+    Authorization: Basic <BASE64_CLIENT_ID_AND_SECRET>
+  body: |
+    {
+      "grantType": "authorization_code",
+      "code": "<AUTHORIZATION_CODE>",
+      "redirectUri": "<REDIRECT_URI>"
+    }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

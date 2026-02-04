@@ -2,7 +2,45 @@
 id: create-application-client
 title: Create Application Client
 sidebar_label: Create Application Client
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/partner/merchant/{merchantId}/application
+    prod: https://open.revenuemonster.my/v3/partner/merchant/{merchantId}/application
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  bodyType: json
+  body:
+    userId:
+      type: string
+      required: true
+    name:
+      type: string
+      required: true
+    homePageUrl:
+      type: string
+      required: true
+    logoUrl:
+      type: string
+      required: true
+    privacyPolicyUrl:
+      type: string
+      required: true
+    redirectUri:
+      type: array
+      required: true
+    publicKey:
+      type: string
+      required: true
+    isActive:
+      type: boolean
+      required: true
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

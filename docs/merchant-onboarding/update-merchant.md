@@ -2,7 +2,21 @@
 id: update-merchant
 title: Update Merchant
 sidebar_label: Update Merchant
+api:
+  method: PATCH
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/partner/merchant/{merchantID}
+    prod: https://open.revenuemonster.my/v3/partner/merchant/{merchantID}
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body:
+    type: json
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

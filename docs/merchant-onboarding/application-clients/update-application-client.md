@@ -2,7 +2,43 @@
 id: update-application-client
 title: Update Application Client
 sidebar_label: Update Application Client
+api:
+  method: PUT
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/partner/merchant/{merchantId}/application/{clientId}
+    prod: https://open.revenuemonster.my/v3/partner/merchant/{merchantId}/application/{clientId}
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  bodyType: json
+  body:
+    userId:
+      type: string
+      required: true
+    name:
+      type: string
+      required: true
+    homePageUrl:
+      type: string
+      required: true
+    logoUrl:
+      type: string
+      required: true
+    privacyPolicyUrl:
+      type: string
+      required: true
+    redirectUri:
+      type: array
+      required: true
+    publicKey:
+      type: string
+      required: true
+    isActive:
+      type: boolean
+      required: true
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

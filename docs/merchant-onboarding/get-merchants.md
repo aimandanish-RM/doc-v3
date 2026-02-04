@@ -2,7 +2,19 @@
 id: get-merchants
 title: Merchants Info
 sidebar_label: Merchants Info
+api:
+  method: GET
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/partner/merchants
+    prod: https://open.revenuemonster.my/v3/partner/merchants
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

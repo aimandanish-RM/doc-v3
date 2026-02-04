@@ -2,7 +2,19 @@
 id: get-application-clients
 title: Get Application Clients
 sidebar_label: Get Application Clients
+api:
+  method: GET
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/partner/merchant/{merchantId}/applications
+    prod: https://open.revenuemonster.my/v3/partner/merchant/{merchantId}/applications
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

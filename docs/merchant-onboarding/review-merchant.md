@@ -1,8 +1,20 @@
 ---
-id: review-merchant
+id: submit-merchant-for-review
 title: Submit Merchant for Review
 sidebar_label: Submit Merchant for Review
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/partner/merchant/{merchantID}
+    prod: https://open.revenuemonster.my/v3/partner/merchant/{merchantID}
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

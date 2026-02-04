@@ -2,7 +2,26 @@
 id: upload-merchant-file
 title: Upload Merchant File
 sidebar_label: Upload Merchant File
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/partner/file/upload
+    prod: https://open.revenuemonster.my/v3/partner/file/upload
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  bodyType: form-data
+  body:
+    file:
+      type: file
+      required: true
+    fileName:
+      type: string
+      required: true
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 
