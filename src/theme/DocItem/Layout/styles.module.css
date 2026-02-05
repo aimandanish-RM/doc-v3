@@ -1,14 +1,18 @@
 .layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 380px;
-  gap: 2rem;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: 1.5rem;
+}
+
+.content {
+  min-width: 0;
 }
 
 .api {
   position: sticky;
-  top: 4rem;
-  height: calc(100vh - 4rem);
+  top: var(--ifm-navbar-height);
+  height: calc(100vh - var(--ifm-navbar-height));
   overflow: auto;
-  border-left: 1px solid var(--ifm-color-emphasis-300);
+  border-left: 1px solid var(--ifm-toc-border-color);
   padding-left: 1rem;
 }
