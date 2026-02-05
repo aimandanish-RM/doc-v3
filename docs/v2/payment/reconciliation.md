@@ -2,7 +2,30 @@
 id: reconciliation
 title: "Reconciliation"
 sidebar_label: "Reconciliation"
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/payment/reconciliation
+    prod: https://open.revenuemonster.my/v3/payment/reconciliation
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  body:
+    type: json
+    example: |
+      {
+        "transactionType": "PAYMENT",
+        "date": "2021-07-28",
+        "method": ["BOOST"],
+        "region": ["MALAYSIA"],
+        "cursor": ""
+      }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

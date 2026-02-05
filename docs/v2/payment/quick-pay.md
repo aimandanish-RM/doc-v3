@@ -2,7 +2,34 @@
 id: quick-pay
 title: "Quick Pay"
 sidebar_label: "Quick Pay"
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/payment/quickpay
+    prod: https://open.revenuemonster.my/v3/payment/quickpay
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  body:
+    type: json
+    example: |
+      {
+        "authCode": "134850717797247290",
+        "storeId": "6170506694335521334",
+        "ipAddress": "8.8.8.8",
+        "order": {
+          "id": "ODR-20230513-1001",
+          "title": "Payment via OpenAPI",
+          "currencyType": "MYR",
+          "amount": 1000,
+          "detail": "",
+          "additionalData": ""
+        }
+      }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

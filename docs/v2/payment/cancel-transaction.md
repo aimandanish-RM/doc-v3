@@ -2,7 +2,24 @@
 id: cancel-transaction
 title: "Cancel Transaction"
 sidebar_label: "Cancel Transaction"
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/payment/reverse
+    prod: https://open.revenuemonster.my/v3/payment/reverse
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Timestamp: {{timestamp}}
+  body:
+    type: json
+    example: |
+      {
+        "orderId": "180730103903010431152179"
+      }
 ---
+
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

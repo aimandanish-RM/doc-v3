@@ -2,6 +2,34 @@
 id: online-payment
 title: "Online Payment"
 sidebar_label: "Online Payment"
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/payment/online
+    prod: https://open.revenuemonster.my/v3/payment/online
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body:
+    type: json
+    example: |
+      {
+        "storeId": "123456789012345678901234",
+        "redirectUrl": "https://merchant.com/payment/redirect",
+        "notifyUrl": "https://merchant.com/payment/notify",
+        "layoutVersion": "v4",
+        "type": "WEB_PAYMENT",
+        "order": {
+          "id": "ORDER123456789012345678",
+          "title": "Online Payment",
+          "currencyType": "MYR",
+          "amount": 1000
+        }
+      }
 ---
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";

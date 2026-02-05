@@ -2,7 +2,40 @@
 id: tokenization-payment
 title: "Tokenization Payment"
 sidebar_label: "Tokenization Payment"
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/recurring-payment
+    prod: https://open.revenuemonster.my/v3/recurring-payment
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  body:
+    type: json
+    example: |
+      {
+        "storeId": "123456789012345678901234",
+        "email": "customer@email.com",
+        "name": "Customer Name",
+        "countryCode": "MY",
+        "phoneNumber": "0123456789",
+        "productName": "Subscription",
+        "productDescription": "Weekly subscription",
+        "currency": "MYR",
+        "amount": 1000,
+        "redirectUrl": "https://merchant.com/redirect",
+        "notifyUrl": "https://merchant.com/notify",
+        "recurringInterval": "WEEKLY",
+        "recurringTarget": "customer",
+        "recurringRepetition": 12
+      }
 ---
+
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

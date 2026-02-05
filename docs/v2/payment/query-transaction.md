@@ -2,7 +2,22 @@
 id: query-transaction
 title: "Query Transaction"
 sidebar_label: "Query Transaction"
+
+api:
+  method: GET
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/payment/transaction/{id}
+    prod: https://open.revenuemonster.my/v3/payment/transaction/{id}
+  pathParams:
+    id:
+      type: string
+      required: true
+      description: Transaction ID or Order ID
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Timestamp: {{timestamp}}
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

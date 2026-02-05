@@ -2,7 +2,33 @@
 id: terminal-integration
 title: "Terminal Integration"
 sidebar_label: "Terminal Integration"
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/payment/terminal/quickpay
+    prod: https://open.revenuemonster.my/v3/payment/terminal/quickpay
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Timestamp: {{timestamp}}
+  body:
+    type: json
+    example: |
+      {
+        "terminalId": "1554193032595276913",
+        "type": "E-WALLET",
+        "receiptType": 3,
+        "cameraType": "FRONT",
+        "order": {
+          "amount": 10,
+          "currencyType": "MYR",
+          "id": "387153091916665362292147",
+          "title": "title"
+        }
+      }
 ---
+
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 
@@ -75,6 +101,47 @@ Sandbox URL : `https://sb-open.revenuemonster.my/v3/payment/terminal/quickpay`
 | `error.code`    | String |                                                                 | Error code                     |
 | `error.message` | String |                                                                 | Error message                  |
 | `error.debug`   | String |                                                                 | Debug message ( sandbox only ) |
+
+---
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/payment/terminal/quickpay
+    prod: https://open.revenuemonster.my/v3/payment/terminal/quickpay
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Timestamp: {{timestamp}}
+  bodyType: json
+  body:
+    terminalId:
+      type: string
+      required: true
+    type:
+      type: string
+      required: true
+      enum: ["CARD"]
+    receiptType:
+      type: number
+      required: true
+      enum: [1,2,3]
+    order:
+      type: object
+      required: true
+      properties:
+        id:
+          type: string
+          required: true
+        title:
+          type: string
+          required: true
+        currencyType:
+          type: string
+          required: true
+          enum: ["MYR"]
+        amount:
+          type: number
+          required: true
+---
 
 ## Event: Card Payment
 
