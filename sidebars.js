@@ -27,7 +27,7 @@ module.exports = {
       "merchant-onboarding/get-merchants",
       "merchant-onboarding/get-merchant",
       "merchant-onboarding/update-merchant",
-      "merchant-onboarding/review-merchant",
+      "merchant-onboarding/submit-merchant-for-review",
       "merchant-onboarding/upload-merchant-file",
       {
         type: "category",

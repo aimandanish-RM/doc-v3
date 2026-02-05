@@ -2,6 +2,7 @@
 id: update-merchant
 title: Update Merchant
 sidebar_label: Update Merchant
+
 api:
   method: PATCH
   url:
@@ -15,7 +16,15 @@ api:
     X-Timestamp: {{timestamp}}
   body:
     type: json
+    example: |
+      {
+        "brandName": "Revenue Monster",
+        "websiteUrl": "https://revenuemonster.my",
+        "registrationNumber": "XAS1233123",
+        "establishedAt": "2006-01-02T15:04:05Z"
+      }
 ---
+
 
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";

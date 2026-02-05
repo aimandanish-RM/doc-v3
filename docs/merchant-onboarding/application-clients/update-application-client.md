@@ -2,6 +2,7 @@
 id: update-application-client
 title: Update Application Client
 sidebar_label: Update Application Client
+
 api:
   method: PUT
   url:
@@ -11,33 +12,21 @@ api:
     Authorization: Bearer {{access_token}}
     X-Timestamp: {{timestamp}}
     Content-Type: application/json
-  bodyType: json
   body:
-    userId:
-      type: string
-      required: true
-    name:
-      type: string
-      required: true
-    homePageUrl:
-      type: string
-      required: true
-    logoUrl:
-      type: string
-      required: true
-    privacyPolicyUrl:
-      type: string
-      required: true
-    redirectUri:
-      type: array
-      required: true
-    publicKey:
-      type: string
-      required: true
-    isActive:
-      type: boolean
-      required: true
+    type: json
+    example: |
+      {
+        "userId": "1647501978916382207",
+        "name": "required name",
+        "homePageUrl": "https://google.com",
+        "logoUrl": "https://google.com",
+        "privacyPolicyUrl": "https://google.com",
+        "redirectUri": ["https://google.com"],
+        "publicKey": "-----BEGIN PUBLIC KEY-----\n...\n-----END PUBLIC KEY-----",
+        "isActive": true
+      }
 ---
+
 
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";

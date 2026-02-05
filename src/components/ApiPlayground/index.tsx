@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { getToken, setToken } from "../../utils/auth";
 import { generateCurl, generateFetch } from "../../utils/apiExamples";
 
+/* ================= TYPES ================= */
+
 type Preset = {
   label: string;
-  headers?: Record<string, string>;
-  body?: string;
+  headers?: Record<string, any>;
+  body?: any;
 };
 
 type UrlConfig =
@@ -15,20 +17,50 @@ type UrlConfig =
       prod: string;
     };
 
+type BodyType = "json" | "multipart";
+
+type BodySchema =
+  | string
+  | {
+      type?: string;
+      example?: string;
+    };
+
 type Props = {
   method: string;
   title?: string;
-  url?: UrlConfig; // ⬅️ optional (IMPORTANT)
-  headers?: Record<string, string>;
-  body?: string;
+  url?: UrlConfig;
+  headers?: Record<string, any>;
+  body?: BodySchema;
+  bodyType?: BodyType;
   presets?: Preset[];
 };
 
+/* ================= HELPERS ================= */
+
+const sanitizeHeaders = (h?: Record<string, any>) => {
+  if (!h) return {};
+  return Object.fromEntries(
+    Object.entries(h).map(([k, v]) => [
+      k,
+      typeof v === "string" ? v : "",
+    ])
+  );
+};
+
+const extractBody = (body?: BodySchema): string => {
+  if (!body) return "";
+  if (typeof body === "string") return body;
+  if (typeof body === "object" && body.example) return body.example;
+  return "";
+};
+
+/* ================= COMPONENT ================= */
+
 export default function ApiPlayground(props: Props) {
-  // ✅ HARD GUARD — prevents ALL crashes
-  if (!props || !props.url) {
-    return null;
-  }
+  if (!props?.url) return null;
+
+  const bodyType: BodyType = props.bodyType ?? "json";
 
   const [env, setEnv] = useState<"sandbox" | "prod">("sandbox");
   const [prodConfirmed, setProdConfirmed] = useState(false);
@@ -38,20 +70,14 @@ export default function ApiPlayground(props: Props) {
   }, [env]);
 
   const resolvedUrl =
-    typeof props.url === "string"
-      ? props.url
-      : props.url?.[env];
+    typeof props.url === "string" ? props.url : props.url[env];
 
-  // ✅ SECOND GUARD
-  if (!resolvedUrl) {
-    return null;
-  }
-
-  const [token, setTokenState] = useState<string>(() => getToken() ?? "");
+  const [token, setTokenState] = useState(() => getToken() ?? "");
   const [headers, setHeaders] = useState<Record<string, string>>(
-    props.headers ?? {}
+    sanitizeHeaders(props.headers)
   );
-  const [body, setBody] = useState(props.body ?? "");
+  const [body, setBody] = useState<string>(() => extractBody(props.body));
+  const [files, setFiles] = useState<Record<string, File>>({});
   const [response, setResponse] = useState<any>(null);
   const [status, setStatus] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
@@ -62,13 +88,16 @@ export default function ApiPlayground(props: Props) {
     "playground" | "curl" | "fetch"
   >("playground");
 
+  /* ===== PRESETS ===== */
+
   useEffect(() => {
     if (!props.presets?.length) return;
-
     const preset = props.presets[selectedPreset];
-    if (preset.headers) setHeaders(preset.headers);
-    if (preset.body) setBody(preset.body);
+    if (preset.headers) setHeaders(sanitizeHeaders(preset.headers));
+    if (preset.body) setBody(extractBody(preset.body));
   }, [selectedPreset, props.presets]);
+
+  /* ===== SEND REQUEST ===== */
 
   const send = async () => {
     setLoading(true);
@@ -76,6 +105,23 @@ export default function ApiPlayground(props: Props) {
     setStatus(null);
 
     try {
+      let requestBody: any = undefined;
+      let requestHeaders: Record<string, string> = { ...headers };
+
+      if (props.method !== "GET") {
+        if (bodyType === "json") {
+          requestBody = body;
+          requestHeaders["Content-Type"] = "application/json";
+        }
+
+        if (bodyType === "multipart") {
+          const form = new FormData();
+          Object.entries(files).forEach(([k, f]) => form.append(k, f));
+          requestBody = form;
+          delete requestHeaders["Content-Type"];
+        }
+      }
+
       const res = await fetch(
         "https://rm-api-proxy.aiman-danish.workers.dev",
         {
@@ -85,23 +131,24 @@ export default function ApiPlayground(props: Props) {
             url: resolvedUrl,
             method: props.method,
             headers: {
-              ...headers,
+              ...requestHeaders,
               ...(token ? { Authorization: `Bearer ${token}` } : {}),
             },
-            body: props.method !== "GET" ? body : undefined,
+            body: requestBody,
           }),
         }
       );
 
       setStatus(res.status);
-      const data = await res.json();
-      setResponse(data);
+      setResponse(await res.json());
     } catch (err: any) {
       setResponse({ error: true, message: err.message });
     } finally {
       setLoading(false);
     }
   };
+
+  /* ================= RENDER ================= */
 
   return (
     <div className="api-playground">
@@ -113,74 +160,55 @@ export default function ApiPlayground(props: Props) {
       {typeof props.url !== "string" && (
         <section>
           <strong>Environment</strong>
-          <div>
-            <label>
-              <input
-                type="radio"
-                checked={env === "sandbox"}
-                onChange={() => setEnv("sandbox")}
-              />
-              Sandbox
-            </label>
-
-            <label style={{ marginLeft: 12 }}>
-              <input
-                type="radio"
-                checked={env === "prod"}
-                onChange={() => setEnv("prod")}
-              />
-              Production
-            </label>
-          </div>
+          <label>
+            <input
+              type="radio"
+              checked={env === "sandbox"}
+              onChange={() => setEnv("sandbox")}
+            />
+            Sandbox
+          </label>
+          <label style={{ marginLeft: 12 }}>
+            <input
+              type="radio"
+              checked={env === "prod"}
+              onChange={() => setEnv("prod")}
+            />
+            Production
+          </label>
         </section>
       )}
 
       {env === "prod" && (
         <section style={{ border: "1px solid red", padding: 8 }}>
-          <p style={{ color: "red", fontWeight: "bold" }}>
-            ⚠ This will send a REAL production request
-          </p>
+          <strong style={{ color: "red" }}>
+            ⚠ REAL production request
+          </strong>
           <label>
             <input
               type="checkbox"
               checked={prodConfirmed}
               onChange={(e) => setProdConfirmed(e.target.checked)}
             />
-            I understand this affects real data
+            I understand
           </label>
         </section>
       )}
 
       <div className="api-tabs">
-        {["playground", "curl", "fetch"].map((tab) => (
+        {["playground", "curl", "fetch"].map((t) => (
           <button
-            key={tab}
-            className={`api-tab ${activeTab === tab ? "active" : ""}`}
-            onClick={() => setActiveTab(tab as any)}
+            key={t}
+            className={activeTab === t ? "active" : ""}
+            onClick={() => setActiveTab(t as any)}
           >
-            {tab.toUpperCase()}
+            {t.toUpperCase()}
           </button>
         ))}
       </div>
 
       {activeTab === "playground" && (
         <>
-          {props.presets?.length > 0 && (
-            <section>
-              <h4>Examples</h4>
-              <select
-                value={selectedPreset}
-                onChange={(e) => setSelectedPreset(Number(e.target.value))}
-              >
-                {props.presets.map((p, i) => (
-                  <option key={i} value={i}>
-                    {p.label}
-                  </option>
-                ))}
-              </select>
-            </section>
-          )}
-
           <section>
             <h4>Access Token</h4>
             <input
@@ -212,20 +240,24 @@ export default function ApiPlayground(props: Props) {
           {props.method !== "GET" && (
             <section>
               <h4>Body</h4>
-              <textarea
-                value={body}
-                onChange={(e) => setBody(e.target.value)}
-              />
+              {bodyType === "json" && (
+                <textarea value={body} onChange={(e) => setBody(e.target.value)} />
+              )}
+              {bodyType === "multipart" && (
+                <input
+                  type="file"
+                  onChange={(e) =>
+                    e.target.files?.[0] &&
+                    setFiles({ file: e.target.files[0] })
+                  }
+                />
+              )}
             </section>
           )}
 
           <button
             onClick={send}
-            disabled={
-              loading ||
-              !!headerError ||
-              (env === "prod" && !prodConfirmed)
-            }
+            disabled={loading || !!headerError || (env === "prod" && !prodConfirmed)}
           >
             {loading ? "Sending..." : "▶ Send Request"}
           </button>
@@ -235,27 +267,11 @@ export default function ApiPlayground(props: Props) {
       )}
 
       {activeTab === "curl" && (
-        <pre>
-          {generateCurl({
-            method: props.method,
-            url: resolvedUrl,
-            headers,
-            body,
-            token,
-          })}
-        </pre>
+        <pre>{generateCurl({ method: props.method, url: resolvedUrl, headers, body, token })}</pre>
       )}
 
       {activeTab === "fetch" && (
-        <pre>
-          {generateFetch({
-            method: props.method,
-            url: resolvedUrl,
-            headers,
-            body,
-            token,
-          })}
-        </pre>
+        <pre>{generateFetch({ method: props.method, url: resolvedUrl, headers, body, token })}</pre>
       )}
     </div>
   );
