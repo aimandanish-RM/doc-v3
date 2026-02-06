@@ -2,6 +2,26 @@
 id: enroll-card
 title: Enroll Card
 sidebar_label: Enroll Card
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/vop/enroll-card
+    prod: https://open.revenuemonster.my/v3/vop/enroll-card
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  body:
+    type: json
+    example: |
+      {
+        "userId": "1699331101742889953",
+        "cardPan": "4364484100392451",
+        "name": "Ambank Visa Infinite"
+      }
 ---
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";

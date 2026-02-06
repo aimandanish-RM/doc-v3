@@ -2,7 +2,29 @@
 id: enroll-user
 title: Enroll User
 sidebar_label: Enroll User
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/vop/enroll-user
+    prod: https://open.revenuemonster.my/v3/vop/enroll-user
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  body:
+    type: json
+    example: |
+      {
+        "userId": "KCac44i8NmtnUBo",
+        "cardPan": "4364484100392449",
+        "name": "Ambank Visa Infinite",
+        "notifyUrl": "https://google.com/"
+      }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

@@ -2,7 +2,26 @@
 id: unenroll-user
 title: Unenroll User
 sidebar_label: Unenroll User
+
+api:
+  method: DELETE
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/vop/unenroll-user
+    prod: https://open.revenuemonster.my/v3/vop/unenroll-user
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  body:
+    type: json
+    example: |
+      {
+        "userId": "1699331101742889953"
+      }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 
