@@ -2,7 +2,32 @@
 id: refund-order
 title: Refund Order
 sidebar_label: Refund Order
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/service
+    prod: https://open.revenuemonster.my/v3/service
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  body:
+    type: json
+    example: |
+      {
+        "service": "alacarte",
+        "version": "v1",
+        "function": "refund.store.order",
+        "request": {
+          "storeId": "2808912573238362402",
+          "orderId": "5f6984d6585d7cc1ae35a39c"
+        }
+      }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 
