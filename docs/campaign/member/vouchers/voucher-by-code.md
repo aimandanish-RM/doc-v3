@@ -1,7 +1,28 @@
 ---
 id: voucher-by-code
 title: Get Voucher By Code
-sidebar_label: Get Voucher By Code
+api:
+  method: GET
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/me/voucher/{voucherCode}
+    prod: https://open.revenuemonster.my/v3/loyalty/me/voucher/{voucherCode}
+
+  path:
+    voucherCode: "rms@xR43u4bRhUU"
+
+  query:
+    countryCode: "60"
+    phoneNumber: "187824152"
+
+  headers:
+    Authorization: "Bearer {{access_token}}"
+    X-Signature: "sha256 {{signature}}"
+    X-Nonce-Str: "{{nonce}}"
+    X-Timestamp: "{{timestamp}}"
+    Content-Type: "application/json"
+
+  body: ""
+
 ---
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";

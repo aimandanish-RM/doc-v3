@@ -2,6 +2,22 @@
 id: reinstate-voucher
 title: Reinstate Voucher
 sidebar_label: Reinstate Voucher
+api:
+  method: PATCH
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/voucher/{code}/reinstate
+    prod: https://open.revenuemonster.my/v3/voucher/{code}/reinstate
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {
+      "pin": "string",
+      "reason": "string"
+    }
 ---
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";

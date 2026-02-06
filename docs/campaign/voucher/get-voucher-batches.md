@@ -2,7 +2,19 @@
 id: get-voucher-batches
 title: Get Voucher Batches
 sidebar_label: Get Voucher Batches
+api:
+  method: GET
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/voucher-batches
+    prod: https://open.revenuemonster.my/v3/voucher-batches
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

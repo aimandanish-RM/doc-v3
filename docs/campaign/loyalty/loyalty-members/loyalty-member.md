@@ -2,7 +2,20 @@
 id: loyalty-member
 title: Get Loyalty Member By ID
 sidebar_label: Get Loyalty Member By ID
+api:
+  method: GET
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/member/{{member_id}}
+    prod: https://open.revenuemonster.my/v3/loyalty/member/{{member_id}}
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: "{}"
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

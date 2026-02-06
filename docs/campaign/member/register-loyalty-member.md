@@ -2,7 +2,41 @@
 id: register-loyalty-member
 title: Register Loyalty Member
 sidebar_label: Register Loyalty Member
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/member
+    prod: https://open.revenuemonster.my/v3/loyalty/member
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  body:
+    type: json
+    example: |
+      {
+        "name": "Oska",
+        "countryCode": "60",
+        "phoneNumber": "1878241234",
+        "email": "developer.oskang@gmail.com",
+        "nric": "950711011234",
+        "birthDate": "1995-07-11T00:00:00Z",
+        "gender": "MALE",
+        "point": 0,
+        "address": {
+          "addressLine1": "17, Jalan Pertanian 25",
+          "addressLine2": "Taman Universiti",
+          "postCode": "81301",
+          "city": "SKUDAI",
+          "state": "JOHOR",
+          "country": "MALAYSIA"
+        }
+      }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

@@ -1,8 +1,25 @@
 ---
 id: topup-online
-title: Topup Balance Online ( Payment Gateway )
-sidebar_label: Topup Balance Online ( Payment Gateway )
+title: Topup Balance Online (Payment Gateway)
+sidebar_label: Topup Balance Online (Payment Gateway)
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/member/:memberId/topup-online
+    prod: https://open.revenuemonster.my/v3/loyalty/member/:memberId/topup-online
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {
+      "topUpAmount": 10,
+      "redirectUrl": "https://revenuemonster.my"
+    }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

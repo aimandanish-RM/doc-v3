@@ -2,7 +2,58 @@
 id: bulk-create-members
 title: Bulk Create Members
 sidebar_label: Bulk Create Members
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/members
+    prod: https://open.revenuemonster.my/v3/loyalty/members
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {
+      "members": [
+        {
+          "name": "testing 1",
+          "countryCode": "60",
+          "phoneNumber": "1622288812",
+          "nric": "970503145887",
+          "email": "test@email.com",
+          "gender": "MALE",
+          "state": "",
+          "address": {
+            "addressLine1": "",
+            "addressLine2": "",
+            "postcode": "52100",
+            "city": "",
+            "country": ""
+          },
+          "loyaltyPoint": 10
+        },
+        {
+          "name": "testing 2",
+          "countryCode": "60",
+          "phoneNumber": "1622288813",
+          "nric": "970503145887",
+          "email": "test@email.com",
+          "gender": "MALE",
+          "state": "",
+          "address": {
+            "addressLine1": "",
+            "addressLine2": "",
+            "postcode": "52100",
+            "city": "",
+            "country": ""
+          },
+          "loyaltyPoint": 0
+        }
+      ]
+    }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

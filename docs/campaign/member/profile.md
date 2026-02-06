@@ -2,7 +2,31 @@
 id: profile
 title: Get Profile
 sidebar_label: Get Profile
+
+api:
+  method: GET
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/me
+    prod: https://open.revenuemonster.my/v3/loyalty/me
+
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+
+  query:
+    countryCode:
+      type: string
+      required: true
+      example: "60"
+    phoneNumber:
+      type: string
+      required: true
+      example: "187824152"
 ---
+
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

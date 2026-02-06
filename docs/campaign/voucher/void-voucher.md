@@ -2,7 +2,20 @@
 id: void-voucher
 title: Void Voucher
 sidebar_label: Void Voucher
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/voucher/{code}/void
+    prod: https://open.revenuemonster.my/v3/voucher/{code}/void
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: "{}"
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

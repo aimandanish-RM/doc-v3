@@ -2,7 +2,27 @@
 id: deduct-loyalty-point
 title: Deduct Loyalty Point
 sidebar_label: Deduct Loyalty Point
+
+api:
+  method: DELETE
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/reward
+    prod: https://open.revenuemonster.my/v3/loyalty/reward
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  body:
+    type: json
+    example: |
+      {
+        "point": 100,
+        "memberId": "1231231312"
+      }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

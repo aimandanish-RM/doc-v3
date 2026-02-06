@@ -2,7 +2,23 @@
 id: cancel-spending-loyalty-point
 title: Cancel Spending Loyalty Point
 sidebar_label: Cancel Spending Loyalty Point
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/spending-reward/cancel
+    prod: https://open.revenuemonster.my/v3/loyalty/spending-reward/cancel
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {
+      "id": "dee13d3470f2dd43466c252cfc67f967"
+    }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

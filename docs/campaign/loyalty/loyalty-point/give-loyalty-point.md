@@ -2,7 +2,30 @@
 id: give-loyalty-point
 title: Give Loyalty Point
 sidebar_label: Give Loyalty Point
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/reward
+    prod: https://open.revenuemonster.my/v3/loyalty/reward
+
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: ""
+    X-Timestamp: ""
+
+  body: |
+    {
+      "point": 100,
+      "type": "PHONENUMBER",
+      "countryCode": "60",
+      "phoneNumber": "176473298"
+    }
 ---
+
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

@@ -2,7 +2,25 @@
 id: bulk-redeem-voucher
 title: Bulk Redeem Voucher
 sidebar_label: Bulk Redeem Voucher
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/vouchers/redeem
+    prod: https://open.revenuemonster.my/v3/vouchers/redeem
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {
+      "codes": [
+        "string"
+      ]
+    }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

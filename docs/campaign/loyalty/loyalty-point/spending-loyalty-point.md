@@ -2,7 +2,28 @@
 id: spending-loyalty-point
 title: Spending Loyalty Point
 sidebar_label: Spending Loyalty Point
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/spending-reward
+    prod: https://open.revenuemonster.my/v3/loyalty/spending-reward
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {
+      "currencyType": "MYR",
+      "amount": 100,
+      "type": "PHONENUMBER",
+      "countryCode": "60",
+      "phoneNumber": "176473298"
+    }
 ---
+
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

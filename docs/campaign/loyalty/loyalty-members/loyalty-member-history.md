@@ -1,8 +1,21 @@
 ---
 id: loyalty-member-history
-title: Get Loyalty Member Hisotry
-sidebar_label: Get Loyalty Member Hisotry
+title: Get Loyalty Member History
+sidebar_label: Get Loyalty Member History
+api:
+  method: GET
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/member/{{member_id}}/history
+    prod: https://open.revenuemonster.my/v3/loyalty/member/{{member_id}}/history
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: "{}"
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

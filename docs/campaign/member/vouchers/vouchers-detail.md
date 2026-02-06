@@ -2,7 +2,25 @@
 id: vouchers-detail
 title: Get Vouchers
 sidebar_label: Get Vouchers
+api:
+  method: GET
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/me/vouchers
+    prod: https://open.revenuemonster.my/v3/loyalty/me/vouchers
+  query:
+    countryCode: "60"
+    phoneNumber: "187824152"
+    limit: "100"
+    cursor: ""
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: ""
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

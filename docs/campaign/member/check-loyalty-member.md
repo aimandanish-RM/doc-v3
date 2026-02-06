@@ -2,7 +2,28 @@
 id: check-loyalty-member
 title: Check Loyalty Member
 sidebar_label: Check Loyalty Member
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/member/check
+    prod: https://open.revenuemonster.my/v3/loyalty/member/check
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  body:
+    type: json
+    example: |
+      {
+        "countryCode": "60",
+        "phoneNumber": "1878241152"
+      }
 ---
+`
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

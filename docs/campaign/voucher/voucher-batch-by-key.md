@@ -2,7 +2,19 @@
 id: voucher-batch-by-key
 title: Get Voucher Batch By Key
 sidebar_label: Get Voucher Batch By Key
+api:
+  method: GET
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/voucher-batch/{batchKey}/vouchers
+    prod: https://open.revenuemonster.my/v3/voucher-batch/{batchKey}/vouchers
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

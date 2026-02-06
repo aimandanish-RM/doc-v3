@@ -1,7 +1,29 @@
 ---
 id: topup-offline
-title: Topup Balance Offline ( QuickPay )
-sidebar_label: Topup Balance Offline ( QuickPay )
+title: Topup Balance Offline (QuickPay)
+sidebar_label: Topup Balance Offline (QuickPay)
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/member/:memberId/topup-offline
+    prod: https://open.revenuemonster.my/v3/loyalty/member/:memberId/topup-offline
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {
+      "authCode": "283838110784383199",
+      "storeId": "10946114768247530",
+      "memberId": "1626838502220135674",
+      "order": {
+        "id": "123asd1e1zz2ed",
+        "amount": 100,
+        "currencyType": "MYR"
+      }
+    }
 ---
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";

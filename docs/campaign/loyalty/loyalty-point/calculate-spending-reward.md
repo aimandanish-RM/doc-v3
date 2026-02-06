@@ -2,7 +2,24 @@
 id: calculate-spending-reward
 title: Calculate Spending Reward
 sidebar_label: Calculate Spending Reward
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/spending-reward/calculate
+    prod: https://open.revenuemonster.my/v3/loyalty/spending-reward/calculate
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {
+      "currencyType": "MYR",
+      "amount": 300
+    }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

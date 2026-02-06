@@ -2,7 +2,19 @@
 id: get-loyalty-balances
 title: Get Loyalty Balances
 sidebar_label: Get Loyalty Balances
+api:
+  method: GET
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/balances
+    prod: https://open.revenuemonster.my/v3/loyalty/balances
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

@@ -2,7 +2,21 @@
 id: voucher-by-code
 title: Get Voucher By Code
 sidebar_label: Get Voucher By Code
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/voucher/{voucher_code}
+    prod: https://open.revenuemonster.my/v3/voucher/{voucher_code}
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {}
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

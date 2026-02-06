@@ -2,7 +2,22 @@
 id: rewards-detail
 title: Get Rewards
 sidebar_label: Get Rewards
+api:
+  method: GET
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/loyalty/me/rewards?countryCode=60&phoneNumber=187824152
+    prod: https://open.revenuemonster.my/v3/loyalty/me/rewards?countryCode=60&phoneNumber=187824152
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  query:
+    countryCode: 60
+    phoneNumber: 187824152
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 
@@ -10,7 +25,7 @@ import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 URL : `https://open.revenuemonster.my/v3/loyalty/me/rewards?countryCode=60&phoneNumber=187824152`<br/>
 Sandbox URL : `https://sb-open.revenuemonster.my/v3/loyalty/me/rewards?countryCode=60&phoneNumber=187824152`
 
-:::note
+:::noteya,,
 
 - Using Query String to **Get User Reward** by input the **country code** and **phone number**
 - Using Query String to set a limit: ~/?limit=< limit >
