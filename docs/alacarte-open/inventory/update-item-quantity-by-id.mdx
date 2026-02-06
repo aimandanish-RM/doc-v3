@@ -2,7 +2,32 @@
 id: update-item-quantity-by-id
 title: Update Item Quantity By ID
 sidebar_label: Update Item Quantity By ID
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/service
+    prod: https://open.revenuemonster.my/v3/service
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  body:
+    type: json
+    example: |
+      {
+        "service": "alacarte",
+        "version": "v1",
+        "function": "update.item.quantity",
+        "request": {
+          "itemId": "5f698149585d7cc1ae35a391",
+          "quantity": 300
+        }
+      }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

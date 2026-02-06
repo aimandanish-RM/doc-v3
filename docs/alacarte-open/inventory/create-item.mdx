@@ -2,7 +2,78 @@
 id: create-item
 title: Create Item
 sidebar_label: Create Item
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/service
+    prod: https://open.revenuemonster.my/v3/service
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  body:
+    type: json
+    example: |
+      {
+        "service": "alacarte",
+        "version": "v1",
+        "function": "create.item",
+        "request": {
+          "storeId": "1556079400120532579",
+          "name": "Test123",
+          "description": "Describe",
+          "imageUrl": [],
+          "isAvailable": true,
+          "quantity": 350,
+          "price": {
+            "amount": 100,
+            "currencyType": "MYR"
+          },
+          "sides": [
+            {
+              "name": "Side Category 1",
+              "minChoice": 1,
+              "maxChoice": 2,
+              "isAvailable": true,
+              "items": [
+                {
+                  "referenceItemId": "5eaa7b72e0e9cd7b01a3a2b2",
+                  "name": "Coke",
+                  "price": { "amount": 10, "currencyType": "MYR" },
+                  "isAvailable": true
+                },
+                {
+                  "name": "New Drink",
+                  "price": { "amount": 312, "currencyType": "MYR" },
+                  "isAvailable": true
+                }
+              ]
+            }
+          ],
+          "preferences": [
+            {
+              "name": "Sweetness",
+              "minChoice": 1,
+              "maxChoice": 3,
+              "labels": [
+                { "name": "Basic" },
+                { "name": "Sweeet" },
+                { "name": "Very Sweet" }
+              ]
+            }
+          ],
+          "schedules": [
+            ["2020-09-22T02:00:00.000Z", "2020-09-22T14:00:00.000Z"]
+          ],
+          "sku": "fkj31i",
+          "categoryIds": ["5ec1bf480e7df1ca6f3f6350"]
+        }
+      }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

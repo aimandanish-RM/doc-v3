@@ -2,7 +2,68 @@
 id: update-item-by-id
 title: Update Item By ID
 sidebar_label: Update Item By ID
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/service
+    prod: https://open.revenuemonster.my/v3/service
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  body:
+    type: json
+    example: |
+      {
+        "service": "alacarte",
+        "version": "v1",
+        "function": "update.item",
+        "request": {
+          "itemId": "5eaeee9db07a77cef7caceb6",
+          "categoryId": ["5eabf31ee0e9cd7b01a3a35e"],
+          "name": "Hainan Chicken Rice",
+          "description": "yummz",
+          "imageUrl": [
+            "https://smart-cafe-sandbox.oss-ap-southeast-3.aliyuncs.com/images/4118165203679668885/3b198791-fedb-426e-98ef-adb8cd3d6718"
+          ],
+          "isAvailable": true,
+          "price": {
+            "amount": 500,
+            "currencyType": "MYR"
+          },
+          "quantity": 380,
+          "sides": [
+            {
+              "name": "test",
+              "minChoice": 0,
+              "maxChoice": 1,
+              "isAvailable": true,
+              "items": [
+                {
+                  "alaCarteFoodId": "5eaef304b07a77cef7cacee3",
+                  "name": "Tandoori Chicken",
+                  "price": {
+                    "amount": 1000,
+                    "currencyType": "MYR"
+                  },
+                  "isAvailable": true
+                }
+              ]
+            }
+          ],
+          "preferences": [],
+          "schedules": [
+            ["2020-09-22T02:00:00.000Z", "2020-09-22T14:00:00.000Z"],
+            ["2020-09-22T15:00:00.000Z", "2020-09-22T15:45:00.000Z"]
+          ],
+          "sku": "fkj31i"
+        }
+      }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

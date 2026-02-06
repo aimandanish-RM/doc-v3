@@ -2,6 +2,34 @@
 id: set-notification
 title: Set Notification
 sidebar_label: Set Notification
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/service
+    prod: https://open.revenuemonster.my/v3/service
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  body:
+    type: json
+    example: |
+      {
+        "service": "alacarte",
+        "version": "v1",
+        "function": "set.notification.webhook",
+        "request": {
+          "notificationUrls": [
+            "https://webhook.site/2688336e-7b61-4cd2-b2bb-40592a3e353a"
+          ],
+          "storeIds": [
+            "5eabf31ee0e9cd7b01a3a35e"
+          ]
+        }
+      }
 ---
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
