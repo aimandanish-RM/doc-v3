@@ -2,7 +2,52 @@
 id: update-store-by-id-delivery
 title: Update Store Delivery
 sidebar_label: Update Store Delivery
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/service
+    prod: https://open.revenuemonster.my/v3/service
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  body:
+    type: json
+    example: |
+      {
+        "service": "alacarte",
+        "version": "v1",
+        "function": "update.store.delivery",
+        "request": {
+          "storeId": "2808912573238362402",
+          "method": "OWN",
+          "cost": [
+            {
+              "type": "FIXED",
+              "startDistanceInMeter": 0,
+              "endDistanceInMeter": 5000,
+              "amount": 0
+            },
+            {
+              "type": "DYNAMIC",
+              "startDistanceInMeter": 5000,
+              "endDistanceInMeter": 10000,
+              "amount": 0
+            },
+            {
+              "type": "DYNAMIC",
+              "startDistanceInMeter": 10000,
+              "endDistanceInMeter": 1000000,
+              "amount": 0
+            }
+          ]
+        }
+      }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

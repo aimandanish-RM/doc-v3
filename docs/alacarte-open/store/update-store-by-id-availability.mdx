@@ -2,7 +2,32 @@
 id: update-store-by-id-availability
 title: Update Store Availability
 sidebar_label: Update Store Availability
+
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/service
+    prod: https://open.revenuemonster.my/v3/service
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+    Content-Type: application/json
+  body:
+    type: json
+    example: |
+      {
+        "service": "alacarte",
+        "version": "v1",
+        "function": "update.store.avaiablility",
+        "request": {
+          "storeId": "2808912573238362402",
+          "closedUntil": "2020-09-22T05:00:06.741Z"
+        }
+      }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 
