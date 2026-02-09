@@ -2,7 +2,21 @@
 id: create-account
 title: Create Account
 sidebar_label: Create Account
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/account
+    prod: https://open.revenuemonster.my/v3/account
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {}
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

@@ -2,7 +2,78 @@
 id: update-account
 title: Update Account By ID
 sidebar_label: Update Account By ID
+api:
+  method: PUT
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/accounts/{id}
+    prod: https://open.revenuemonster.my/v3/accounts/{id}
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {
+      "brandName": "Revenue Monster",
+      "websiteUrl": "https://revenuemonster.my",
+      "registrationNumber": "XAS1233123",
+      "establishedAt": "2006-01-02T15:04:05Z",
+      "addressLine1": "1, Jalan Pertanian 25",
+      "addressLine2": "Taman Universiti",
+      "postCode": "81302",
+      "city": "SKUDAI",
+      "state": "JOHOR",
+      "country": "MALAYSIA",
+      "countryCode": "60",
+      "phoneNumber": "167724152",
+      "companyName": "Revenue Monster",
+      "companyType": "PRIVATE LIMITED COMPANY (SDN BHD)",
+      "businessCategory": "COMPUTER AND ELECTRONICS",
+      "averageTicketSize": 1000000,
+      "averageTurnoverPerMonth": 1000000,
+      "businessScope": "some business scope",
+      "invoiceAddress": {
+        "addressLine1": "1, Jalan Pertanian 25",
+        "addressLine2": "Taman Universiti",
+        "postCode": "81302",
+        "city": "SKUDAI",
+        "state": "JOHOR",
+        "country": "MALAYSIA"
+      },
+      "document": {
+        "ctosFileUrl": "https://somefilenedpoint.com",
+        "ownerICFileUrl": "https://somefilenedpoint.com",
+        "directorICFileUrl": "https://somefilenedpoint.com",
+        "shareHolderICFileUrl": "https://somefilenedpoint.com",
+        "businessRegistrationFileUrl": "https://somefilenedpoint.com",
+        "bankStatementFileUrl": "https://somefilenedpoint.com",
+        "moaFileUrl": "https://somefilenedpoint.com",
+        "form24FileUrl": "https://somefilenedpoint.com",
+        "form49FileUrl": "https://somefilenedpoint.com",
+        "section14FileUrl": "https://somefilenedpoint.com",
+        "form44FileUrl": "https://somefilenedpoint.com",
+        "businessSitePhotoFileUrl": "https://somefilenedpoint.com"
+      },
+      "inspectList": [
+        {
+          "fullName": "NG SZE CHEN",
+          "gender": "MALE",
+          "birthday": "2000-07-14T15:59:59Z",
+          "nationality": "MALAYSIAN",
+          "idType": "IC",
+          "idNo": "2131290134"
+        }
+      ],
+      "bankAccountType": "CORPORATE",
+      "bankAccountHolderName": "Revenue Monster",
+      "bankAccountNo": "32312323",
+      "bankCode": "HLBB",
+      "latitude": 0.0,
+      "longitude": 0.0
+    }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

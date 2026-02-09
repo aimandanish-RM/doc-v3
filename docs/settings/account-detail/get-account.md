@@ -2,6 +2,17 @@
 id: get-account
 title: Get Account By ID
 sidebar_label: Get Account By ID
+api:
+  method: GET
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/account/{id}
+    prod: https://open.revenuemonster.my/v3/account/{id}
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
 ---
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
