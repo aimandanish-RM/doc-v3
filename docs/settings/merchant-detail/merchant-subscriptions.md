@@ -2,7 +2,19 @@
 id: merchant-subscriptions
 title: Get Merchant Subscriptions
 sidebar_label: Get Merchant Subscriptions
+api:
+  method: GET
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/merchant/subscriptions
+    prod: https://open.revenuemonster.my/v3/merchant/subscriptions
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: "{}"
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 
