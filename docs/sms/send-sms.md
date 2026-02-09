@@ -2,7 +2,26 @@
 id: send-sms
 title: Send SMS
 sidebar_label: Send SMS
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/sms
+    prod: https://open.revenuemonster.my/v3/sms
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {
+      "countryCode": "60",
+      "phoneNumber": "163877652",
+      "message": "test",
+      "type": "VERIFY_CODE"
+    }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 
