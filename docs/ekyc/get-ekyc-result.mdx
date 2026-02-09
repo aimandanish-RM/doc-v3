@@ -2,7 +2,28 @@
 id: get-ekyc-result
 title: GET EKYC Result
 sidebar_label: GET EKYC Result
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/service
+    prod: https://open.revenuemonster.my/v3/service
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {
+      "service": "ekyc",
+      "version": "v1",
+      "function": "get-ekyc-result",
+      "request": {
+        "id": "{{request_id}}"
+      }
+    }
 ---
+
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 
 :::note

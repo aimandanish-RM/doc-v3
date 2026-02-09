@@ -2,7 +2,19 @@
 id: user-profile
 title: Get User Profile
 sidebar_label: Get User Profile
+api:
+  method: GET
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/user
+    prod: https://open.revenuemonster.my/v3/user
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: "{}"
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

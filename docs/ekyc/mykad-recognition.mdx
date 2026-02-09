@@ -2,7 +2,29 @@
 id: mykad-recognition
 title: Mykad Recognition
 sidebar_label: Mykad Recognition
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/service
+    prod: https://open.revenuemonster.my/v3/service
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {
+      "service": "ekyc",
+      "version": "v1",
+      "function": "id-mykad",
+      "request": {
+        "notify_url": "{{notify_url}}",
+        "query_image_content": "{{base64_image}}"
+      }
+    }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

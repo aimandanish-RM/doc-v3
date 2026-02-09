@@ -2,7 +2,29 @@
 id: liveness-check-with-face-verification
 title: Liveness check with Face Verification
 sidebar_label: Liveness check with Face Verification
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/service
+    prod: https://open.revenuemonster.my/v3/service
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {
+      "service": "ekyc",
+      "version": "v1",
+      "function": "liveness-face",
+      "request": {
+        "mykad_request_id": "{{mykad_request_id}}",
+        "query_image_content": "{{base64_image}}"
+      }
+    }
 ---
+
 
 :::note
 Prerequisite : Acquire requestID from mykad recognition response

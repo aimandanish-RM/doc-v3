@@ -2,7 +2,28 @@
 id: get-mykad-result
 title: GET Mykad Result
 sidebar_label: GET Mykad Result
+api:
+  method: POST
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/service
+    prod: https://open.revenuemonster.my/v3/service
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {
+      "service": "ekyc",
+      "version": "v1",
+      "function": "get-mykad-result",
+      "request": {
+        "id": "{{request_id}}"
+      }
+    }
 ---
+
 
 :::note
 Prerequisite : Acquire requestID from mykad recognition response
