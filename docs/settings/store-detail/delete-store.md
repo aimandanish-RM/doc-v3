@@ -2,7 +2,19 @@
 id: delete-store
 title: Delete Store
 sidebar_label: Delete Store
+api:
+  method: DELETE
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/store/{store_id}
+    prod: https://open.revenuemonster.my/v3/store/{store_id}
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: "{}"
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

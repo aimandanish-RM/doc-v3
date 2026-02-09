@@ -2,7 +2,21 @@
 id: store-details
 title: Get All Stores
 sidebar_label: Get All Stores
+api:
+  method: GET
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/stores
+    prod: https://open.revenuemonster.my/v3/stores
+  headers:
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {}
 ---
+Get Store By ID
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 

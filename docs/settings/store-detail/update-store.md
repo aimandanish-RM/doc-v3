@@ -2,7 +2,36 @@
 id: update-store
 title: Update Store
 sidebar_label: Update Store
+api:
+  method: PATCH
+  url:
+    sandbox: https://sb-open.revenuemonster.my/v3/store/{store_id}
+    prod: https://open.revenuemonster.my/v3/store/{store_id}
+  headers:
+    Content-Type: application/json
+    Authorization: Bearer {{access_token}}
+    X-Signature: sha256 {{signature}}
+    X-Nonce-Str: {{nonce}}
+    X-Timestamp: {{timestamp}}
+  body: |
+    {
+      "merchantSettlementId": "string",
+      "name": "string",
+      "addressLine1": "string",
+      "addressLine2": "string",
+      "postCode": "string",
+      "city": "string",
+      "state": "string",
+      "country": "string",
+      "countryCode": "string",
+      "phoneNumber": "string",
+      "geoLocation": {
+        "latitude": 0,
+        "longitude": 0
+      }
+    }
 ---
+
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 
