@@ -12,7 +12,7 @@ api:
     X-Signature: sha256 {{signature}}
     X-Nonce-Str: {{nonce}}
     X-Timestamp: {{timestamp}}
-  bodyType: form-data
+  bodyType: multipart
   body:
     file:
       type: file
