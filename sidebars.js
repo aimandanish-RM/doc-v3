@@ -10,35 +10,88 @@ module.exports = {
       },
       "quickstart/signature-algorithm",
       "quickstart/verify-signature",
-      {
-        type: "category",
-        label: "Access Token",
-        items: [
-          "quickstart/accesstoken/client-credentials",
-          "quickstart/accesstoken/authorization-code",
-          "quickstart/accesstoken/refresh-token",
-        ],
-      },
+{
+  type: "category",
+  label: "Access Token",
+  items: [
+    {
+      type: "doc",
+      id: "quickstart/accesstoken/client-credentials",
+      className: "api-post",
+    },
+    {
+      type: "doc",
+      id: "quickstart/accesstoken/authorization-code",
+      className: "api-post",
+    },
+    {
+      type: "doc",
+      id: "quickstart/accesstoken/refresh-token",
+      className: "api-post",
+    },
+  ],
+}
+
     ],
 
-    "Merchant Onboarding": [
-      "merchant-onboarding/introduction",
-      "merchant-onboarding/create-merchant",
-      "merchant-onboarding/get-merchants",
-      "merchant-onboarding/get-merchant",
-      "merchant-onboarding/update-merchant",
-      "merchant-onboarding/submit-merchant-for-review",
-      "merchant-onboarding/upload-merchant-file",
+"Merchant Onboarding": [
+  "merchant-onboarding/introduction",
+
+  {
+    type: "doc",
+    id: "merchant-onboarding/create-merchant",
+    className: "api-post",
+  },
+  {
+    type: "doc",
+    id: "merchant-onboarding/get-merchants",
+    className: "api-get",
+  },
+  {
+    type: "doc",
+    id: "merchant-onboarding/get-merchant",
+    className: "api-get",
+  },
+  {
+    type: "doc",
+    id: "merchant-onboarding/update-merchant",
+    className: "api-patch",
+  },
+  {
+    type: "doc",
+    id: "merchant-onboarding/submit-merchant-for-review",
+    className: "api-post",
+  },
+  {
+    type: "doc",
+    id: "merchant-onboarding/upload-merchant-file",
+    className: "api-post",
+  },
+
+  {
+    type: "category",
+    label: "Application Clients",
+    items: [
       {
-        type: "category",
-        label: "Application Clients",
-        items: [
-          "merchant-onboarding/application-clients/get-application-clients",
-          "merchant-onboarding/application-clients/create-application-client",
-          "merchant-onboarding/application-clients/update-application-client",
-        ],
+        type: "doc",
+        id: "merchant-onboarding/application-clients/get-application-clients",
+        className: "api-get",
+      },
+      {
+        type: "doc",
+        id: "merchant-onboarding/application-clients/create-application-client",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "merchant-onboarding/application-clients/update-application-client",
+        className: "api-put",
       },
     ],
+  },
+],
+
+
 
     Payment: [
       "v2/payment/quick-pay",
