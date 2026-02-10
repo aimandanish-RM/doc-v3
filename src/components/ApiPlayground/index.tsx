@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { getToken, setToken } from "../../utils/auth";
 import { generateCurl, generateFetch } from "../../utils/apiExamples";
+import styles from "./styles.module.css";
 
 /* ================= TYPES ================= */
 
@@ -30,13 +31,42 @@ type Props = {
   bodyType?: "json" | "multipart";
 };
 
+const highlightJson = (json: string) => {
+  return json
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(
+      /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")\s*:/g,
+      `<span class="${styles.jsonKey}">$1</span>:`
+    )
+    .replace(
+      /:\s*("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")/g,
+      `: <span class="${styles.jsonValue}">$1</span>`
+    )
+    .replace(
+      /:\s*(\d+|true|false|null)/g,
+      `: <span class="${styles.jsonValue}">$1</span>`
+    );
+};
+
+
 /* ================= COMPONENT ================= */
 
 export default function ApiPlayground(props: Props) {
   if (!props.url) return null;
 
   const bodyType = props.bodyType ?? "json";
-  const [env] = useState<"sandbox" | "prod">("sandbox");
+
+  /* ================= ENV ================= */
+
+  const [env, setEnv] = useState<"sandbox" | "prod">("sandbox");
+
+  const resolvedUrl =
+    typeof props.url === "string" ? props.url : props.url[env];
+
+  /* ================= TOKEN ================= */
+
   const [token, setTokenState] = useState(getToken() ?? "");
 
   /* ================= HEADERS ================= */
@@ -58,7 +88,7 @@ export default function ApiPlayground(props: Props) {
     )
   );
 
-  /* ================= JSON BODY (FIXED) ================= */
+  /* ================= JSON BODY ================= */
 
   let initialJsonBody = "{}";
 
@@ -74,7 +104,7 @@ export default function ApiPlayground(props: Props) {
     initialJsonBody = props.body.example;
   }
 
-  const [jsonBody, setJsonBody] = useState<string>(initialJsonBody);
+  const [jsonBody, setJsonBody] = useState(initialJsonBody);
 
   /* ================= MULTIPART BODY ================= */
 
@@ -86,7 +116,6 @@ export default function ApiPlayground(props: Props) {
     if ("type" in props.body) return;
 
     const defaults: Record<string, any> = {};
-
     Object.entries(props.body).forEach(([key, cfg]) => {
       if (cfg.type === "string" && cfg.example) {
         defaults[key] = cfg.example;
@@ -94,7 +123,7 @@ export default function ApiPlayground(props: Props) {
     });
 
     setMultipart(defaults);
-  }, []);
+  }, [bodyType, props.body]);
 
   /* ================= STATE ================= */
 
@@ -102,13 +131,8 @@ export default function ApiPlayground(props: Props) {
   const [status, setStatus] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] =
-    useState<"playground" | "curl" | "fetch">("playground");
-
-  const resolvedUrl =
-    typeof props.url === "string" ? props.url : props.url[env];
-
-  const exampleBody =
-    bodyType === "json" ? jsonBody : "[form-data]";
+    useState<"playground" | "code">("playground");
+  const [codeLang, setCodeLang] = useState<"curl" | "fetch">("curl");
 
   /* ================= SEND ================= */
 
@@ -120,7 +144,6 @@ export default function ApiPlayground(props: Props) {
     try {
       let res: Response;
 
-      // ===== MULTIPART =====
       if (bodyType === "multipart") {
         const form = new FormData();
         Object.entries(multipart).forEach(([k, v]) => form.append(k, v));
@@ -137,10 +160,7 @@ export default function ApiPlayground(props: Props) {
             body: form,
           }
         );
-      }
-
-      // ===== JSON / STRING =====
-      else {
+      } else {
         res = await fetch(
           "https://rm-api-proxy.aiman-danish.workers.dev/json",
           {
@@ -171,64 +191,94 @@ export default function ApiPlayground(props: Props) {
     }
   };
 
-  /* ================= MULTIPART INPUTS ================= */
+  /* ================= CODE ================= */
 
-  const renderMultipartInputs = () => {
-    if (!props.body || typeof props.body !== "object") return null;
-    if ("type" in props.body) return null;
+  const codeBody = bodyType === "json" ? jsonBody : "[form-data]";
 
-    return Object.entries(props.body).map(([key, cfg]) =>
-      cfg.type === "file" ? (
-        <div key={key}>
-          <label>{key}</label>
-          <input
-            type="file"
-            onChange={(e) =>
-              e.target.files?.[0] &&
-              setMultipart((p) => ({ ...p, [key]: e.target.files![0] }))
-            }
-          />
-        </div>
-      ) : (
-        <div key={key}>
-          <label>{key}</label>
-          <input
-            type="text"
-            defaultValue={cfg.example ?? ""}
-            onChange={(e) =>
-              setMultipart((p) => ({ ...p, [key]: e.target.value }))
-            }
-          />
-        </div>
-      )
-    );
-  };
+  const code = useMemo(() => {
+    return codeLang === "curl"
+      ? generateCurl({
+          method: props.method,
+          url: resolvedUrl,
+          headers,
+          body: codeBody,
+          token,
+        })
+      : generateFetch({
+          method: props.method,
+          url: resolvedUrl,
+          headers,
+          body: codeBody,
+          token,
+        });
+  }, [codeLang, props.method, resolvedUrl, headers, codeBody, token]);
+
+  const copy = (value: string) => navigator.clipboard.writeText(value);
+
+  const methodClass = styles[props.method.toLowerCase()];
 
   /* ================= RENDER ================= */
 
   return (
-    <div className="api-playground">
-      <header>
-        <strong>{props.method}</strong>
-        <span>{resolvedUrl}</span>
-      </header>
+    <div className={styles.wrapper}>
+      {/* HEADER */}
+      <div className={styles.header}>
+        <span className={`${styles.method} ${methodClass}`}>
+          {props.method}
+        </span>
 
-      <div className="api-tabs">
-        {["playground", "curl", "fetch"].map((t) => (
+        <span className={styles.url}>{resolvedUrl}</span>
+
+        <div className={styles.envToggle}>
           <button
-            key={t}
-            onClick={() => setActiveTab(t as any)}
-            className={activeTab === t ? "active" : ""}
+            className={`${styles.envBtn} ${
+              env === "sandbox" ? styles.envActiveSandbox : ""
+            }`}
+            onClick={() => setEnv("sandbox")}
           >
-            {t.toUpperCase()}
+            Sandbox
           </button>
-        ))}
+          <button
+            className={`${styles.envBtn} ${
+              env === "prod" ? styles.envActiveProd : ""
+            }`}
+            onClick={() => setEnv("prod")}
+          >
+            Prod
+          </button>
+        </div>
       </div>
 
+      {/* TABS */}
+      <div className={styles.tabs}>
+        <button
+          className={`${styles.tab} ${
+            activeTab === "playground" ? styles.tabActive : ""
+          }`}
+          onClick={() => setActiveTab("playground")}
+        >
+          Playground
+        </button>
+
+        <select
+          className={styles.select}
+          value={codeLang}
+          onChange={(e) => {
+            setActiveTab("code");
+            setCodeLang(e.target.value as any);
+          }}
+        >
+          <option value="curl">cURL</option>
+          <option value="fetch">Fetch</option>
+        </select>
+      </div>
+
+      {/* PLAYGROUND */}
       {activeTab === "playground" && (
         <>
-          <h4>Access Token</h4>
+          <label className={styles.label}>Access Token</label>
           <input
+            className={styles.input}
             type="password"
             value={token}
             onChange={(e) => {
@@ -237,56 +287,68 @@ export default function ApiPlayground(props: Props) {
             }}
           />
 
-          <h4>Headers</h4>
-          <textarea
-            value={JSON.stringify(headers, null, 2)}
-            onChange={(e) => setHeaders(JSON.parse(e.target.value))}
-          />
+          <div className={styles.blockHeader}>
+            <label className={styles.label}>Headers</label>
+            <button onClick={() => copy(JSON.stringify(headers, null, 2))}>
+              Copy
+            </button>
+          </div>
+
+        <pre
+  className={`${styles.editor}`}
+  contentEditable
+  suppressContentEditableWarning
+  onBlur={(e) => {
+    try {
+      setHeaders(JSON.parse(e.currentTarget.innerText));
+    } catch {
+      // silently ignore invalid JSON while typing
+    }
+  }}
+  dangerouslySetInnerHTML={{
+    __html: highlightJson(JSON.stringify(headers, null, 2)),
+  }}
+/>
+
 
           {props.method !== "GET" && (
             <>
-              <h4>Body</h4>
-              {bodyType === "json" && (
-                <textarea
-                  value={jsonBody}
-                  onChange={(e) => setJsonBody(e.target.value)}
-                />
-              )}
-              {bodyType === "multipart" && renderMultipartInputs()}
+              <div className={styles.blockHeader}>
+                <label className={styles.label}>Body</label>
+                <button onClick={() => copy(jsonBody)}>Copy</button>
+              </div>
+
+            <pre
+  className={`${styles.editor}`}
+  contentEditable
+  suppressContentEditableWarning
+  onBlur={(e) => setJsonBody(e.currentTarget.innerText)}
+  dangerouslySetInnerHTML={{
+    __html: highlightJson(jsonBody),
+  }}
+/>
+
             </>
           )}
 
-          <button onClick={send} disabled={loading}>
+          <button
+            className={styles.send}
+            onClick={send}
+            disabled={loading}
+          >
             ▶ Send Request
           </button>
 
-          {status && <pre>{JSON.stringify(response, null, 2)}</pre>}
+          {status && (
+            <pre className={styles.response}>
+              {JSON.stringify(response, null, 2)}
+            </pre>
+          )}
         </>
       )}
 
-      {activeTab === "curl" && (
-        <pre>
-          {generateCurl({
-            method: props.method,
-            url: resolvedUrl,
-            headers,
-            body: exampleBody,
-            token,
-          })}
-        </pre>
-      )}
-
-      {activeTab === "fetch" && (
-        <pre>
-          {generateFetch({
-            method: props.method,
-            url: resolvedUrl,
-            headers,
-            body: exampleBody,
-            token,
-          })}
-        </pre>
-      )}
+      {/* CODE */}
+      {activeTab === "code" && <pre className={styles.code}>{code}</pre>}
     </div>
   );
 }

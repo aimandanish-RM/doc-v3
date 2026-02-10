@@ -1,7 +1,7 @@
 .layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 420px;
-  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
+  gap: 0;
 }
 
 .content {
@@ -13,6 +13,7 @@
   top: var(--ifm-navbar-height);
   height: calc(100vh - var(--ifm-navbar-height));
   overflow: auto;
+
   border-left: 1px solid var(--ifm-toc-border-color);
-  padding-left: 1rem;
+  padding: 0; /* 🔥 IMPORTANT */
 }
