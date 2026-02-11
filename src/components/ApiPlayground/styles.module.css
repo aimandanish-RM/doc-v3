@@ -24,6 +24,8 @@
 /* Postman colors */
 .post {
   background: #facc15;
+    color: rgb(255, 255, 255);
+
 }
 .get {
   background: #22c55e;
@@ -33,7 +35,7 @@
   color: white;
 }
 .patch {
-  background: #a855f7;
+  background: #808080;
   color: white;
 }
 .delete {
