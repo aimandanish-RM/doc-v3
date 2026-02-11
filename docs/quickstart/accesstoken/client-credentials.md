@@ -15,13 +15,20 @@ api:
       "grantType": "client_credentials"
     }
 ---
+import ApiEndpoint from "@site/src/components/api/ApiEndpoint";
+
+<ApiEndpoint
+  method="POST"
+  sandbox="https://sb-oauth.revenuemonster.my/v1/token"
+  prod="https://oauth.revenuemonster.my/v1/token"
+/>
 
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";
 
-**Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
+<!-- **Method :** <span style={{ color: "orange", fontWeight: "bold" }}>POST</span><br/>
 URL : `https://oauth.revenuemonster.my/v1/token`<br/>
-Sandbox URL : `https://sb-oauth.revenuemonster.my/v1/token`<br/>
+Sandbox URL : `https://sb-oauth.revenuemonster.my/v1/token`<br/> -->
 
 **Process flow for Grant Type: `client_credentials`**
 
@@ -78,13 +85,22 @@ After Base64 encoding: <br />
 
 More info: [Authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)
 
-**In Body Request** :
+
+##  Request Parameters
+
+<details open>
+<summary><strong>Request Parameters</strong></summary>
+In Body Request :
 
 `{ "grantType": "client_credentials" }`
 
 |  Parameter  |  Type  | Required | Description                                           |      Example       |
 | :---------: | :----: | :------: | ----------------------------------------------------- | :----------------: |
 | `grantType` | String |   Yes    | Only support client credentials or authorisation code | client_credentials |
+
+</details>
+
+---
 
 > Example Request
 
@@ -99,6 +115,8 @@ curl --location --request POST "https://sb-oauth.revenuemonster.my/v1/token" \
 
 ### Response Parameters
 
+<details> <summary><strong>Response Parameters</strong></summary>
+
 | Parameter               |  Type  | Description                                                                  |              Example |
 | :---------------------- | :----: | ---------------------------------------------------------------------------- | -------------------: |
 | `accessToken`           | String | Required for subsequent request(s)                                           |         Access Token |
@@ -106,6 +124,10 @@ curl --location --request POST "https://sb-oauth.revenuemonster.my/v1/token" \
 | `expiresIn`             | String | Token expiry, in seconds format. “72591999” means 72591999 seconds or 30 day |             72591999 |
 | `refreshToken`          | String | Required for getting new access token after expiry                           | Refresh token string |
 | `refreshTokenExpiresIn` | String | Token expiry, in seconds format. “1576799999” means 1576799999 seconds       |           1576799999 |
+
+</details>
+
+---
 
 > Example Response
 
