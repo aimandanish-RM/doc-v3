@@ -1,3 +1,6 @@
+//next task side bar and custom css
+
+
 module.exports = {
   someSidebar: {
     Introduction: ["introduction/overview", "introduction/usecase"],
@@ -93,16 +96,45 @@ module.exports = {
 
 
 
-    Payment: [
-      "v2/payment/quick-pay",
-      "v2/payment/query-transaction",
-      "v2/payment/cancel-transaction",
-      "v2/payment/terminal-integration",
-      "v2/payment/deeplink-integration",
-      "v2/payment/online-payment",
-      "v2/payment/tokenization-payment",
-      "v2/payment/reconciliation",
-    ],
+Payment: [
+  {
+    type: "doc",
+    id: "v2/payment/quick-pay",
+    className: "api-post",
+  },
+  {
+    type: "doc",
+    id: "v2/payment/query-transaction",
+    className: "api-get",
+  },
+  {
+    type: "doc",
+    id: "v2/payment/cancel-transaction",
+    className: "api-post",
+  },
+  {
+    type: "doc",
+    id: "v2/payment/terminal-integration",
+    className: "api-post",
+  },
+  "v2/payment/deeplink-integration",
+  {
+    type: "doc",
+    id: "v2/payment/online-payment",
+    className: "api-post",
+  },
+  {
+    type: "doc",
+    id: "v2/payment/tokenization-payment",
+    className: "api-post",
+  },
+  {
+    type: "doc",
+    id: "v2/payment/reconciliation",
+    className: "api-post",
+  },
+],
+
 
     // "(Deprecated) Payment": [
     //   "payment/overview",
@@ -170,194 +202,504 @@ module.exports = {
     //   "pos/card-settlement",
     // ],
 
-    "Visa Offers Platform": [
-      "visa-vop/enroll-user",
-      "visa-vop/unenroll-user",
-      "visa-vop/enroll-card",
-      "visa-vop/unenroll-card",
-      "visa-vop/webhook",
-    ],
+"Visa Offers Platform": [
+  {
+    type: "doc",
+    id: "visa-vop/enroll-user",
+    className: "api-post",
+  },
+  {
+    type: "doc",
+    id: "visa-vop/unenroll-user",
+    className: "api-delete",
+  },
+  {
+    type: "doc",
+    id: "visa-vop/enroll-card",
+    className: "api-post",
+  },
+  {
+    type: "doc",
+    id: "visa-vop/unenroll-card",
+    className: "api-delete",
+  },
+  "visa-vop/webhook",
+],
 
-    Plugin: ["v2/plugin/introduction", "v2/plugin/integration"],
 
-    "à la carte": [
-      "alacarte-open/introduction",
-      {
-        type: "category",
-        label: "Orders",
-        items: [
-          "alacarte-open/orders/get-orders-by-store-id",
-          "alacarte-open/orders/get-order-by-id",
-          "alacarte-open/orders/update-order-status",
-          "alacarte-open/orders/refund-order",
-        ],
-      },
-      {
-        type: "category",
-        label: "Store",
-        items: [
-          "alacarte-open/store/get-store-by-id",
-          "alacarte-open/store/update-store-by-id-delivery",
-          "alacarte-open/store/update-store-by-id-types",
-          "alacarte-open/store/update-store-by-id-availability",
-        ],
-      },
-      {
-        type: "category",
-        label: "Inventory",
-        items: [
-          "alacarte-open/inventory/create-category-by-store-id",
-          "alacarte-open/inventory/get-categories-by-store-id",
-          "alacarte-open/inventory/update-category-by-id",
-          "alacarte-open/inventory/create-item",
-          "alacarte-open/inventory/get-items-by-category-id",
-          "alacarte-open/inventory/get-all-items-by-store-id",
-          "alacarte-open/inventory/update-item-by-id",
-          "alacarte-open/inventory/update-item-quantity-by-id",
-        ],
-      },
-      "alacarte-open/set-notification",
-    ],
+    Plugin: [
+  "v2/plugin/introduction",
+  "v2/plugin/integration",
+],
 
-    "Loyalty & Voucher": [
+"à la carte": [
+  "alacarte-open/introduction",
+  {
+    type: "category",
+    label: "Orders",
+    items: [
       {
-        type: "category",
-        label: "Member",
-        items: [
-          "campaign/member/register-loyalty-member",
-          "campaign/member/check-loyalty-member",
-          "campaign/member/profile",
-          {
-            type: "category",
-            label: "Vouchers",
-            items: [
-              "campaign/member/vouchers/vouchers-detail",
-              "campaign/member/vouchers/voucher-by-code",
-              "campaign/member/vouchers/redeem-voucher",
-            ],
-          },
-          {
-            type: "category",
-            label: "Rewards",
-            items: [
-              "campaign/member/rewards/rewards-detail",
-              "campaign/member/rewards/reward-by-id",
-              "campaign/member/rewards/redeem-reward",
-            ],
-          },
-        ],
+        type: "doc",
+        id: "alacarte-open/orders/get-orders-by-store-id",
+        className: "api-post",
       },
       {
-        type: "category",
-        label: "Loyalty",
-        items: [
-          {
-            type: "category",
-            label: "Loyalty Point",
-            items: [
-              "campaign/loyalty/loyalty-point/give-loyalty-point",
-              "campaign/loyalty/loyalty-point/deduct-loyalty-point",
-              "campaign/loyalty/loyalty-point/spending-loyalty-point",
-              "campaign/loyalty/loyalty-point/cancel-spending-loyalty-point",
-              "campaign/loyalty/loyalty-point/calculate-spending-reward",
-            ],
-          },
-          {
-            type: "category",
-            label: "Loyalty Members",
-            items: [
-              "campaign/loyalty/loyalty-members/member-authorize",
-              "campaign/loyalty/loyalty-members/loyalty-members",
-              "campaign/loyalty/loyalty-members/loyalty-member",
-              "campaign/loyalty/loyalty-members/loyalty-member-history",
-              "campaign/loyalty/loyalty-members/bulk-create-members",
-              "campaign/loyalty/loyalty-members/topup-online",
-              "campaign/loyalty/loyalty-members/topup-offline",
-            ],
-          },
-          {
-            type: "category",
-            label: "Loyalty Balance",
-            items: [
-              "campaign/loyalty/loyalty-balance/get-loyalty-balances",
-              "campaign/loyalty/loyalty-balance/spend-loyalty-balance",
-            ],
-          },
-        ],
+        type: "doc",
+        id: "alacarte-open/orders/get-order-by-id",
+        className: "api-post",
       },
       {
-        type: "category",
-        label: "Voucher",
-        items: [
-          "campaign/voucher/overview",
-          "campaign/voucher/get-voucher-batches",
-          "campaign/voucher/voucher-by-code",
-          "campaign/voucher/voucher-batch-by-key",
-          "campaign/voucher/issue-voucher",
-          "campaign/voucher/void-voucher",
-          "campaign/voucher/reinstate-voucher",
-          "campaign/voucher/bulk-redeem-voucher",
-        ],
+        type: "doc",
+        id: "alacarte-open/orders/update-order-status",
+        className: "api-post",
       },
-
       {
-        type: "category",
-        label: "Campaign",
-        items: ["campaign/chop-stamp", "campaign/gourmet-card"],
+        type: "doc",
+        id: "alacarte-open/orders/refund-order",
+        className: "api-post",
       },
     ],
+  },
+  {
+    type: "category",
+    label: "Store",
+    items: [
+      {
+        type: "doc",
+        id: "alacarte-open/store/get-store-by-id",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "alacarte-open/store/update-store-by-id-delivery",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "alacarte-open/store/update-store-by-id-types",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "alacarte-open/store/update-store-by-id-availability",
+        className: "api-post",
+      },
+    ],
+  },
+  {
+    type: "category",
+    label: "Inventory",
+    items: [
+      {
+        type: "doc",
+        id: "alacarte-open/inventory/create-category-by-store-id",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "alacarte-open/inventory/get-categories-by-store-id",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "alacarte-open/inventory/update-category-by-id",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "alacarte-open/inventory/create-item",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "alacarte-open/inventory/get-items-by-category-id",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "alacarte-open/inventory/get-all-items-by-store-id",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "alacarte-open/inventory/update-item-by-id",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "alacarte-open/inventory/update-item-quantity-by-id",
+        className: "api-post",
+      },
+    ],
+  },
+  {
+    type: "doc",
+    id: "alacarte-open/set-notification",
+    className: "api-post",
+  },
+],
+
+
+"Loyalty & Voucher": [
+  {
+    type: "category",
+    label: "Member",
+    items: [
+      {
+        type: "doc",
+        id: "campaign/member/register-loyalty-member",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "campaign/member/check-loyalty-member",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "campaign/member/profile",
+        className: "api-get",
+      },
+      {
+        type: "category",
+        label: "Vouchers",
+        items: [
+          {
+            type: "doc",
+            id: "campaign/member/vouchers/vouchers-detail",
+            className: "api-get",
+          },
+          {
+            type: "doc",
+            id: "campaign/member/vouchers/voucher-by-code",
+            className: "api-get",
+          },
+          {
+            type: "doc",
+            id: "campaign/member/vouchers/redeem-voucher",
+            className: "api-post",
+          },
+        ],
+      },
+      {
+        type: "category",
+        label: "Rewards",
+        items: [
+          {
+            type: "doc",
+            id: "campaign/member/rewards/rewards-detail",
+            className: "api-get",
+          },
+          {
+            type: "doc",
+            id: "campaign/member/rewards/reward-by-id",
+            className: "api-get",
+          },
+          {
+            type: "doc",
+            id: "campaign/member/rewards/redeem-reward",
+            className: "api-post",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: "category",
+    label: "Loyalty",
+    items: [
+      {
+        type: "category",
+        label: "Loyalty Point",
+        items: [
+          {
+            type: "doc",
+            id: "campaign/loyalty/loyalty-point/give-loyalty-point",
+            className: "api-post",
+          },
+          {
+            type: "doc",
+            id: "campaign/loyalty/loyalty-point/deduct-loyalty-point",
+            className: "api-delete",
+          },
+          {
+            type: "doc",
+            id: "campaign/loyalty/loyalty-point/spending-loyalty-point",
+            className: "api-post",
+          },
+          {
+            type: "doc",
+            id: "campaign/loyalty/loyalty-point/cancel-spending-loyalty-point",
+            className: "api-post",
+          },
+          {
+            type: "doc",
+            id: "campaign/loyalty/loyalty-point/calculate-spending-reward",
+            className: "api-post",
+          },
+        ],
+      },
+      {
+        type: "category",
+        label: "Loyalty Members",
+        items: [
+          {
+            type: "doc",
+            id: "campaign/loyalty/loyalty-members/member-authorize",
+            className: "api-post",
+          },
+          {
+            type: "doc",
+            id: "campaign/loyalty/loyalty-members/loyalty-members",
+            className: "api-get",
+          },
+          {
+            type: "doc",
+            id: "campaign/loyalty/loyalty-members/loyalty-member",
+            className: "api-get",
+          },
+          {
+            type: "doc",
+            id: "campaign/loyalty/loyalty-members/loyalty-member-history",
+            className: "api-get",
+          },
+          {
+            type: "doc",
+            id: "campaign/loyalty/loyalty-members/bulk-create-members",
+            className: "api-post",
+          },
+          {
+            type: "doc",
+            id: "campaign/loyalty/loyalty-members/topup-online",
+            className: "api-post",
+          },
+          {
+            type: "doc",
+            id: "campaign/loyalty/loyalty-members/topup-offline",
+            className: "api-post",
+          },
+        ],
+      },
+      {
+        type: "category",
+        label: "Loyalty Balance",
+        items: [
+          {
+            type: "doc",
+            id: "campaign/loyalty/loyalty-balance/get-loyalty-balances",
+            className: "api-get",
+          },
+          {
+            type: "doc",
+            id: "campaign/loyalty/loyalty-balance/spend-loyalty-balance",
+            className: "api-post",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    type: "category",
+    label: "Voucher",
+    items: [
+      "campaign/voucher/overview",
+      {
+        type: "doc",
+        id: "campaign/voucher/get-voucher-batches",
+        className: "api-get",
+      },
+      {
+        type: "doc",
+        id: "campaign/voucher/voucher-by-code",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "campaign/voucher/voucher-batch-by-key",
+        className: "api-get",
+      },
+      {
+        type: "doc",
+        id: "campaign/voucher/issue-voucher",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "campaign/voucher/void-voucher",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "campaign/voucher/reinstate-voucher",
+        className: "api-patch",
+      },
+      {
+        type: "doc",
+        id: "campaign/voucher/bulk-redeem-voucher",
+        className: "api-post",
+      },
+    ],
+  },
+  {
+    type: "category",
+    label: "Campaign",
+    items: [
+      {
+        type: "doc",
+        id: "campaign/chop-stamp",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "campaign/gourmet-card",
+        className: "api-post",
+      },
+    ],
+  },
+],
+
     // "Merchant Wallet": [
     //   "merchant-wallet/check-balance",
     //   "merchant-wallet/topup-wallet",
     //   "merchant-wallet/history",
     //   "merchant-wallet/topup-history",
     // ],
-    Settings: [
+Settings: [
+  {
+    type: "category",
+    label: "Account",
+    items: [
       {
-        type: "category",
-        label: "Account",
-        items: [
-          "settings/account-detail/create-account",
-          "settings/account-detail/get-accounts",
-          "settings/account-detail/get-account",
-          "settings/account-detail/update-account",
-          "settings/account-detail/submit-account-review",
-        ],
+        type: "doc",
+        id: "settings/account-detail/create-account",
+        className: "api-post",
       },
       {
-        type: "category",
-        label: "Store",
-        items: [
-          "settings/store-detail/store-details",
-          "settings/store-detail/get-store-by-id",
-          "settings/store-detail/create-store",
-          "settings/store-detail/update-store",
-          "settings/store-detail/delete-store",
-        ],
+        type: "doc",
+        id: "settings/account-detail/get-accounts",
+        className: "api-get",
       },
       {
-        type: "category",
-        label: "Merchant",
-        items: [
-          "settings/merchant-detail/merchant-profile",
-          "settings/merchant-detail/merchant-subscriptions",
-        ],
+        type: "doc",
+        id: "settings/account-detail/get-account",
+        className: "api-get",
       },
       {
-        type: "category",
-        label: "User",
-        items: ["settings/user-profile"],
+        type: "doc",
+        id: "settings/account-detail/update-account",
+        className: "api-put",
+      },
+      {
+        type: "doc",
+        id: "settings/account-detail/submit-account-review",
+        className: "api-post",
       },
     ],
-    eKYC: [
-      "ekyc/mykad-recognition",
-      "ekyc/liveness-check-with-face-verification",
-      "ekyc/face-verification",
-      "ekyc/get-mykad-result",
-      "ekyc/get-ekyc-result",
+  },
+  {
+    type: "category",
+    label: "Store",
+    items: [
+      {
+        type: "doc",
+        id: "settings/store-detail/store-details",
+        className: "api-get",
+      },
+      {
+        type: "doc",
+        id: "settings/store-detail/get-store-by-id",
+        className: "api-get",
+      },
+      {
+        type: "doc",
+        id: "settings/store-detail/create-store",
+        className: "api-post",
+      },
+      {
+        type: "doc",
+        id: "settings/store-detail/update-store",
+        className: "api-patch",
+      },
+      {
+        type: "doc",
+        id: "settings/store-detail/delete-store",
+        className: "api-delete",
+      },
     ],
-    "Short Message Service ": ["sms/send-sms"],
-    "Push Notification": ["push-notification/push-to-merchant"],
+  },
+  {
+    type: "category",
+    label: "Merchant",
+    items: [
+      {
+        type: "doc",
+        id: "settings/merchant-detail/merchant-profile",
+        className: "api-get",
+      },
+      {
+        type: "doc",
+        id: "settings/merchant-detail/merchant-subscriptions",
+        className: "api-get",
+      },
+    ],
+  },
+  {
+    type: "category",
+    label: "User",
+    items: [
+      {
+        type: "doc",
+        id: "settings/user-profile",
+        className: "api-get",
+      },
+    ],
+  },
+],
+
+"eKYC": [
+  {
+    type: "doc",
+    id: "ekyc/mykad-recognition",
+    className: "api-post",
+  },
+  {
+    type: "doc",
+    id: "ekyc/liveness-check-with-face-verification",
+    className: "api-post",
+  },
+  {
+    type: "doc",
+    id: "ekyc/face-verification",
+    className: "api-post",
+  },
+  {
+    type: "doc",
+    id: "ekyc/get-mykad-result",
+    className: "api-post",
+  },
+  {
+    type: "doc",
+    id: "ekyc/get-ekyc-result",
+    className: "api-post",
+  },
+],
+
+"Short Message Service": [
+  {
+    type: "doc",
+    id: "sms/send-sms",
+    className: "api-post",
+  },
+],
+
+"Push Notification": [
+  {
+    type: "doc",
+    id: "push-notification/push-to-merchant",
+    className: "api-post",
+  },
+],
+
     Downloads: [
       "downloads/revenue-monster-logo",
       "downloads/application",
