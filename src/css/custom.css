@@ -185,5 +185,21 @@
   color: black;
 }
 
+/* ================================
+   SIDEBAR TREE CONNECTOR LINE
+================================ */
+
+/* Add faded vertical line for nested categories */
+.menu__list .menu__list {
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  margin-left: 10px;
+  padding-left: 14px;
+}
+
+/* Light mode adjustment */
+html[data-theme="light"] .menu__list .menu__list {
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+}
+
 @import "./api-playground.css";
 
