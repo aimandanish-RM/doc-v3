@@ -8,19 +8,22 @@ export default function LayoutWrapper(props) {
   const { frontMatter } = useDoc();
   const api = frontMatter?.api;
 
-  // ✅ No API → use default layout (full width)
+  // Normal docs → default layout (with TOC)
   if (!api) {
     return <Layout {...props} />;
   }
 
-  // ✅ API page → split layout
+  // API docs → custom split layout
   return (
-    <div className={styles.layout}>
-      <main className={styles.content}>
-        <Layout {...props} />
+    <div className={styles.apiLayout}>
+      <main className={styles.docContent}>
+        <Layout
+          {...props}
+          hideTableOfContents={true}
+        />
       </main>
 
-      <aside className={styles.api}>
+      <aside className={styles.playground}>
         <ApiPlayground {...api} />
       </aside>
     </div>

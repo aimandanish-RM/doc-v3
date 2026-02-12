@@ -1,19 +1,25 @@
-.layout {
+.apiLayout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
-  gap: 0;
+  grid-template-columns: minmax(0, 1fr) 520px;
+  height: 100%;
 }
 
-.content {
+/* LEFT SIDE (DOC CONTENT) */
+.docContent {
   min-width: 0;
 }
 
-.api {
+/* Make markdown content readable */
+.docContent .theme-doc-markdown {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* RIGHT SIDE (PLAYGROUND) */
+.playground {
   position: sticky;
   top: var(--ifm-navbar-height);
   height: calc(100vh - var(--ifm-navbar-height));
   overflow: auto;
-
   border-left: 1px solid var(--ifm-toc-border-color);
-  padding: 0; /* 🔥 IMPORTANT */
 }
