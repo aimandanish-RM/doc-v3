@@ -1,13 +1,18 @@
 .wrapper {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
-  padding: 16px;
-  border-radius: 10px;
+  gap: clamp(12px, 2vw, 20px);
+  padding: clamp(12px, 2vw, 20px);
+  border-radius: 12px;
   background: var(--ifm-color-emphasis-100);
   margin-bottom: 24px;
   font-family: monospace;
+
+  /* Prevent overflow issues */
+  flex-wrap: wrap;
 }
+
+/* ================= BADGE ================= */
 
 .badge {
   padding: 6px 12px;
@@ -15,8 +20,10 @@
   font-weight: 700;
   border-radius: 6px;
   text-transform: uppercase;
+  flex-shrink: 0;
 }
 
+/* Method colors */
 .get {
   background: #16a34a;
   color: white;
@@ -24,12 +31,12 @@
 
 .post {
   background: #FACC15;
-  color: rgb(255, 255, 255);
+  color: white;
 }
 
 .put {
   background: #f59e0b;
-  color: rgb(255, 254, 254);
+  color: white;
 }
 
 .delete {
@@ -39,17 +46,48 @@
 
 .patch {
   background: #f59e0b;
-  color: rgb(255, 255, 255);
+  color: white;
 }
+
+/* ================= URL SECTION ================= */
 
 .urls {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
+  flex: 1;
+  min-width: 0; /* important for overflow handling */
 }
 
+/* Label */
 .label {
   font-size: 11px;
   opacity: 0.6;
   display: block;
+  margin-bottom: 2px;
+}
+
+/* Code styling */
+.urls code {
+  display: block;
+  background: var(--ifm-code-background);
+  padding: 8px 10px;
+  border-radius: 8px;
+
+  font-size: clamp(12px, 1.1vw, 14px);
+
+  word-break: break-all;
+  overflow-x: auto;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+  .wrapper {
+    flex-direction: column;
+  }
+
+  .badge {
+    align-self: flex-start;
+  }
 }

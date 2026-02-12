@@ -1,25 +1,92 @@
+/* ============================= */
+/* MAIN GRID */
+/* ============================= */
+
 .apiLayout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 520px;
-  height: 100%;
+
+  /* Break out of Docusaurus container */
+  width: 75vw;
+
+  /* Responsive columns */
+  grid-template-columns:
+    minmax(0, 1fr)
+    clamp(340px, 28vw, 560px);
+
+  gap: clamp(24px, 3vw, 48px);
 }
 
-/* LEFT SIDE (DOC CONTENT) */
+
+/* ============================= */
+/* LEFT CONTENT */
+/* ============================= */
+
 .docContent {
   min-width: 0;
 }
 
-/* Make markdown content readable */
+/* Keep markdown readable but fluid */
 .docContent .theme-doc-markdown {
-  max-width: 900px;
+  max-width: clamp(680px, 60vw, 920px);
   margin: 0 auto;
 }
 
-/* RIGHT SIDE (PLAYGROUND) */
+/* ============================= */
+/* PLAYGROUND */
+/* ============================= */
+
 .playground {
   position: sticky;
   top: var(--ifm-navbar-height);
   height: calc(100vh - var(--ifm-navbar-height));
-  overflow: auto;
+  overflow-y: auto;
+
   border-left: 1px solid var(--ifm-toc-border-color);
+  padding-left: clamp(16px, 2vw, 32px);
+}
+
+/* ============================= */
+/* LARGE SCREENS */
+/* ============================= */
+
+@media (min-width: 1600px) {
+  .apiLayout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      600px;
+  }
+}
+
+/* ============================= */
+/* TABLET */
+/* ============================= */
+
+@media (max-width: 1100px) {
+  .apiLayout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      clamp(320px, 35vw, 460px);
+  }
+}
+
+/* ============================= */
+/* MOBILE */
+/* ============================= */
+
+@media (max-width: 996px) {
+  .apiLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .playground {
+    position: relative;
+    height: auto;
+    border-left: none;
+    padding-left: 0;
+    margin-top: 40px;
+  }
+
+  .docContent .theme-doc-markdown {
+    max-width: 100%;
+  }
 }
