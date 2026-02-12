@@ -90,3 +90,14 @@
     max-width: 100%;
   }
 }
+
+/* Hide right TOC column ONLY on API pages */
+.apiPage :global(.col--3) {
+  display: none !important;
+}
+
+/* Expand content when TOC removed */
+.apiPage :global(.col--7) {
+  flex: 0 0 100%;
+  max-width: 100%;
+}

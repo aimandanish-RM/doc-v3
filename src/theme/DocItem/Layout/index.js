@@ -14,18 +14,18 @@ export default function LayoutWrapper(props) {
   }
 
   // API docs → custom split layout
-  return (
-    <div className={styles.apiLayout}>
-      <main className={styles.docContent}>
-        <Layout
-          {...props}
-          hideTableOfContents={true}
-        />
-      </main>
+return (
+  <div
+    className={`${styles.apiLayout} ${api ? styles.apiPage : ""}`}
+  >
+    <main className={styles.docContent}>
+      <Layout {...props} />
+    </main>
 
-      <aside className={styles.playground}>
-        <ApiPlayground {...api} />
-      </aside>
-    </div>
-  );
+    <aside className={styles.playground}>
+      <ApiPlayground {...api} />
+    </aside>
+  </div>
+);
+
 }
