@@ -201,6 +201,27 @@ html[data-theme="light"] .menu__list .menu__list {
   border-left: 1px solid rgba(0, 0, 0, 0.08);
 }
 
+/* src/css/custom.css */
+.navbar__item--explore {
+  display: block; /* desktop */
+}
+
+@media screen and (max-width: 768px) {
+  .navbar__item--explore {
+    display: none;
+  }
+}
+
+/* src/css/custom.css */
+.navbar__item--explore {
+  display: block; /* desktop */
+}
+
+@media screen and (max-width: 768px) {
+  .navbar__item--explore {
+    display: none;
+  }
+}
 
 @import "./api-playground.css";
 

@@ -129,3 +129,17 @@
     transition: none !important;
   }
 }
+
+
+.navButton {
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 999px;
+}
+
+
+
+.navButton:hover {
+  background: var(--ifm-navbar-link-color);
+  color: var(--ifm-background-color);
+}

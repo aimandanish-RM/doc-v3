@@ -92,6 +92,13 @@ module.exports = {
         href: "https://revenuemonster.my",
       },
 items: [
+
+{
+  type: "custom-explore",
+  position: "left",
+},
+
+
   {
     to: "docs/introduction/overview",
     activeBasePath: "docs",
