@@ -30,6 +30,50 @@ api:
         "longitude": 0
       }
     }
+
+examples:
+  request: |
+    curl --location --request POST "https://sb-open.revenuemonster.my/v3/store" \
+      --header "Content-Type: application/json" \
+      --header "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiKiJdLCJleHAiOjE1MjE2MjkyNTYsImlhdCI6MTUyMTYyMjA1NywiaXNzIjoiaHR0cHM6Ly9zYi1vYXV0aC5yZXZlbnVlbW9uc3Rlci5teSIsImp0aSI6IkVod0tFRTlCZFhSb1FXTmpaWE56Vkc5clpXNFF5cmYza3EzTDY4QnoiLCJuYmYiOjE1MjE2MjIwNTcsInN1YiI6IkVoUUtDRTFsY21Ob1lXNTBFSlhWemQzd3JhcVRPUklRQ2dSVmMyVnlFSXlKcUl6dnlNUFZjUSJ9.dJknY9MZHLNrKx1p7gZxS0_oA3uXLWplDU1r1dpwxIbmdB6yw4tQBTXKlWArDfKLlBDn6v22_gT5Px7sdCMj7e5M9eRoJoMnoPnslgYpmJJ5kjqAbKU7dUxKb1OzFLrvmtSK9r-FRLVtMFHioWYpwgSvSPBgZ6lAYkUyDzH7aKadFYtQcBuJR0hlq2CXtP0mzbHOeu2q6giONf3E5-XqS8lLRtuHPAbJ7_YFwo0Oe2zc6h05IOocmx_NvBVPfDBnuygTU063h70Q987MYeGDV_Os4N6N_I4b-GoHprEPtmntB1RJPrFrY28hvvoUfDHXHZVXT1GlrsozrkWV4EjbTw" \
+      --header "X-Signature: sha256 X+IAMfyCdGTE4Or/jdYqBbwRvCpzNqv1lnaXUd+iWE37nCmxAT69x3PqdmcwyQnmO6BuHsqNy7znCFg3L9sjxg==" \
+      --header "X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN" \
+      --header "X-Timestamp: 1527407052" \
+      --data "{
+    	\"addressLine1\": \"gugusan melur\",
+        \"city\": \"petaling jaya\",
+        \"country\": \"malaysia.\",
+        \"name\": \"yussuf\",
+        \"countryCode\": \"60\",
+        \"phoneNumber\": \"176473298\",
+        \"postCode\": \"47810\",
+        \"state\": \"selangor\"
+    }"
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "item": {
+        "id": "5237968049713769466",
+        "name": "yussuf",
+        "addressLine1": "GUGUSAN MELUR",
+        "addressLine2": "",
+        "postCode": "47810",
+        "city": "PETALING JAYA",
+        "state": "SELANGOR",
+        "country": "MALAYSIA.",
+        "countryCode": "60",
+        "phoneNumber": "176473298",
+        "geoLocation": {
+          "latitude": 0,
+          "longitude": 0
+        },
+        "status": "ACTIVE",
+        "createdAt": "2018-05-27T17:17:12.196274Z",
+        "updatedAt": "2018-05-27T17:17:12.196283Z"
+      },
+      "code": "SUCCESS"
+    }
 ---
 
 

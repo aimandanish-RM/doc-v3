@@ -30,6 +30,14 @@ api:
           "amount": 1000
         }
       }
+
+examples:
+  request: |
+    There is no example request provided.
+  body: |
+    There is no example body request.
+  response: |
+    There is no example response provided.
 ---
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";

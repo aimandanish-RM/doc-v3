@@ -13,6 +13,93 @@ api:
     X-Signature: sha256 {{signature}}
     X-Nonce-Str: {{nonce}}
     X-Timestamp: {{timestamp}}
+
+examples:
+  request: |
+    There is no example request provided.
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "items": [
+        {
+          "id": "2940921291529816182",
+          "name": "Gan",
+          "email": "junkai@revenuemonster.my",
+          "nric": "",
+          "address": {
+            "addressLine1": "",
+            "addressLine2": "",
+            "postcode": "",
+            "city": "",
+            "state": "",
+            "country": ""
+          },
+          "gender": "",
+          "state": "",
+          "birthDate": "0001-01-01T00:00:00Z",
+          "loyaltyPoint": 0,
+          "countryCode": "60",
+          "phoneNumber": "167367171",
+          "profileImageUrl": "https://storage.googleapis.com/rm-sandbox-asset/img/avatar.png",
+          "memberTier": null,
+          "status": "ACTIVE",
+          "createdAt": "2018-09-19T10:00:21Z"
+        },
+        {
+          "id": "3328113896344269171",
+          "name": "Sharon",
+          "email": "sharon@apacvebture.com",
+          "nric": "",
+          "address": {
+            "addressLine1": "",
+            "addressLine2": "",
+            "postcode": "",
+            "city": "",
+            "state": "",
+            "country": ""
+          },
+          "gender": "",
+          "state": "",
+          "birthDate": "0001-01-01T00:00:00Z",
+          "loyaltyPoint": 99,
+          "countryCode": "60",
+          "phoneNumber": "1126195189",
+          "profileImageUrl": "https://storage.googleapis.com/rm-sandbox-asset/img/avatar.png",
+          "memberTier": null,
+          "status": "ACTIVE",
+          "createdAt": "2018-09-13T09:17:24Z"
+        },
+        {
+          "id": "2777058682717858418",
+          "name": "yussuf",
+          "email": "yussuf@gmail.com",
+          "nric": "",
+          "address": {
+            "addressLine1": "",
+            "addressLine2": "",
+            "postcode": "",
+            "city": "",
+            "state": "",
+            "country": ""
+          },
+          "gender": "",
+          "state": "",
+          "birthDate": "0001-01-01T00:00:00Z",
+          "loyaltyPoint": 400,
+          "countryCode": "60",
+          "phoneNumber": "176473298",
+          "profileImageUrl": "https://storage.googleapis.com/rm-dev-asset/img/avatar.png",
+          "memberTier": null,
+          "status": "ACTIVE",
+          "createdAt": "2018-09-26T07:13:13Z"
+        }
+      ],
+      "code": "SUCCESS",
+      "meta": {
+        "count": 3
+      }
+    }
 ---
 
 

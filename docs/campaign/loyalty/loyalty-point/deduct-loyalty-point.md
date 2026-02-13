@@ -21,6 +21,16 @@ api:
         "point": 100,
         "memberId": "1231231312"
       }
+
+examples:
+  request: |
+    There is no example request provided.
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "code": "SUCCESS"
+    }
 ---
 
 

@@ -13,6 +13,30 @@ api:
     X-Nonce-Str: {{nonce}}
     X-Timestamp: {{timestamp}}
   body: "{}"
+
+examples:
+  request: |
+    There is no example request provided.
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "item": {
+        "id": "2728070797661038926",
+        "firstName": "M",
+        "lastName": "YUSSUF",
+        "countryCode": "60",
+        "phoneNumber": "176473298",
+        "email": "yussuf@revenuemonster.my",
+        "avatarUrl": "https://storage.googleapis.com/rm-dev-asset/img/avatar.png",
+        "status": "ACTIVE",
+        "storeId": ["6883264812332703106"],
+        "isActive": true,
+        "createdAt": "2018-05-14T09:26:23Z",
+        "updatedAt": "2018-05-15T03:29:56Z"
+      },
+      "code": "SUCCESS"
+    }
 ---
 
 

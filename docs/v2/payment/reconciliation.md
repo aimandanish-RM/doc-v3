@@ -24,6 +24,14 @@ api:
         "region": ["MALAYSIA"],
         "cursor": ""
       }
+
+examples:
+  request: |
+    There is no example request provided.
+  body: |
+    There is no example body request.
+  response: |
+    There is no example response provided.
 ---
 
 

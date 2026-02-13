@@ -17,6 +17,25 @@ api:
     {
       "id": "dee13d3470f2dd43466c252cfc67f967"
     }
+
+examples:
+  request: |
+    curl --location --request POST "{{open_base_path}}/v3/loyalty/spending-reward/cancel" \
+    --header "Content-Type: application/json"\
+    --header "Authorization: Bearer {{clientToken}}" \
+    --header "X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==" \
+    --header "X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN" \
+    --header "X-Timestamp: 1528450585"\
+    --data-raw "{
+      \"id\":\"dee13d3470f2dd43466c252cfc67f967\"
+    
+    }"
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "code": "SUCCESS"
+    }
 ---
 
 

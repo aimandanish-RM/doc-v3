@@ -26,6 +26,57 @@ api:
           "closedUntil": "2020-09-22T05:00:06.741Z"
         }
       }
+
+examples:
+  request: |
+    curl --location --request POST 'https://sb-open.revenuemonster.my/v3/service' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVKTE42dFdBMG82MEx3Il0sImV4cCI6MTYwMzI1NDU2OSwiaWF0IjoxNjAwNjYyNTY5LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UTZNenR5b1RFckpzVyIsIm5iZiI6MTYwMDY2MjU2OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.H3G6UDX7sR9EXtTMNs4Q2OHdhUGIhhCfdlAeOpywH4rDuVOcWXXwzF4Imbx8E7I10vFAJpwYZrEkCWCdCCw-WV11y9VT5kP6k75CeS-ZPMOLcKnC5iFT7vEi07r6ovwty9erlcZeXrtrmEIn3rnLva-dxSg3vZ2MyymoNDk-kV7ltXnkoWW4jtXRls6siLhxeY__8kXn2qa0ojVX4Nm6HmzN_vgi-RKSmToMgsdzTF94Y61QVBWhZfolD2-JpHx4qNlklcUdv8HOJ1QHHWpyoJytaJmvr3GJ5G399LbcTLwxB1p2qPg7z4hpoGNu4AP-ybRJVC3P9q9OscQYDNX-dA' \
+    --header 'X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==' \
+    --header 'X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN' \
+    --header 'X-Timestamp: 1528450585' \
+    --data-raw '{
+      "service": "alacarte",
+      "version": "v1",
+      "function": "update.store.avaiablility",
+      "request": {
+        "storeId": "2808912573238362402",
+        "closedUntil": "2020-09-22T05:00:06.741Z"
+      }
+    }'
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "item": {
+        "closedUntil": "2020-09-22T05:00:06.741Z",
+        "supportedTypes": ["DELIVERY", "DINEIN", "DRIVE_THRU", "PICKUP"],
+        "delivery": {
+          "method": "OWN",
+          "cost": [
+            {
+              "type": "FIXED",
+              "startDistanceInMeter": 0,
+              "endDistanceInMeter": 5000,
+              "amount": 0
+            },
+            {
+              "type": "DYNAMIC",
+              "startDistanceInMeter": 5000,
+              "endDistanceInMeter": 10000,
+              "amount": 0
+            },
+            {
+              "type": "DYNAMIC",
+              "startDistanceInMeter": 10000,
+              "endDistanceInMeter": 1000000,
+              "amount": 0
+            }
+          ]
+        },
+        "updatedAt": "2020-09-23T00:54:05.811779863Z"
+      }
+    }
 ---
 
 

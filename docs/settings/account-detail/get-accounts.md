@@ -13,6 +13,111 @@ api:
     X-Signature: sha256 {{signature}}
     X-Nonce-Str: {{nonce}}
     X-Timestamp: {{timestamp}}
+
+examples:
+  request: |
+    curl --location --request GET "https://sb-open.revenuemonster.my/v3/accounts" \
+    --header "Content-Type: application/json" \
+    --header "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMy0xOCIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVQZUEyYXJ4dk1PSUZnIl0sImV4cCI6MTU5MzU4MDY0NSwiaWF0IjoxNTkwOTg4NjQ1LCJpc3MiOiJodHRwczovL29hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UXMtNnI5LVgzbElvVyIsIm5iZiI6MTU5MDk4ODY0NSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVMUF9wNlNKNnFQN0ZSSVFDZ1JWYzJWeUVPaXZfb1dKNnFQN0ZRIn0.RKtXykw3y0ov3mKKa_K2h5FZB2jXtqf3gNRwwnzzA4xTMdY09mEHlFupMeUmchFW2XHYK254LdMYbF4ZhjxK9K51UUdQBYH-zZpo0WWtPSZqrPGtT-c4z_sEO73EDVcek3rDwyWiXvjSKDpsZM7NOdKRm5tvT3qNK-7C7WMUjSXDcBzbTFhwfOAOO1n-wMR9H_w0DuIE-yMjEZkOdt7GUIBC8F5izATlZH0FRTx4VAwQWY4gjjQ9-3PbUbHx-NKiFXwCOAsxu-79PiF0HDEHb6ZOCGywNmKuanEXqLonli0caZiUZfrdT53y3Xnd3W2SEr6s7ZQxWnQO5PeOU7BQYA" \
+    --header "X-Signature: sha256 bFGc2JOEFqdI91DE5VXYBUllr+9DHcrrylRFU3i1r72aPmJreljn0dU+nwPSwTH/dTQUiZ9C2aQSF8AuT959EW4WEyEZ6VWgt9gCyZaU/bcOQ/ZIhKc06+uwzivVhAzpbUtG5tm5/sBp4ig6Sk7L6SE0Ecu6Tm0FhYl0qdgZvrTh4EEpLs3kHIuYL9QXKJILfKlu4gTX1Exrt7nNyEr8ndeUMaKYrj3FckMbRtmCwc829SsVp6FAgvoDPnguUJ+VjLF1e9NXhar2JwYjuqMkwsmUWRDbittqCgCCfaPF8anarlLsoXbdYEa7bp9BYp2U/Dw3Xd2MlamEZSR8H+Dosw==" \
+    --header "X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN" \
+    --header "X-Timestamp: 1528450585" \
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "items": [
+        {
+          "id": "1596124535165747709",
+          "merchantId": "4118165203679668885",
+          "isDefault": false,
+          "companyName": "Merchant & Testings",
+          "companyType": "SOLE PROPRIETORSHIP",
+          "registrationNumber": "123455-Test",
+          "businessCategory": "BANK, FINANCIAL INSITUTION",
+          "businessScope": "Finance industry",
+          "sourceOfFunds": "",
+          "customerOrigin": "",
+          "establishedAt": "2018-05-31T09:06:26Z",
+          "countryCode": "60",
+          "phoneNumber": "123907657",
+          "addressLine1": "1, TEST ROAD 1",
+          "addressLine2": "",
+          "postcode": "50000",
+          "city": "KUALA LUMPUR",
+          "state": "KUALA LUMPUR",
+          "country": "MALAYSIA",
+          "isSameBusinessAddress": false,
+          "invoiceAddress": {
+            "addressLine1": "1, TEST ROAD 1",
+            "addressLine2": "",
+            "postcode": "50000",
+            "city": "KUALA LUMPUR",
+            "state": "KUALA LUMPUR",
+            "country": "MALAYSIA"
+          },
+          "inspectList": [
+            {
+              "fullName": "DFDSF",
+              "email": "",
+              "position": "DIRECTOR",
+              "countryCode": "",
+              "phoneNumber": "",
+              "gender": "MALE",
+              "birthday": "2018-05-20T23:59:59.000Z",
+              "nationality": "ALBANIAN",
+              "idType": "IC",
+              "idNo": "123456789098",
+              "beginAt": "",
+              "endAt": ""
+            }
+          ],
+          "status": "VERIFIED",
+          "document": {
+            "ctosFileUrl": "",
+            "ownerICFileUrl": "https://rm-sandbox-document.oss-ap-southeast-3.aliyuncs.com/4118165203679668885/T3duZXJJQ0ZpbGVVUkw=.png",
+            "directorICFileUrl": "",
+            "shareHolderICFileUrl": "",
+            "businessRegistrationFileUrl": "https://rm-sandbox-document.oss-ap-southeast-3.aliyuncs.com/4118165203679668885/QnVzaW5lc3NSZWdpc3RyYXRpb25GaWxlVVJM.png",
+            "bankStatementFileUrl": "https://rm-sandbox-document.oss-ap-southeast-3.aliyuncs.com/4118165203679668885/YmFua1N0YXRlbWVudEZpbGVVcmw=.png",
+            "moaFileUrl": "",
+            "form24FileUrl": "",
+            "form49FileUrl": "",
+            "section14FileUrl": "",
+            "form44FileUrl": "",
+            "businessSitePhotoFileUrl": "https://rm-sandbox-document.oss-ap-southeast-3.aliyuncs.com/4118165203679668885/YnVzaW5lc3NTaXRlUGhvdG9GaWxlVXJs.png",
+            "essmDocumentFileUrl": "",
+            "letterOfConsentFileUrl": ""
+          },
+          "documentFile": {
+            "CTOSFileURL": null,
+            "OwnerICFileURL": null,
+            "DirectorICFileURL": null,
+            "ShareHolderICFileURL": null,
+            "BusinessRegistrationFileURL": null,
+            "BankStatementFileURL": null,
+            "MOAFileURL": null,
+            "Form24FileURL": null,
+            "Form49FileURL": null,
+            "Section14FileURL": null,
+            "Form44FileURL": null,
+            "BusinessSitePhotoFileURL": null
+          },
+          "bankAccountNo": "asdsad13123123",
+          "bankAccountType": "INDIVIDUAL",
+          "bankAccountHolderName": "Revenue Monster Sdn Bhd",
+          "bankName": "KUWAIT FINANCE HOUSE",
+          "bankCode": "KFHO",
+          "averageTicketSize": 0,
+          "averageTurnoverPerMonth": 0,
+          "paymentSubscription": "",
+          "createdAt": "2021-01-13T04:35:32Z",
+          "updatedAt": "2021-01-13T04:35:32Z"
+        }
+      ],
+      "code": "SUCCESS",
+      "meta": {}
+    }
 ---
 
 

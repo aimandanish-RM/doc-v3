@@ -16,6 +16,14 @@ api:
   headers:
     Authorization: Bearer {{access_token}}
     X-Timestamp: {{timestamp}}
+
+examples:
+  request: |
+    There is no example request provided.
+  body: |
+    There is no example body request.
+  response: |
+    There is no example response provided.
 ---
 
 

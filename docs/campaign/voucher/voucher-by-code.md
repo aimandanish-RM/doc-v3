@@ -15,6 +15,47 @@ api:
     X-Timestamp: {{timestamp}}
   body: |
     {}
+
+examples:
+  request: |
+    There is no example request provided.
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "item": {
+        "key": "EhQKCE1lcmNoYW50EJXVzd3wraqTORIVCgdWb3VjaGVyGgpOQWtsRWZiVmRW",
+        "label": "oijfge",
+        "redemptionRuleKey": null,
+        "voucherBatchKey": "EhQKCE1lcmNoYW50EJXVzd3wraqTORIYCgxWb3VjaGVyQmF0Y2gQkvnGweaB2uQg",
+        "type": "GIFT",
+        "amount": 0,
+        "discountRate": 0,
+        "minimumSpendAmount": 0,
+        "origin": "SYSTEM",
+        "imageUrl": "",
+        "memberProfile": null,
+        "redemptionRule": null,
+        "assignedAt": "2018-09-28T17:15:17Z",
+        "payload": null,
+        "qrUrl": "http://api.revenuemonster.my/qr/4118165203679668885/voucher/NAklEfbVdV",
+        "code": "NAklEfbVdV",
+        "isShipping": false,
+        "address": null,
+        "expiry": {
+          "type": "DYNAMIC",
+          "day": 100,
+          "expiredAt": "2019-01-06T17:19:35Z"
+        },
+        "usedAt": "2018-09-28T17:19:44.686549737Z",
+        "redeemedAt": "2018-09-28T17:19:35Z",
+        "isDeviceRedeem": false,
+        "status": "VOID",
+        "createdAt": "2018-06-21T11:08:00Z",
+        "updatedAt": "2018-09-28T17:19:44.686549977Z"
+      },
+      "code": "SUCCESS"
+    }
 ---
 
 

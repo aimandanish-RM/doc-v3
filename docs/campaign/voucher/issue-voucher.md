@@ -13,6 +13,20 @@ api:
     X-Nonce-Str: {{nonce}}
     X-Timestamp: {{timestamp}}
   body: "{}"
+
+examples:
+  request: |
+    There is no example request provided.
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "item": {
+        "code": "NAklEfbVdV",
+        "qrUrl": "http://api.local.rm:8080/qr/4118165203679668885/voucher/NAklEfbVdV"
+      },
+      "code": "SUCCESS"
+    }
 ---
 
 

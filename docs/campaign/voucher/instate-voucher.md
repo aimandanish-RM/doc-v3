@@ -18,6 +18,57 @@ api:
       "pin": "string",
       "reason": "string"
     }
+
+examples:
+  request: |
+    curl --location --request POST "https://sb-open.revenuemonster.my/v3/voucher/2yA2gRND/reinstate" \
+    --header "Content-Type: application/json" \
+    --header "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVNV2E1NHl5dE1QSUZnIl0sImV4cCI6MTc0NTA1MDY2MCwiaWF0IjoxNzQyNDU4NjYwLCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UW5vcURvcm1kblpjWSIsIm5iZiI6MTc0MjQ1ODY2MCwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.T-6nuPM-V0dMV6cgFrfzznx-pdOwyUVvM6EdIxpsQYu8GWjGIN6xrZzBbldy7Fafp2zuhKLfRkE6G-FVuSfV3Qg_S8hDJD4SpB0_bawuXwNmq-tMp1WOFkE0IOfMtfCowp4z6arDayhQTIT0qO36aQ1XzZrsPwqvRJ8fo_YfsurE8Z1UnSXukZWPTpjDs7fio8ZEVcNlWDWuimGHJcpYuH4FgvIdMJ1oWqnwZtvf9gDqmig5ddSpPEVTjf9cGMVBdZlwPXXw0mRuI0ClKMbBgrgUwmnYnIT3zPTRxNwMPKj4AkI3QnLbFkLvTDpk9wrIgrXLFNEZ37j9mQtehuTSgQ" \
+    --header "X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==" \
+    --header "X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN" \
+    --header "X-Timestamp: 1717039047" \
+    --data-raw "{
+    \"pin\": \"321123\"
+     \"reason\": \"wrong void\",
+    }"
+  body: |
+    There is no example body request.
+  response: |
+    {
+        "item": {
+            "key": "EhQKCE1lcmNoYW50EJXVzd3wraqTORITCgdWb3VjaGVyGgg4SndwTTNCQw",
+            "label": "1",
+            "redemptionRuleKey": "EhQKCE1lcmNoYW50EJXVzd3wraqTORIaCg5SZWRlbXB0aW9uUnVsZRCR8Jqz_tGOmhg",
+            "voucherBatchKey": "EhQKCE1lcmNoYW50EJXVzd3wraqTORIYCgxWb3VjaGVyQmF0Y2gQtfzY7rPRjpoY",
+            "type": "CASH",
+            "amount": 200,
+            "discountRate": 0,
+            "minimumSpendAmount": 100,
+            "origin": "SYSTEM",
+            "imageUrl": "",
+            "memberProfile": null,
+            "assignedAt": "2025-04-08T03:35:45Z",
+            "payload": null,
+            "qrUrl": "",
+            "code": "8JwpM3BC",
+            "isShipping": false,
+            "address": null,
+            "expiry": {
+                "type": "DYNAMIC",
+                "day": 30,
+                "expiredAt": "2025-05-08T03:36:17Z"
+            },
+            "usedAt": "2025-04-08T03:36:22Z",
+            "redeemedAt": "2025-04-08T03:36:17Z",
+            "isDeviceRedeem": false,
+            "status": "REDEEMED",
+            "voucherComboKey": null,
+            "isMarketPlace": false,
+            "createdAt": "2025-04-08T03:35:25Z",
+            "updatedAt": "2025-04-08T03:36:56Z"
+        },
+        "code": "SUCCESS"
+    }
 ---
 
 import { Box, Heading, Text, Card, Image, Button, Flex } from "rebass";

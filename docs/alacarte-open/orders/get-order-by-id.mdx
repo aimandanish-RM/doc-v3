@@ -26,6 +26,107 @@ api:
           "orderId": "5f6984d6585d7cc1ae35a39c"
         }
       }
+
+examples:
+  request: |
+    curl --location --request POST 'https://sb-open.revenuemonster.my/v3/service' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVKTE42dFdBMG82MEx3Il0sImV4cCI6MTYwMzI1NDU2OSwiaWF0IjoxNjAwNjYyNTY5LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UTZNenR5b1RFckpzVyIsIm5iZiI6MTYwMDY2MjU2OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.H3G6UDX7sR9EXtTMNs4Q2OHdhUGIhhCfdlAeOpywH4rDuVOcWXXwzF4Imbx8E7I10vFAJpwYZrEkCWCdCCw-WV11y9VT5kP6k75CeS-ZPMOLcKnC5iFT7vEi07r6ovwty9erlcZeXrtrmEIn3rnLva-dxSg3vZ2MyymoNDk-kV7ltXnkoWW4jtXRls6siLhxeY__8kXn2qa0ojVX4Nm6HmzN_vgi-RKSmToMgsdzTF94Y61QVBWhZfolD2-JpHx4qNlklcUdv8HOJ1QHHWpyoJytaJmvr3GJ5G399LbcTLwxB1p2qPg7z4hpoGNu4AP-ybRJVC3P9q9OscQYDNX-dA' \
+    --header 'X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==' \
+    --header 'X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN' \
+    --header 'X-Timestamp: 1528450585' \
+    --data-raw '{
+        "service": "alacarte",
+        "version": "v1",
+        "function": "get.store.order",
+        "request": {
+            "storeId": "2808912573238362402",
+            "orderId": "5f6984d6585d7cc1ae35a39c"
+        }
+    }'
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "item": {
+        "createdAt": "2020-10-01T08:44:16.863Z",
+        "customer": {
+          "countryCode": "60",
+          "email": "bassem@revenuemosnter.my",
+          "id": "5f63082ae9c755d6ba3122ac",
+          "name": "Bassem AlSabbagh",
+          "phoneNumber": "1123621544"
+        },
+        "delivery": null,
+        "deliveryAt": "2020-10-01T08:35:22.525Z",
+        "driveThru": null,
+        "items": [
+          {
+            "description": "got Nasi gt lemak",
+            "imageUrl": [
+              "https://smart-cafe-sandbox.oss-ap-southeast-3.aliyuncs.com/images/4118165203679668885/193557da-8d2e-4bd4-8df5-13663cb99eff"
+            ],
+            "itemId": "5f69a41f212de28db36031d6",
+            "name": "Nasi lemak & Lemak",
+            "preferences": [],
+            "price": {
+              "amount": 10,
+              "currencyType": "MYR"
+            },
+            "quantity": 1,
+            "remark": "",
+            "sides": []
+          }
+        ],
+        "orderId": "5f7596e066ef1c1a4f9807f4",
+        "payment": {
+          "deliveryFee": {
+            "amount": 0,
+            "currencyType": ""
+          },
+          "rounding": {
+            "amount": -2,
+            "currencyType": "MYR"
+          },
+          "serviceFee": {
+            "amount": 1,
+            "currencyType": "MYR",
+            "percentage": 500
+          },
+          "serviceTax": {
+            "amount": 1,
+            "currencyType": "MYR",
+            "percentage": 1300
+          },
+          "status": "NOTPAID",
+          "subTotal": {
+            "amount": 10,
+            "currencyType": "MYR"
+          },
+          "totalAfterRounding": {
+            "amount": 10,
+            "currencyType": "MYR"
+          },
+          "totalBeforeRounding": {
+            "amount": 12,
+            "currencyType": "MYR"
+          }
+        },
+        "quantity": 1,
+        "queueNo": 0,
+        "state": "ACCEPTED",
+        "status": "EMPTY",
+        "storeId": "10946114768247530",
+        "table": {
+          "id": "5e86af7ef9e6794801df3302",
+          "isActive": true,
+          "isDefault": true,
+          "name": "Default Table"
+        },
+        "type": "PICKUP",
+        "updatedAt": "2020-10-01T08:44:16.863Z"
+      }
+    }
 ---
 
 

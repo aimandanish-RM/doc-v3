@@ -26,6 +26,150 @@ api:
           "orderId": "5f6984d6585d7cc1ae35a39c"
         }
       }
+
+examples:
+  request: |
+    curl --location --request POST 'https://sb-open.revenuemonster.my/v3/service' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVKTE42dFdBMG82MEx3Il0sImV4cCI6MTYwMzI1NDU2OSwiaWF0IjoxNjAwNjYyNTY5LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UTZNenR5b1RFckpzVyIsIm5iZiI6MTYwMDY2MjU2OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.H3G6UDX7sR9EXtTMNs4Q2OHdhUGIhhCfdlAeOpywH4rDuVOcWXXwzF4Imbx8E7I10vFAJpwYZrEkCWCdCCw-WV11y9VT5kP6k75CeS-ZPMOLcKnC5iFT7vEi07r6ovwty9erlcZeXrtrmEIn3rnLva-dxSg3vZ2MyymoNDk-kV7ltXnkoWW4jtXRls6siLhxeY__8kXn2qa0ojVX4Nm6HmzN_vgi-RKSmToMgsdzTF94Y61QVBWhZfolD2-JpHx4qNlklcUdv8HOJ1QHHWpyoJytaJmvr3GJ5G399LbcTLwxB1p2qPg7z4hpoGNu4AP-ybRJVC3P9q9OscQYDNX-dA' \
+    --header 'X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==' \
+    --header 'X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN' \
+    --header 'X-Timestamp: 1528450585' \
+    --data-raw '{
+        "service": "alacarte",
+        "version": "v1",
+        "function": "refund.store.order",
+        "request": {
+            "storeId": "2808912573238362402",
+            "orderId":"5f6984d6585d7cc1ae35a39c"
+        }
+    }'
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "item": {
+        "createdAt": "2020-10-10T07:09:32.349Z",
+        "customer": {
+          "countryCode": "60",
+          "email": "edwin@revenuemonster.my",
+          "id": "5f7e7c38397dc15895356b3c",
+          "name": "Edwin",
+          "phoneNumber": "163699187"
+        },
+        "delivery": {
+          "address": {
+            "addressLine1": "",
+            "addressLine2": "Lebuh Bandar Utama",
+            "city": "Petaling Jaya",
+            "country": "",
+            "latitude": 0,
+            "longitude": 0,
+            "name": "",
+            "postCode": "47800",
+            "remark": "",
+            "state": "Selangor",
+            "unit": ""
+          },
+          "courier": {
+            "id": "",
+            "latitude": 0,
+            "longitude": 0,
+            "name": "Testing123",
+            "phone": "163698122",
+            "photoUrl": "",
+            "surname": ""
+          },
+          "distanceInMeter": 17446,
+          "id": "5f815e2c3c6920f1233a540f",
+          "method": "OWN",
+          "vendorId": "5f815e2c3c6920f1233a540f"
+        },
+        "deliveryAt": "2020-10-10T08:44:28.878Z",
+        "driveThru": null,
+        "items": [
+          {
+            "description": "",
+            "imageUrl": [
+              "https://smart-cafe-sandbox.oss-ap-southeast-3.aliyuncs.com/images/4118165203679668885/4f062980-a5be-4e33-961c-ae37f1a22fb1"
+            ],
+            "itemId": "5f7b4195021ba83f52a02556",
+            "name": "Ice Kacang (ABC)",
+            "preferences": [],
+            "price": {
+              "amount": 100,
+              "currencyType": "MYR"
+            },
+            "quantity": 1,
+            "remark": "",
+            "sides": []
+          },
+          {
+            "description": "",
+            "imageUrl": [
+              "https://smart-cafe-sandbox.oss-ap-southeast-3.aliyuncs.com/images/4118165203679668885/52bd3e20-6dea-45ba-a58e-f044688253e1"
+            ],
+            "itemId": "5f7b4195021ba83f52a02557",
+            "name": "Cendol",
+            "preferences": [],
+            "price": {
+              "amount": 50,
+              "currencyType": "MYR"
+            },
+            "quantity": 1,
+            "remark": "",
+            "sides": []
+          }
+        ],
+        "orderId": "5f815e2c3c6920f1233a540f",
+        "payment": {
+          "deliveryFee": {
+            "amount": 0,
+            "currencyType": "MYR"
+          },
+          "rounding": {
+            "amount": -2,
+            "currencyType": "MYR"
+          },
+          "serviceFee": {
+            "amount": 63,
+            "currencyType": "MYR",
+            "percentage": 600
+          },
+          "serviceTax": {
+            "amount": 74,
+            "currencyType": "MYR",
+            "percentage": 700
+          },
+          "status": "REFUNDED",
+          "subTotal": {
+            "amount": 1050,
+            "currencyType": "MYR"
+          },
+          "totalAfterRounding": {
+            "amount": 1185,
+            "currencyType": "MYR"
+          },
+          "totalBeforeRounding": {
+            "amount": 1187,
+            "currencyType": "MYR"
+          }
+        },
+        "quantity": 11,
+        "queueNo": 2,
+        "state": "REFUNDED",
+        "status": "CANCELLED",
+        "storeId": "1601912947341252990",
+        "table": {
+          "id": "5f7b40d0021ba83f52a02547",
+          "isActive": true,
+          "isDefault": true,
+          "name": "Default Table"
+        },
+        "type": "DELIVERY",
+        "updatedAt": "2020-10-10T07:23:15.062108233Z"
+      }
+    }
 ---
 
 

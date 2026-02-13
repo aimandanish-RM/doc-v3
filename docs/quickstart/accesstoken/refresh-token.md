@@ -15,6 +15,26 @@ api:
       "grantType": "refresh_token",
       "refreshToken": "YOUR_REFRESH_TOKEN"
     }
+
+examples:
+  request: |
+    curl --location --request POST "https://sb-oauth.revenuemonster.my/v1/token" \
+      --header "Content-Type: application/json" \
+      --header "Authorization: Basic MTM5NjMxNzEzNjIyMzY4MzExMjpEWGxaTWpQem96dXh2Z2JRRmtYWmFDcnFoRmliS3B4ZQ==" \
+      --data "{
+      \"grantType\": \"refresh_token\",
+      \"refreshToken\": \"OgoHjoZyLZPnHemifOrHIwStdeyzKuFoDaJBtBRULxEIJgANlhsLgFuBFiVTtqiQgmYDOTBkakwXZWfcLqXQTUTiqCpQTAEVHuqshWdiuvtGMIYztLiVfEmLEoXNlALi\"
+    }"
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "accessToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVJbmVpOW5mbE9DN0ZRIl0sImV4cCI6MjM0NDQyOTc0OSwiaWF0IjoxNTU2MDI5NzQ5LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UXJ1dkxrSUthaU13ViIsIm5iZiI6MTU1NjAyOTc0OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.PL3u_qTOw1c51HWNJsgTVDQBIZssLMRT2Nuo95_qyHHRTOhYz_LPtFdnICabU8P77lBOtZR5rMTuw3jzFFUopu3mCfT6ULzLtbBMVtlwXRdAZAw-kecYIhG5AmkT7H7Iwskvpitkqp1G31xb6PPOEhNTiO3iUY_Q-o3lsjn8uAWdDn7oXdWSmTMCI-1Mo0eYpWIQxsMI6HdQKXzhn1NELE1zvedyUhb6syw3oIocL7yll2eMg_LcYMdTOh26Ae614an8m7zSxgSBydwMHC0gjf7mzYEgqUzJ0M7zg_-vHy67u5UrysXQXDx-1MVHXaetzh3RriCR0R0_qESnIge3SQ",
+      "tokenType": "Bearer",
+      "expiresIn": 72591999,
+      "refreshToken": "XtBwKribhoPsoEbhHnLNJSjkSuskqsRIpTnvVxmOTyQhenqlgGQisbtbpcjcapmhPEaHrJZVbPGvkvaTwWozamuCBUfvWdWQzHJSnjpuurEACugOZssEpUffUSDoSxLz",
+      "refreshTokenExpiresIn": 1576799999
+    }
 ---
 
 

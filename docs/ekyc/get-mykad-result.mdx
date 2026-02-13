@@ -22,6 +22,253 @@ api:
         "id": "{{request_id}}"
       }
     }
+
+examples:
+  request: |
+    curl --location --request POST 'https://sb-open.revenuemonster.my/v3/service' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVKTE42dFdBMG82MEx3Il0sImV4cCI6MTYwMzI1NDU2OSwiaWF0IjoxNjAwNjYyNTY5LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UTZNenR5b1RFckpzVyIsIm5iZiI6MTYwMDY2MjU2OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.H3G6UDX7sR9EXtTMNs4Q2OHdhUGIhhCfdlAeOpywH4rDuVOcWXXwzF4Imbx8E7I10vFAJpwYZrEkCWCdCCw-WV11y9VT5kP6k75CeS-ZPMOLcKnC5iFT7vEi07r6ovwty9erlcZeXrtrmEIn3rnLva-dxSg3vZ2MyymoNDk-kV7ltXnkoWW4jtXRls6siLhxeY__8kXn2qa0ojVX4Nm6HmzN_vgi-RKSmToMgsdzTF94Y61QVBWhZfolD2-JpHx4qNlklcUdv8HOJ1QHHWpyoJytaJmvr3GJ5G399LbcTLwxB1p2qPg7z4hpoGNu4AP-ybRJVC3P9q9OscQYDNX-dA' \
+    --header 'X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==' \
+    --header 'X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN' \
+    --header 'X-Timestamp: 1528450585' \
+    --data-raw '{
+        "service": "ekyc",
+        "version": "v1",
+        "function": "get-mykad-result",
+        "request": {
+            "id": "62201d48a694817dede84b35"
+        }
+    }'
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "item": {
+        "action": "NONE_REQUIRED",
+        "clientId": "1626834435437339931",
+        "createdAt": "2022-03-03T01:43:36.963Z",
+        "duration": 3.9828,
+        "id": "62201d48a694817dede84b35",
+        "merchantId": "4118165203679668885",
+        "objects": {
+          "data": [
+            {
+              "boxes": [
+                {
+                  "x": 196,
+                  "y": 200
+                },
+                {
+                  "x": 332,
+                  "y": 274
+                }
+              ],
+              "confidence": 0.9614,
+              "prediction": "hibiscus_logo"
+            },
+            {
+              "boxes": [
+                {
+                  "x": 254,
+                  "y": 12
+                },
+                {
+                  "x": 318,
+                  "y": 71
+                }
+              ],
+              "confidence": 0.9608,
+              "prediction": "mykad_logo"
+            },
+            {
+              "boxes": [
+                {
+                  "x": 321,
+                  "y": 18
+                },
+                {
+                  "x": 407,
+                  "y": 64
+                }
+              ],
+              "confidence": 0.9603,
+              "prediction": "malaysia_flag"
+            },
+            {
+              "boxes": [
+                {
+                  "x": 280,
+                  "y": 64
+                },
+                {
+                  "x": 409,
+                  "y": 239
+                }
+              ],
+              "confidence": 0.9571,
+              "prediction": "face_image"
+            },
+            {
+              "boxes": [
+                {
+                  "x": 52,
+                  "y": 22
+                },
+                {
+                  "x": 225,
+                  "y": 60
+                }
+              ],
+              "confidence": 0.9488,
+              "prediction": "front_upper_left_text"
+            },
+            {
+              "boxes": [
+                {
+                  "x": 144,
+                  "y": 63
+                },
+                {
+                  "x": 252,
+                  "y": 130
+                }
+              ],
+              "confidence": 0.9438,
+              "prediction": "msc_logo"
+            },
+            {
+              "boxes": [
+                {
+                  "x": 0,
+                  "y": 5
+                },
+                {
+                  "x": 432,
+                  "y": 273
+                }
+              ],
+              "confidence": 0.709,
+              "prediction": "ic_1_front"
+            }
+          ],
+          "duration": 1.9634
+        },
+        "results": [
+          {
+            "colour": {
+              "detected": "BLUE",
+              "percentage": 0.6008
+            },
+            "data": {
+              "address": {
+                "addressLine1": "GDW KAMPUNG BAYANGAN",
+                "addressLine2": "80000 KENINGAU",
+                "addressLine3": "SABAH",
+                "city": "KENINGAU",
+                "postcode": "80000",
+                "state": "SABAH"
+              },
+              "gender": "Not found",
+              "ic": "550106-12-5821",
+              "isMuslim": false,
+              "name": "ROWAN SEBASTIAN ATKINSON"
+            },
+            "duration": 1.8658,
+            "faces": [
+              {
+                "boxes": [
+                  {
+                    "x": 428,
+                    "y": 137
+                  },
+                  {
+                    "x": 372,
+                    "y": 272
+                  }
+                ],
+                "confidence": 1
+              }
+            ],
+            "glare": {
+              "details": [],
+              "present": false
+            },
+            "meta": {
+              "resizeScale": 1.39
+            },
+            "object": {
+              "confidence": 0.709,
+              "prediction": "ic_1_front"
+            },
+            "ocrRequestIds": {
+              "region1": "62201d4b4fddc13446bd6d0e",
+              "region2": "62201d4b4fddc13446bd6d0f",
+              "region3": "62201d4b4fddc13446bd6d10"
+            },
+            "scores": {
+              "landmarks": 0.5442817296300616,
+              "ocr": 0.956196536620458,
+              "searcher": 0.9,
+              "total": 0.840095653250104
+            },
+            "tamperCheck": {
+              "faceVerification": {
+                "message": "Ghost face not found",
+                "result": {
+                  "isSamePerson": false,
+                  "similarity": 0
+                },
+                "success": false
+              },
+              "frontalFace": {
+                "message": "Success",
+                "result": {
+                  "alternated": false,
+                  "confidence": 0.9987,
+                  "prediction": "ORIGINAL"
+                },
+                "success": true
+              },
+              "physical": {
+                "confidence": 0,
+                "prediction": "",
+                "success": false
+              },
+              "prediction": "ORIGINAL",
+              "region1": {
+                "message": "Success",
+                "result": {
+                  "alternated": false,
+                  "confidence": 0.9998,
+                  "prediction": "ORIGINAL"
+                },
+                "success": true
+              },
+              "region2": {
+                "message": "Success",
+                "result": {
+                  "alternated": false,
+                  "confidence": 1,
+                  "prediction": "ORIGINAL"
+                },
+                "success": true
+              },
+              "region3": {
+                "message": "Success",
+                "result": {
+                  "alternated": false,
+                  "confidence": 1,
+                  "prediction": "ORIGINAL"
+                },
+                "success": true
+              }
+            }
+          }
+        ],
+        "status": "SUCCESS",
+        "updatedAt": "2022-03-03T01:43:40.978Z",
+      }
+    }
 ---
 
 

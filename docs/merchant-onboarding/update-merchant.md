@@ -23,6 +23,168 @@ api:
         "registrationNumber": "XAS1233123",
         "establishedAt": "2006-01-02T15:04:05Z"
       }
+
+examples:
+  request: |
+    curl --location --request PATCH "https://sb-open.revenuemonster.my/v3/partner/merchant/1629258448138509563" \
+      --header "Content-Type: application/json" \
+      --header "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiKiJdLCJleHAiOjE1MjE2MjkyNTYsImlhdCI6MTUyMTYyMjA1NywiaXNzIjoiaHR0cHM6Ly9zYi1vYXV0aC5yZXZlbnVlbW9uc3Rlci5teSIsImp0aSI6IkVod0tFRTlCZFhSb1FXTmpaWE56Vkc5clpXNFF5cmYza3EzTDY4QnoiLCJuYmYiOjE1MjE2MjIwNTcsInN1YiI6IkVoUUtDRTFsY21Ob1lXNTBFSlhWemQzd3JhcVRPUklRQ2dSVmMyVnlFSXlKcUl6dnlNUFZjUSJ9.dJknY9MZHLNrKx1p7gZxS0_oA3uXLWplDU1r1dpwxIbmdB6yw4tQBTXKlWArDfKLlBDn6v22_gT5Px7sdCMj7e5M9eRoJoMnoPnslgYpmJJ5kjqAbKU7dUxKb1OzFLrvmtSK9r-FRLVtMFHioWYpwgSvSPBgZ6lAYkUyDzH7aKadFYtQcBuJR0hlq2CXtP0mzbHOeu2q6giONf3E5-XqS8lLRtuHPAbJ7_YFwo0Oe2zc6h05IOocmx_NvBVPfDBnuygTU063h70Q987MYeGDV_Os4N6N_I4b-GoHprEPtmntB1RJPrFrY28hvvoUfDHXHZVXT1GlrsozrkWV4EjbTw" \
+      --header "X-Signature: sha256 Uf8oEHcq3l5ZkPc/y9eUsRjoKkx0dLUQz5PEFntWUZcR4A0DYdtQ9+VTx5Rq4e4XsRVp+4KZb4cwpDfzPABCZA==" \
+      --header "X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN" \
+      --header "X-Timestamp: 1527407052" \
+      --data-raw '{
+        "brandName": "Revenue Monster",
+        "websiteUrl": "https://revenuemonster.my",
+        "registrationNumber": "XAS1233123",
+        "establishedAt": "2006-01-02T15:04:05Z",
+        "addressLine1": "1, Jalan Pertanian 25",
+        "addressLine2": "Taman Universiti",
+        "postCode": "81300",
+        "city": "SKUDAI",
+        "state": "JOHOR",
+        "country": "MALAYSIA",
+        "countryCode": "60",
+        "phoneNumber": "187824152",
+        "companyName": "Revenue Monster",
+        "companyType": "PRIVATE LIMITED COMPANY (SDN BHD)",
+        "businessCategory": "COMPUTER AND ELECTRONICS",
+        "averageTicketSize": 1000000,
+        "averageTurnoverPerMonth": 1000000,
+        "businessScope": "some business scope",
+        "invoiceAddress": {
+            "addressLine1": "1, Jalan Pertanian 25",
+            "addressLine2": "Taman Universiti",
+            "postCode": "81300",
+            "city": "SKUDAI",
+            "state": "JOHOR",
+            "country": "MALAYSIA"
+        },
+        "document": {
+            "ctosFileUrl": "https://somefilenedpoint.com",
+            "ownerICFileUrl": "https://somefilenedpoint.com",
+            "directorICFileUrl": "https://somefilenedpoint.com",
+            "shareHolderICFileUrl": "https://somefilenedpoint.com",
+            "businessRegistrationFileUrl": "https://somefilenedpoint.com",
+            "bankStatementFileUrl": "https://somefilenedpoint.com",
+            "moaFileUrl": "https://somefilenedpoint.com",
+            "form24FileUrl": "https://somefilenedpoint.com",
+            "form49FileUrl": "https://somefilenedpoint.com",
+            "section14FileUrl": "https://somefilenedpoint.com",
+            "form44FileUrl": "https://somefilenedpoint.com",
+            "businessSitePhotoFileUrl": "https://somefilenedpoint.com"
+        },
+        "inspectList": [
+            {
+                "fullName": "NG SZE CHEN",
+                "gender": "MALE",
+                "birthday": "1999-07-14T15:59:59Z",
+                "nationality": "MALAYSIAN",
+                "idType": "IC",
+                "idNo": "2131290134"
+            }
+        ],
+        "bankAccountType": "CORPORATE",
+        "bankAccountHolderName": "Revenue Monster",
+        "bankAccountNo": "32312323",
+        "bankCode": "HLBB",
+        "latitude": 0.0,
+        "longitude": 0.0,
+        "paymentSubscription": "BOTH",
+        "terminalOfflineEWallet": false,
+        "terminalOfflineCreditCard": false,
+        "onlineCreditCard": false
+    }'
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "item": {
+        "id": "1622609881925201839",
+        "merchantId": "1622608181378590507",
+        "isDefault": true,
+        "companyName": "Revenue Monster",
+        "companyType": "PRIVATE LIMITED COMPANY (SDN BHD)",
+        "registrationNumber": "XAS1233123",
+        "businessCategory": "COMPUTER AND ELECTRONICS",
+        "businessScope": "some business scope",
+        "sourceOfFunds": "",
+        "customerOrigin": "",
+        "establishedAt": "2006-01-02T15:04:05Z",
+        "countryCode": "60",
+        "phoneNumber": "187824152",
+        "addressLine1": "1, Jalan Pertanian 25",
+        "addressLine2": "Taman Universiti",
+        "postcode": "81300",
+        "city": "SKUDAI",
+        "state": "JOHOR",
+        "country": "MALAYSIA",
+        "isSameBusinessAddress": false,
+        "invoiceAddress": {
+          "addressLine1": "1, Jalan Pertanian 25",
+          "addressLine2": "Taman Universiti",
+          "postcode": "81300",
+          "city": "SKUDAI",
+          "state": "JOHOR",
+          "country": "MALAYSIA"
+        },
+        "inspectList": [
+          {
+            "fullName": "NG SZE CHEN",
+            "email": "",
+            "position": "",
+            "countryCode": "",
+            "phoneNumber": "",
+            "gender": "MALE",
+            "birthday": "1999-07-14T15:59:59Z",
+            "nationality": "MALAYSIAN",
+            "idType": "IC",
+            "idNo": "2131290134",
+            "beginAt": "",
+            "endAt": ""
+          }
+        ],
+        "status": "UNVERIFIED",
+        "document": {
+          "ctosFileUrl": "https://somefilenedpoint.com",
+          "ownerICFileUrl": "https://somefilenedpoint.com",
+          "directorICFileUrl": "https://somefilenedpoint.com",
+          "shareHolderICFileUrl": "https://somefilenedpoint.com",
+          "businessRegistrationFileUrl": "https://somefilenedpoint.com",
+          "bankStatementFileUrl": "https://somefilenedpoint.com",
+          "moaFileUrl": "https://somefilenedpoint.com",
+          "form24FileUrl": "https://somefilenedpoint.com",
+          "form49FileUrl": "https://somefilenedpoint.com",
+          "section14FileUrl": "https://somefilenedpoint.com",
+          "form44FileUrl": "https://somefilenedpoint.com",
+          "businessSitePhotoFileUrl": "https://somefilenedpoint.com"
+        },
+        "documentFile": {
+          "CTOSFileURL": null,
+          "OwnerICFileURL": null,
+          "DirectorICFileURL": null,
+          "ShareHolderICFileURL": null,
+          "BusinessRegistrationFileURL": null,
+          "BankStatementFileURL": null,
+          "MOAFileURL": null,
+          "Form24FileURL": null,
+          "Form49FileURL": null,
+          "Section14FileURL": null,
+          "Form44FileURL": null,
+          "BusinessSitePhotoFileURL": null
+        },
+        "bankAccountNo": "32312323",
+        "bankAccountType": "CORPORATE",
+        "bankAccountHolderName": "Revenue Monster",
+        "bankName": "HONG LEONG BANK",
+        "bankCode": "HLBB",
+        "averageTicketSize": 0,
+        "averageTurnoverPerMonth": 0,
+        "paymentSubscription": "",
+        "createdAt": "2021-06-02T14:37:25+08:00",
+        "updatedAt": "2021-06-02T14:37:25+08:00"
+      },
+      "code": "SUCCESS"
+    }
 ---
 
 

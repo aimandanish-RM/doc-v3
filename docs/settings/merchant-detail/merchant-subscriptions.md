@@ -13,6 +13,39 @@ api:
     X-Nonce-Str: {{nonce}}
     X-Timestamp: {{timestamp}}
   body: "{}"
+
+examples:
+  request: |
+    There is no example request provided.
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "item": [
+        {
+          "id": 1001,
+          "gracePeriod": 90,
+          "expiryAt": "2018-04-28T06:36:08Z",
+          "terminateAt": "2018-07-27T23:59:59Z",
+          "status": "ACTIVE"
+        },
+        {
+          "id": 1000,
+          "gracePeriod": 90,
+          "expiryAt": "2018-04-25T02:51:10Z",
+          "terminateAt": "2018-07-24T23:59:59Z",
+          "status": "ACTIVE"
+        },
+        {
+          "id": 1003,
+          "gracePeriod": 90,
+          "expiryAt": "2018-04-29T05:04:30Z",
+          "terminateAt": "2018-07-28T23:59:59Z",
+          "status": "ACTIVE"
+        }
+      ],
+      "code": "SUCCESS"
+    }
 ---
 
 

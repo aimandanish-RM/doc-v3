@@ -15,6 +15,86 @@ api:
     X-Timestamp: {{timestamp}}
   body: |
     {}
+
+examples:
+  request: |
+    curl --location --request GET "https://sb-open.revenuemonster.my/v3/account" \
+    --header "Content-Type: application/json" \
+    --header "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMy0xOCIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVQZUEyYXJ4dk1PSUZnIl0sImV4cCI6MTU5MzU4MDY0NSwiaWF0IjoxNTkwOTg4NjQ1LCJpc3MiOiJodHRwczovL29hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UXMtNnI5LVgzbElvVyIsIm5iZiI6MTU5MDk4ODY0NSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVMUF9wNlNKNnFQN0ZSSVFDZ1JWYzJWeUVPaXZfb1dKNnFQN0ZRIn0.RKtXykw3y0ov3mKKa_K2h5FZB2jXtqf3gNRwwnzzA4xTMdY09mEHlFupMeUmchFW2XHYK254LdMYbF4ZhjxK9K51UUdQBYH-zZpo0WWtPSZqrPGtT-c4z_sEO73EDVcek3rDwyWiXvjSKDpsZM7NOdKRm5tvT3qNK-7C7WMUjSXDcBzbTFhwfOAOO1n-wMR9H_w0DuIE-yMjEZkOdt7GUIBC8F5izATlZH0FRTx4VAwQWY4gjjQ9-3PbUbHx-NKiFXwCOAsxu-79PiF0HDEHb6ZOCGywNmKuanEXqLonli0caZiUZfrdT53y3Xnd3W2SEr6s7ZQxWnQO5PeOU7BQYA" \
+    --header "X-Signature: sha256 bFGc2JOEFqdI91DE5VXYBUllr+9DHcrrylRFU3i1r72aPmJreljn0dU+nwPSwTH/dTQUiZ9C2aQSF8AuT959EW4WEyEZ6VWgt9gCyZaU/bcOQ/ZIhKc06+uwzivVhAzpbUtG5tm5/sBp4ig6Sk7L6SE0Ecu6Tm0FhYl0qdgZvrTh4EEpLs3kHIuYL9QXKJILfKlu4gTX1Exrt7nNyEr8ndeUMaKYrj3FckMbRtmCwc829SsVp6FAgvoDPnguUJ+VjLF1e9NXhar2JwYjuqMkwsmUWRDbittqCgCCfaPF8anarlLsoXbdYEa7bp9BYp2U/Dw3Xd2MlamEZSR8H+Dosw==" \
+    --header "X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN" \
+    --header "X-Timestamp: 1528450585" \
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "item": {
+        "id": "1653895399283266156",
+        "merchantId": "4118165203679668885",
+        "isDefault": false,
+        "companyName": "",
+        "companyType": "",
+        "registrationNumber": "",
+        "businessCategory": "",
+        "businessScope": "",
+        "sourceOfFunds": "",
+        "customerOrigin": "",
+        "establishedAt": "0001-01-01T00:00:00Z",
+        "countryCode": "",
+        "phoneNumber": "",
+        "addressLine1": "",
+        "addressLine2": "",
+        "postcode": "",
+        "city": "",
+        "state": "",
+        "country": "",
+        "isSameBusinessAddress": false,
+        "invoiceAddress": null,
+        "inspectList": null,
+        "status": "UNVERIFIED",
+        "document": {
+          "ctosFileUrl": "",
+          "ownerICFileUrl": "",
+          "directorICFileUrl": "",
+          "shareHolderICFileUrl": "",
+          "businessRegistrationFileUrl": "",
+          "bankStatementFileUrl": "",
+          "moaFileUrl": "",
+          "form24FileUrl": "",
+          "form49FileUrl": "",
+          "section14FileUrl": "",
+          "form44FileUrl": "",
+          "businessSitePhotoFileUrl": "",
+          "essmDocumentFileUrl": "",
+          "letterOfConsentFileUrl": ""
+        },
+        "documentFile": {
+          "CTOSFileURL": null,
+          "OwnerICFileURL": null,
+          "DirectorICFileURL": null,
+          "ShareHolderICFileURL": null,
+          "BusinessRegistrationFileURL": null,
+          "BankStatementFileURL": null,
+          "MOAFileURL": null,
+          "Form24FileURL": null,
+          "Form49FileURL": null,
+          "Section14FileURL": null,
+          "Form44FileURL": null,
+          "BusinessSitePhotoFileURL": null
+        },
+        "bankAccountNo": "",
+        "bankAccountType": "",
+        "bankAccountHolderName": "",
+        "bankName": "",
+        "bankCode": "",
+        "averageTicketSize": 0,
+        "averageTurnoverPerMonth": 0,
+        "paymentSubscription": "",
+        "createdAt": "2022-05-30T15:23:19+08:00",
+        "updatedAt": "2022-05-30T15:23:19+08:00"
+      },
+      "code": "SUCCESS"
+    }
 ---
 
 

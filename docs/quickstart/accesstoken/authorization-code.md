@@ -16,6 +16,14 @@ api:
       "code": "<AUTHORIZATION_CODE>",
       "redirectUri": "<REDIRECT_URI>"
     }
+
+examples:
+  request: |
+    There is no example request provided.
+  body: |
+    There is no example body request.
+  response: |
+    There is no example response provided.
 ---
 
 

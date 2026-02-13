@@ -14,6 +14,25 @@ api:
     {
       "grantType": "client_credentials"
     }
+
+examples:
+  request: |
+    curl --location --request POST "https://sb-oauth.revenuemonster.my/v1/token" \
+      --header "Content-Type: application/json" \
+      --header "Authorization: Basic NjY5MTY1ODE1MDQ5NjMyNzA1MTptNzFwc3dibVFWQzBpTXNHc000TEZMSUl4czZsWEV6eA==" \
+      --data "{
+      \"grantType\": \"client_credentials\"
+    }"
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "accessToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMy0xOCIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVKbkJ6T0RncXUyRUZnIl0sImV4cCI6MTU5MzUwNjI5OSwiaWF0IjoxNTkwOTE0Mjk5LCJpc3MiOiJodHRwczovL29hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UWxxNnVsSWFFaElvVyIsIm5iZiI6MTU5MDkxNDI5OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.BLCRknhGjIG9nJKKlcOIdB1WGFLP6HkfV5-wwgrqaLoBXchn7BIa7hcrPCbXOMKzQBq91rqkEk77qRaK53Ny7FVtak1zXnbWK8TpMUpmRIhrJ9LVv-1LKhbiM8rZfzV8LVghf42noukeYboaDQlFHpn7nFihD2A_yItkA2MoFSwRP97OVoe19yKiWJoz4W_DSm2P2f3ISg-Sg5ZEIT1hemlS0NbMxadDrDM_6w1b7TuBoGRci5R_0kZYf5qquD5LGFf3JqFqQrtOTqUtEEkD46ytRw_docfExwZg_ohI9ovEejfhmNODKvnxdQI7NIzkuxPYd_FztOl3MwVFuJYnZw",
+      "tokenType": "Bearer",
+      "expiresIn": 2591999,
+      "refreshToken": "hDzmdhTrnGmnMcvUKPjMGSXZNgPpHFNejPWdKBNNtMtZEcTzAqwyTeEfGvOQXcApKdAsUxxmjqytzFPmJIJxsOcuyyISsQPoeZfvgCKpURPWQlfeVrfvLNBPMHjpJQII",
+      "refreshTokenExpiresIn": 1576799999
+    }
 ---
 import ApiEndpoint from "@site/src/components/api/ApiEndpoint";
 

@@ -13,6 +13,97 @@ api:
     X-Signature: sha256 {{signature}}
     X-Nonce-Str: {{nonce}}
     X-Timestamp: {{timestamp}}
+
+examples:
+  request: |
+    There is no example request provided.
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "items": [
+        {
+          "id": "6544507929221794245",
+          "key": "EhQKCE1lcmNoYW50EJXVzd3wraqTORIYCgxWb3VjaGVyQmF0Y2gQxZP495jpsOla",
+          "label": "Shell Voucher",
+          "type": "CASH",
+          "amount": 10000,
+          "discountRate": 0,
+          "imageUrl": "https://storage.googleapis.com/rm-sandbox-merchant/4118165203679668885/gallery/1d2721426e06da4b2b459446135da29e.jpeg",
+          "quantity": 1,
+          "balanceQuantity": 0,
+          "usedQuantity": 1,
+          "status": "COMPLETED",
+          "expiry": {
+            "type": "DYNAMIC",
+            "day": 1,
+            "expiredAt": "2050-12-31T23:59:59Z"
+          },
+          "origin": "SYSTEM",
+          "isShipping": false,
+          "reason": "",
+          "isDeviceRedeem": true,
+          "createdAt": "2018-09-21T07:12:31Z",
+          "updatedAt": "2018-09-26T07:15:54Z"
+        },
+        {
+          "id": "8223209398981211509",
+          "key": "EhQKCE1lcmNoYW50EJXVzd3wraqTORIYCgxWb3VjaGVyQmF0Y2gQ9eq2n5SsrY9y",
+          "label": "Wedding",
+          "type": "GIFT",
+          "discountRate": 0,
+          "imageUrl": "https://storage.googleapis.com/rm-sandbox-merchant/4118165203679668885/gallery/1d2721426e06da4b2b459446135da29e.jpeg",
+          "quantity": 2,
+          "balanceQuantity": 0,
+          "usedQuantity": 0,
+          "status": "COMPLETED",
+          "expiry": {
+            "type": "DYNAMIC",
+            "day": 1,
+            "expiredAt": "2050-12-31T23:59:59Z"
+          },
+          "origin": "SYSTEM",
+          "isShipping": false,
+          "reason": "",
+          "isDeviceRedeem": false,
+          "createdAt": "2018-09-19T03:41:54Z",
+          "updatedAt": "2018-09-19T03:41:54Z"
+        },
+        {
+          "id": "1626310995848872959",
+          "key": "EhQKCE1lcmNoYW50EJXVzd3wraqTORIYCgxWb3VjaGVyQmF0Y2gQ_4eJj7-n9MgW",
+          "label": "ALA10OFF",
+          "type": "DISCOUNT",
+          "discountRate": 1000,
+          "minimumSpendAmount": 100,
+          "imageUrl": "https://storage.googleapis.com/rm-sandbox-merchant/4118165203679668885/gallery/f03508e50866abd615fc65c63857858f.jpeg",
+          "quantity": 50,
+          "balanceQuantity": 48,
+          "usedQuantity": 2,
+          "status": "COMPLETED",
+          "expiry": {
+            "type": "DYNAMIC",
+            "day": 1,
+            "expiredAt": "2050-12-31T23:59:59Z"
+          },
+          "origin": "SYSTEM",
+          "isShipping": false,
+          "isStatic": true,
+          "staticCode": "ALA10OFF",
+          "isDeviceRedeem": true,
+          "source": "",
+          "sourceType": "",
+          "sourcePrefix": "",
+          "isMarketPlace": false,
+          "createdAt": "2021-07-15T01:03:15Z",
+          "updatedAt": "2021-07-15T01:53:38Z"
+       }
+      ],
+      "code": "SUCCESS",
+      "meta": {
+        "count": 3
+      }
+    }
 ---
 
 

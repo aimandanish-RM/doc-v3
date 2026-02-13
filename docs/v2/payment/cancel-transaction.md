@@ -17,6 +17,14 @@ api:
       {
         "orderId": "180730103903010431152179"
       }
+
+examples:
+  request: |
+    There is no example request provided.
+  body: |
+    There is no example body request.
+  response: |
+    There is no example response provided.
 ---
 
 

@@ -27,6 +27,142 @@ api:
           "status": "PROGRESSING"
         }
       }
+
+examples:
+  request: |
+    curl --location --request POST 'https://sb-open.revenuemonster.my/v3/service' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVKTE42dFdBMG82MEx3Il0sImV4cCI6MTYwMzI1NDU2OSwiaWF0IjoxNjAwNjYyNTY5LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UTZNenR5b1RFckpzVyIsIm5iZiI6MTYwMDY2MjU2OSwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.H3G6UDX7sR9EXtTMNs4Q2OHdhUGIhhCfdlAeOpywH4rDuVOcWXXwzF4Imbx8E7I10vFAJpwYZrEkCWCdCCw-WV11y9VT5kP6k75CeS-ZPMOLcKnC5iFT7vEi07r6ovwty9erlcZeXrtrmEIn3rnLva-dxSg3vZ2MyymoNDk-kV7ltXnkoWW4jtXRls6siLhxeY__8kXn2qa0ojVX4Nm6HmzN_vgi-RKSmToMgsdzTF94Y61QVBWhZfolD2-JpHx4qNlklcUdv8HOJ1QHHWpyoJytaJmvr3GJ5G399LbcTLwxB1p2qPg7z4hpoGNu4AP-ybRJVC3P9q9OscQYDNX-dA' \
+    --header 'X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==' \
+    --header 'X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN' \
+    --header 'X-Timestamp: 1528450585' \
+    --data-raw '{
+      "service": "alacarte",
+      "version": "v1",
+      "function": "update.order.status",
+      "request": {
+        "storeId": "1601912947341252990",
+        "orderId": "5f853a02463d8042d57563af",
+        "status": "PROGRESSING"
+      }
+    }'
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "item": {
+        "createdAt": "2020-10-13T05:24:18.715Z",
+        "customer": {
+          "countryCode": "60",
+          "email": "edwin@revenuemonster.my",
+          "id": "5f815fd93c6920f1233a5412",
+          "name": "Edwin",
+          "phoneNumber": "163698187"
+        },
+        "delivery": {
+          "address": {
+            "addressLine1": "RRI Sri Maha Mariamman alayam U 4",
+            "addressLine2": "",
+            "city": "Shah Alam",
+            "country": "",
+            "latitude": 0,
+            "longitude": 0,
+            "name": "Home",
+            "postCode": "40160",
+            "remark": "hello",
+            "state": "Selangor",
+            "unit": "233"
+          },
+          "courier": null,
+          "distanceInMeter": 19050,
+          "id": "5f853a02463d8042d57563af",
+          "method": "OWN",
+          "vendorId": "5f853a02463d8042d57563af"
+        },
+        "deliveryAt": "2020-10-13T06:59:13.091Z",
+        "driveThru": null,
+        "items": [
+          {
+            "description": "yummz",
+            "imageUrl": [
+              "https://smart-cafe-sandbox.oss-ap-southeast-3.aliyuncs.com/images/4118165203679668885/3b198791-fedb-426e-98ef-adb8cd3d6718"
+            ],
+            "itemId": "5f7b4195021ba83f52a02550",
+            "name": "Hainan Chicken Rice",
+            "preferences": [],
+            "price": {
+              "amount": 500,
+              "currencyType": "MYR"
+            },
+            "quantity": 1,
+            "remark": "",
+            "sides": [
+              {
+                "id": "",
+                "name": "test",
+                "sideItems": [
+                  {
+                    "id": "5f7b4195021ba83f52a02551",
+                    "name": "Hainan Chicken Rice",
+                    "price": {
+                      "amount": 500,
+                      "currencyType": "MYR"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "orderId": "5f853a02463d8042d57563af",
+        "payment": {
+          "deliveryFee": {
+            "amount": 100,
+            "currencyType": "MYR"
+          },
+          "rounding": {
+            "amount": 0,
+            "currencyType": "MYR"
+          },
+          "serviceFee": {
+            "amount": 90,
+            "currencyType": "MYR",
+            "percentage": 600
+          },
+          "serviceTax": {
+            "amount": 105,
+            "currencyType": "MYR",
+            "percentage": 700
+          },
+          "status": "PAID",
+          "subTotal": {
+            "amount": 1500,
+            "currencyType": "MYR"
+          },
+          "totalAfterRounding": {
+            "amount": 1795,
+            "currencyType": "MYR"
+          },
+          "totalBeforeRounding": {
+            "amount": 1795,
+            "currencyType": "MYR"
+          }
+        },
+        "quantity": 1,
+        "queueNo": 4,
+        "state": "ACCEPTED",
+        "status": "SHIPPING",
+        "storeId": "1601912947341252990",
+        "table": {
+          "id": "5f7b40d0021ba83f52a02547",
+          "isActive": true,
+          "isDefault": true,
+          "name": "Default Table"
+        },
+        "type": "DELIVERY",
+        "updatedAt": "2020-10-13T05:28:39.487419398Z"
+      }
+    }
 ---
 
 

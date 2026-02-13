@@ -13,6 +13,75 @@ api:
     X-Signature: sha256 {{signature}}
     X-Nonce-Str: {{nonce}}
     X-Timestamp: {{timestamp}}
+
+examples:
+  request: |
+    There is no example request provided.
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "items": [
+        {
+          "key": "EhQKCE1lcmNoYW50EJXVzd3wraqTORIWCgdWb3VjaGVyGgtVVUVyYTIyVlN5Mg",
+          "label": "test",
+          "voucherBatchKey": "EhQKCE1lcmNoYW50EJXVzd3wraqTORIYCgxWb3VjaGVyQmF0Y2gQi5rUhcrdx78V",
+          "type": "CASH",
+          "amount": 100,
+          "discountRate": 0,
+          "minimumSpendAmount": 0,
+          "origin": "SYSTEM",
+          "imageUrl": "",
+          "memberProfile": {
+            "id": "1039768290679711875",
+            "name": "yussuf",
+            "email": "yussuf888@gmail.com",
+            "nric": "",
+            "address": {
+              "addressLine1": "",
+              "addressLine2": "",
+              "postcode": "",
+              "city": "",
+              "state": "",
+              "country": ""
+            },
+            "gender": "",
+            "state": "",
+            "birthDate": "0001-01-01T00:00:00Z",
+            "loyaltyPoint": 0,
+            "credit": 112,
+            "countryCode": "60",
+            "phoneNumber": "176473298",
+            "profileImageUrl": "https://storage.googleapis.com/rm-sandbox-asset/img/avatar.png",
+            "hasPinCode": false,
+            "memberTier": null,
+            "status": "ACTIVE",
+            "createdAt": "2018-10-19T03:39:47Z"
+          },
+          "assignedAt": "0001-01-01T00:00:00Z",
+          "qrUrl": "",
+          "code": "UUEra22VSy2",
+          "isShipping": false,
+          "address": null,
+          "expiry": {
+            "type": "DYNAMIC",
+            "day": 1,
+            "expiredAt": "2050-12-31T23:59:59Z"
+          },
+          "usedAt": "0001-01-01T00:00:00Z",
+          "redeemedAt": "2019-03-22T04:58:38Z",
+          "isDeviceRedeem": true,
+          "status": "REDEEMED",
+          "voucherComboKey": null,
+          "createdAt": "2019-02-01T03:13:19Z",
+          "updatedAt": "2019-03-13T03:16:26Z"
+        }
+      ],
+      "code": "SUCCESS",
+      "meta": {
+        "count": 1
+      }
+    }
 ---
 
 

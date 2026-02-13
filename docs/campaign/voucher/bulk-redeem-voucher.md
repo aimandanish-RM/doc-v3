@@ -19,6 +19,119 @@ api:
         "string"
       ]
     }
+
+examples:
+  request: |
+    curl --location --request POST "https://sb-open.revenuemonster.my/v3/vouchers/redeem" \
+    --header "Content-Type: application/json" \
+    --header "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVNV2E1NHl5dE1QSUZnIl0sImV4cCI6MTc0NTA1MDY2MCwiaWF0IjoxNzQyNDU4NjYwLCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UW5vcURvcm1kblpjWSIsIm5iZiI6MTc0MjQ1ODY2MCwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.T-6nuPM-V0dMV6cgFrfzznx-pdOwyUVvM6EdIxpsQYu8GWjGIN6xrZzBbldy7Fafp2zuhKLfRkE6G-FVuSfV3Qg_S8hDJD4SpB0_bawuXwNmq-tMp1WOFkE0IOfMtfCowp4z6arDayhQTIT0qO36aQ1XzZrsPwqvRJ8fo_YfsurE8Z1UnSXukZWPTpjDs7fio8ZEVcNlWDWuimGHJcpYuH4FgvIdMJ1oWqnwZtvf9gDqmig5ddSpPEVTjf9cGMVBdZlwPXXw0mRuI0ClKMbBgrgUwmnYnIT3zPTRxNwMPKj4AkI3QnLbFkLvTDpk9wrIgrXLFNEZ37j9mQtehuTSgQ" \
+    --header "X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==" \
+    --header "X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN" \
+    --header "X-Timestamp: 1717039047" \
+    --data-raw "{
+      \"codes\": [\"32zSv2W8\", \"344PNV5r\", \"V2FrkTnh\"]
+    }"
+  body: |
+    There is no example body request.
+  response: |
+    {
+        "item": [
+            {
+                "key": "EhQKCE1lcmNoYW50EJXVzd3wraqTORITCgdWb3VjaGVyGggzMnpTdjJXOA",
+                "label": "dasdadas",
+                "voucherBatchKey": "EhQKCE1lcmNoYW50EJXVzd3wraqTORIYCgxWb3VjaGVyQmF0Y2gQqPfD1ua8up4Y",
+                "type": "CASH",
+                "amount": 100,
+                "discountRate": 0,
+                "minimumSpendAmount": 100,
+                "origin": "SYSTEM",
+                "imageUrl": "",
+                "memberProfile": null,
+                "assignedAt": "0001-01-01T00:00:00Z",
+                "payload": null,
+                "qrUrl": "",
+                "code": "32zSv2W8",
+                "isShipping": false,
+                "address": null,
+                "expiry": {
+                    "type": "DYNAMIC",
+                    "day": 2,
+                    "expiredAt": "2025-06-15T09:18:05Z"
+                },
+                "usedAt": "0001-01-01T00:00:00Z",
+                "redeemedAt": "2025-06-13T09:18:05Z",
+                "isDeviceRedeem": true,
+                "status": "REDEEMED",
+                "voucherComboKey": null,
+                "isMarketPlace": false,
+                "createdAt": "2025-05-06T10:38:51Z",
+                "updatedAt": "2025-06-13T09:18:05Z"
+            },
+            {
+                "key": "EhQKCE1lcmNoYW50EJXVzd3wraqTORITCgdWb3VjaGVyGggzNDRQTlY1cg",
+                "label": "dasdadas",
+                "voucherBatchKey": "EhQKCE1lcmNoYW50EJXVzd3wraqTORIYCgxWb3VjaGVyQmF0Y2gQqPfD1ua8up4Y",
+                "type": "CASH",
+                "amount": 100,
+                "discountRate": 0,
+                "minimumSpendAmount": 100,
+                "origin": "SYSTEM",
+                "imageUrl": "",
+                "memberProfile": null,
+                "assignedAt": "0001-01-01T00:00:00Z",
+                "payload": null,
+                "qrUrl": "",
+                "code": "344PNV5r",
+                "isShipping": false,
+                "address": null,
+                "expiry": {
+                    "type": "DYNAMIC",
+                    "day": 2,
+                    "expiredAt": "2025-06-15T09:18:05Z"
+                },
+                "usedAt": "0001-01-01T00:00:00Z",
+                "redeemedAt": "2025-06-13T09:18:05Z",
+                "isDeviceRedeem": true,
+                "status": "REDEEMED",
+                "voucherComboKey": null,
+                "isMarketPlace": false,
+                "createdAt": "2025-05-06T10:38:51Z",
+                "updatedAt": "2025-06-13T09:18:05Z"
+            },
+            {
+                "key": "EhQKCE1lcmNoYW50EJXVzd3wraqTORITCgdWb3VjaGVyGghWMkZya1RuaA",
+                "label": "dasdadas",
+                "voucherBatchKey": "EhQKCE1lcmNoYW50EJXVzd3wraqTORIYCgxWb3VjaGVyQmF0Y2gQqPfD1ua8up4Y",
+                "type": "CASH",
+                "amount": 100,
+                "discountRate": 0,
+                "minimumSpendAmount": 100,
+                "origin": "SYSTEM",
+                "imageUrl": "",
+                "memberProfile": null,
+                "assignedAt": "0001-01-01T00:00:00Z",
+                "payload": null,
+                "qrUrl": "",
+                "code": "V2FrkTnh",
+                "isShipping": false,
+                "address": null,
+                "expiry": {
+                    "type": "DYNAMIC",
+                    "day": 2,
+                    "expiredAt": "2025-06-15T09:18:05Z"
+                },
+                "usedAt": "0001-01-01T00:00:00Z",
+                "redeemedAt": "2025-06-13T09:18:05Z",
+                "isDeviceRedeem": true,
+                "status": "REDEEMED",
+                "voucherComboKey": null,
+                "isMarketPlace": false,
+                "createdAt": "2025-05-06T10:38:51Z",
+                "updatedAt": "2025-06-13T09:18:05Z"
+            }
+        ],
+        "code": "SUCCESS"
+    }
 ---
 
 

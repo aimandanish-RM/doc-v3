@@ -14,6 +14,79 @@ api:
     X-Timestamp: {{timestamp}}
   body: |
     {}
+
+examples:
+  request: |
+    There is no example request provided.
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "items": [
+        {
+          "id": "1662168764176583360",
+          "name": "Test Store",
+          "addressLine1": "20, JALAN JASA 38, TAMAN MUTIARA RINI",
+          "addressLine2": "",
+          "postCode": "81230",
+          "city": "BALING",
+          "state": "KEDAH",
+          "country": "MALAYSIA",
+          "countryCode": "60",
+          "phoneNumber": "12354645547",
+          "geoLocation": {
+            "latitude": 0,
+            "longitude": 0
+          },
+          "status": "ACTIVE",
+          "createdAt": "2018-05-16T08:05:02Z",
+          "updatedAt": "2018-05-16T08:05:02Z"
+        },
+        {
+          "id": "526742853846521323",
+          "name": "yussuf",
+          "addressLine1": "GUGUSAN MELUR",
+          "addressLine2": "",
+          "postCode": "47810",
+          "city": "PETALING JAYA",
+          "state": "SELANGOR",
+          "country": "MALAYSIA.",
+          "countryCode": "60",
+          "phoneNumber": "176473298",
+          "geoLocation": {
+            "latitude": 0,
+            "longitude": 0
+          },
+          "status": "ACTIVE",
+          "createdAt": "2018-05-27T10:12:25Z",
+          "updatedAt": "2018-05-27T10:12:25Z"
+        },
+        {
+          "id": "6883264812332703106",
+          "name": "XXX",
+          "addressLine1": "",
+          "addressLine2": "",
+          "postCode": "",
+          "city": "",
+          "state": "",
+          "country": "",
+          "countryCode": "",
+          "phoneNumber": "",
+          "geoLocation": {
+            "latitude": 0,
+            "longitude": 0
+          },
+          "status": "ACTIVE",
+          "createdAt": "2018-05-14T09:26:23Z",
+          "updatedAt": "2018-05-14T09:26:23Z"
+        }
+      ],
+      "code": "SUCCESS",
+      "meta": {
+        "count": 3,
+        "total": 3
+      }
+    }
 ---
 Get Store By ID
 

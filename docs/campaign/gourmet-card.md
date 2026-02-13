@@ -18,6 +18,52 @@ api:
       "memberCardId": "string",
       "storeId": "string"
     }
+
+examples:
+  request: |
+    curl --location --request POST "https://sb-open.revenuemonster.my/v3/loyalty/chop-stamp/card/scan" \
+    --header "Content-Type: application/json" \
+    --header "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjIwMTgtMDMtMTMiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOlsiYXBpX2NsaWVudEBFaGNLQzA5QmRYUm9RMnhwWlc1MEVNV1Z4NF9UbE5MZEZRIl0sImV4cCI6MTU4NjMzNzc1OCwiaWF0IjoxNTgzNzQ1NzU4LCJpc3MiOiJodHRwczovL3NiLW9hdXRoLnJldmVudWVtb25zdGVyLm15IiwianRpIjoiRWh3S0VFOUJkWFJvUVdOalpYTnpWRzlyWlc0UXlKSG9qb2VNcHYwViIsIm5iZiI6MTU4Mzc0NTc1OCwic3ViIjoiRWhRS0NFMWxjbU5vWVc1MEVKWFZ6ZDN3cmFxVE9SSVFDZ1JWYzJWeUVJeUpxSXp2eU1QVmNRIn0.FfBkCb7fjCKJdcy_DS06dKgEtcAvukPio0HyDRtH2UovhZsLFSqD_8oo21u094XSor_mqFg4hqXmLaHjX-h92Wz3kHl7OwiKQb16x8Rnl5OdyPHtMqIZqP8ab8Ch0RHEZ33VchK1zBTnG6Xosrb1B44tWqJ0_kdTtbRZN4rG821C8i4sb6sx8GaxgluJ5q7CEifMTBFJam_Jub9LfAfukq8YyIl0Bykp7B3A_su2QoELL9L_ElJdV9FuwFPHcKr9bxLvVSrEdyrFg7IBm_tJHxSl8gTh3j4b6lWZrBCfMSLraXaYRNzz1ddbVnwYD4aRuSyRmQeMYTUj0cInktnKUA" \
+    --header "X-Signature: sha256 Sty3LNcKA8+WlMHtAgIY+y1xbwnzKsN0UdyKaW+yYIgcTkBAtF7G5Lx251qQITURJ4wiXPDODxhs1nFVmBBing==" \
+    --header "X-Nonce-Str: VYNknZohxwicZMaWbNdBKUrnrxDtaRhN" \
+    --header "X-Timestamp: 1528450585" \
+    --data-raw "{
+    \"memberCardId\": \"28158443195878043074\"
+     \"storeId\": \"4949529109748431621\",
+    }"
+  body: |
+    There is no example body request.
+  response: |
+    {
+      "item": {
+        "id": "28158443195878043074",
+        "transactionId": "1584431832399399267",
+        "cardId": "1576632501406219093",
+        "memberId": "1584431797984173748",
+        "expiredAt": "2020-05-16T07:59:18Z",
+        "createdAt": "2020-03-17T07:59:18Z",
+        "updatedAt": "2020-03-17T07:59:18Z",
+        "card": {
+          "id": "1576632501406219093",
+          "name": "九折美食卡",
+          "lifetime": 60,
+          "lifetimeType": "DAY",
+          "amount": 10,
+          "currency": "RMB",
+          "discountType": "DISCOUNT",
+          "discountValue": "1000",
+          "minimumSpentAmount": 10,
+          "wallet": "ALIPAY",
+          "templateId": "20191218000000002154347000300178",
+          "status": "ACTIVE",
+          "image": "https://rm-sandbox-membership-public.oss-ap-southeast-3.aliyuncs.com/gourmet/card/image-1579510518825819467-1579510518.png",
+          "icon": "https://rm-sandbox-membership-public.oss-ap-southeast-3.aliyuncs.com/gourmet/card/icon-1579505367845553007-1579505367.png",
+          "createdAt": "2019-12-18T01:28:24Z",
+          "updatedAt": "2019-12-18T01:28:24Z"
+        }
+      },
+      "code": "SUCCESS"
+    }
 ---
 
 
