@@ -203,3 +203,48 @@
 .jsonValue {
   color: #facc15; /* yellow */
 }
+
+/* copy to clipboard styling */
+.iconBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: var(--ifm-font-color-base);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.iconBtn:hover {
+  opacity: 0.7;
+  transform: scale(1.1);
+}
+
+
+/* tick copy to clipboard styling */
+.editorWrapper {
+  position: relative;
+}
+
+.copyIcon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--ifm-font-color-base);
+  transition: all 0.2s ease;
+  z-index: 2;
+}
+
+.copyIcon:hover {
+  opacity: 0.7;
+  transform: scale(1.1);
+}
+
+.copied {
+  color: #22c55e;
+}

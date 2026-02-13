@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { getToken, setToken } from "../../utils/auth";
 import { generateCurl, generateFetch } from "../../utils/apiExamples";
 import styles from "./styles.module.css";
+import { FiCopy, FiCheck } from "react-icons/fi";
 
 /* ================= TYPES ================= */
 
@@ -30,6 +31,9 @@ type Props = {
     | Record<string, BodyField>;
   bodyType?: "json" | "multipart";
 };
+
+
+
 
 const highlightJson = (json: string) => {
   return json
@@ -133,6 +137,17 @@ export default function ApiPlayground(props: Props) {
   const [activeTab, setActiveTab] =
     useState<"playground" | "code">("playground");
   const [codeLang, setCodeLang] = useState<"curl" | "fetch">("curl");
+
+  /* ================= COPY STATE ================= */
+
+const [copiedBlock, setCopiedBlock] = useState<string | null>(null);
+
+const handleCopy = async (value: string, block: string) => {
+  await navigator.clipboard.writeText(value);
+  setCopiedBlock(block);
+  setTimeout(() => setCopiedBlock(null), 1500);
+};
+
 
   /* ================= SEND ================= */
 
@@ -289,44 +304,69 @@ export default function ApiPlayground(props: Props) {
 
           <div className={styles.blockHeader}>
             <label className={styles.label}>Headers</label>
-            <button onClick={() => copy(JSON.stringify(headers, null, 2))}>
-              Copy
-            </button>
+
+
           </div>
 
-        <pre
-  className={`${styles.editor}`}
-  contentEditable
-  suppressContentEditableWarning
-  onBlur={(e) => {
-    try {
-      setHeaders(JSON.parse(e.currentTarget.innerText));
-    } catch {
-      // silently ignore invalid JSON while typing
+<div className={styles.editorWrapper}>
+  <button
+    className={`${styles.copyIcon} ${
+      copiedBlock === "headers" ? styles.copied : ""
+    }`}
+    onClick={() =>
+      handleCopy(JSON.stringify(headers, null, 2), "headers")
     }
-  }}
-  dangerouslySetInnerHTML={{
-    __html: highlightJson(JSON.stringify(headers, null, 2)),
-  }}
-/>
+  >
+    {copiedBlock === "headers" ? <FiCheck /> : <FiCopy />}
+  </button>
+
+  <pre
+    className={styles.editor}
+    contentEditable
+    suppressContentEditableWarning
+    onBlur={(e) => {
+      try {
+        setHeaders(JSON.parse(e.currentTarget.innerText));
+      } catch {}
+    }}
+    dangerouslySetInnerHTML={{
+      __html: highlightJson(JSON.stringify(headers, null, 2)),
+    }}
+  />
+</div>
+
+
 
 
           {props.method !== "GET" && (
             <>
               <div className={styles.blockHeader}>
                 <label className={styles.label}>Body</label>
-                <button onClick={() => copy(jsonBody)}>Copy</button>
+
               </div>
 
-            <pre
-  className={`${styles.editor}`}
-  contentEditable
-  suppressContentEditableWarning
-  onBlur={(e) => setJsonBody(e.currentTarget.innerText)}
-  dangerouslySetInnerHTML={{
-    __html: highlightJson(jsonBody),
-  }}
-/>
+<div className={styles.editorWrapper}>
+  <button
+    className={`${styles.copyIcon} ${
+      copiedBlock === "body" ? styles.copied : ""
+    }`}
+    onClick={() => handleCopy(jsonBody, "body")}
+  >
+    {copiedBlock === "body" ? <FiCheck /> : <FiCopy />}
+  </button>
+
+  <pre
+    className={styles.editor}
+    contentEditable
+    suppressContentEditableWarning
+    onBlur={(e) => setJsonBody(e.currentTarget.innerText)}
+    dangerouslySetInnerHTML={{
+      __html: highlightJson(jsonBody),
+    }}
+  />
+</div>
+
+
 
             </>
           )}
