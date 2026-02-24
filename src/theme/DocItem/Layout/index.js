@@ -2,30 +2,32 @@ import React from "react";
 import Layout from "@theme-original/DocItem/Layout";
 import { useDoc } from "@docusaurus/theme-common/internal";
 import ApiPlayground from "@site/src/components/ApiPlayground";
+import ApiExamples from "@site/src/components/ApiExamples";
 import styles from "./styles.module.css";
 
 export default function LayoutWrapper(props) {
   const { frontMatter } = useDoc();
-  const api = frontMatter?.api;
 
-  // Normal docs → default layout (with TOC)
+  const api = frontMatter?.api;
+  const examples = frontMatter?.examples;
+
   if (!api) {
     return <Layout {...props} />;
   }
 
-  // API docs → custom split layout
-return (
-  <div
-    className={`${styles.apiLayout} ${api ? styles.apiPage : ""}`}
-  >
-    <main className={styles.docContent}>
+  return (
+    <div className={`${styles.apiLayout} ${styles.apiPage}`}>
       <Layout {...props} />
-    </main>
 
-    <aside className={styles.playground}>
-      <ApiPlayground {...api} />
-    </aside>
-  </div>
-);
+      <aside className={styles.playground}>
+        <ApiPlayground {...api} />
 
+        <ApiExamples
+          exampleRequest={examples?.request}
+          exampleResponse={examples?.response}
+        />
+      </aside>
+    </div>
+  );
 }
+

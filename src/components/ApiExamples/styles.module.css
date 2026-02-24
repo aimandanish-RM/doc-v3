@@ -1,0 +1,19 @@
+.wrapper {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.card {
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 1rem;
+  background: rgba(255,255,255,0.02);
+}
+
+.header {
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
