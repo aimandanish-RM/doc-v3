@@ -1,112 +1,109 @@
-const CORS_HEADERS = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers":
-    "Content-Type, Authorization, X-Target-Url",
-};
+interface PlaygroundRequest {
+  method: string
+  body?: any
+  url: string
+  headers?: Record<string, string>
+}
+
+const allowedHosts = [
+  "sb-open.revenuemonster.my",
+  "open.revenuemonster.my",
+  "sb-oauth.revenuemonster.my",
+  "oauth.revenuemonster.my"
+]
 
 export default {
   async fetch(request: Request): Promise<Response> {
-    // =====================
-    // CORS PREFLIGHT
-    // =====================
+
+    const origin = request.headers.get("Origin") || "*"
+
+    const corsHeaders = {
+      "Access-Control-Allow-Origin": origin,
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers":
+        request.headers.get("Access-Control-Request-Headers") || "*",
+      "Access-Control-Allow-Credentials": "true",
+    }
+
     if (request.method === "OPTIONS") {
-      return new Response(null, {
-        status: 204,
-        headers: CORS_HEADERS,
-      });
+      return new Response(null, { status: 204, headers: corsHeaders })
     }
 
     if (request.method !== "POST") {
       return new Response("Method Not Allowed", {
         status: 405,
-        headers: CORS_HEADERS,
-      });
+        headers: corsHeaders
+      })
     }
-
-    const url = new URL(request.url);
-
-    // ==========================================================
-    // 🔥 MULTIPART PASSTHROUGH (NO JSON PARSING)
-    // ==========================================================
-    if (url.pathname.endsWith("/multipart")) {
-      const targetUrl = request.headers.get("x-target-url");
-
-      if (!targetUrl) {
-        return new Response(
-          JSON.stringify({ error: "Missing x-target-url header" }),
-          { status: 400, headers: CORS_HEADERS }
-        );
-      }
-
-      const res = await fetch(targetUrl, {
-        method: "POST",
-        headers: Object.fromEntries(
-          [...request.headers].filter(
-            ([key]) => key.toLowerCase() !== "content-type"
-          )
-        ),
-        body: request.body, // ✅ RAW STREAM (file-safe)
-      });
-
-      const text = await res.text();
-
-      return new Response(text, {
-        status: res.status,
-        headers: {
-          ...CORS_HEADERS,
-          "Content-Type": "application/json",
-        },
-      });
-    }
-
-    // ==========================================================
-    // ✅ JSON PROXY (UNCHANGED, SAFE)
-    // ==========================================================
-    let payload: {
-      url: string;
-      method: string;
-      headers?: Record<string, string>;
-      body?: any;
-    };
 
     try {
-      payload = await request.json();
-    } catch {
-      return new Response(
-        JSON.stringify({ error: "Invalid JSON body" }),
-        { status: 400, headers: CORS_HEADERS }
-      );
-    }
+      const { method, body, url, headers } =
+        await request.json() as PlaygroundRequest
 
-    const { url: targetUrl, method, headers, body } = payload;
+      if (!url || !method) {
+        return new Response(
+          JSON.stringify({ error: "Missing url or method" }),
+          {
+            status: 400,
+            headers: {
+              ...corsHeaders,
+              "Content-Type": "application/json"
+            }
+          }
+        )
+      }
 
-    if (!targetUrl || !method) {
-      return new Response(
-        JSON.stringify({ error: "Missing url or method" }),
-        { status: 400, headers: CORS_HEADERS }
-      );
-    }
+      const urlObj = new URL(url)
 
-    const res = await fetch(targetUrl, {
-      method,
-      headers,
-      body:
-        typeof body === "string"
-          ? body
-          : body
+      if (!allowedHosts.includes(urlObj.hostname)) {
+        return new Response(
+          JSON.stringify({ error: "Host not allowed" }),
+          {
+            status: 403,
+            headers: {
+              ...corsHeaders,
+              "Content-Type": "application/json"
+            }
+          }
+        )
+      }
+
+      const requestBody =
+        body && typeof body !== "string"
           ? JSON.stringify(body)
-          : undefined,
-    });
+          : body
 
-    const text = await res.text();
+      const response = await fetch(url, {
+        method,
+        headers,
+        body: requestBody
+      })
 
-    return new Response(text, {
-      status: res.status,
-      headers: {
-        ...CORS_HEADERS,
-        "Content-Type": "application/json",
-      },
-    });
-  },
-};
+      const responseText = await response.text()
+
+      return new Response(responseText, {
+        status: response.status,
+        headers: {
+          ...corsHeaders,
+          "Content-Type":
+            response.headers.get("Content-Type") || "application/json"
+        }
+      })
+
+    } catch (err: any) {
+      return new Response(
+        JSON.stringify({
+          error: "Worker crashed",
+          message: err?.message || "Unknown error"
+        }),
+        {
+          status: 500,
+          headers: {
+            ...corsHeaders,
+            "Content-Type": "application/json"
+          }
+        }
+      )
+    }
+  }
+}
