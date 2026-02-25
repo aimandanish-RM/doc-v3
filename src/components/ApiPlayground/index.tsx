@@ -1,8 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { getToken, setToken } from "../../utils/auth";
-import { generateCurl, generateFetch } from "../../utils/apiExamples";
 import styles from "./styles.module.css";
-import { FiCopy, FiCheck } from "react-icons/fi";
 
 /* ================= TYPES ================= */
 
@@ -13,27 +11,16 @@ type UrlConfig =
       prod: string;
     };
 
-type BodyField =
-  | { type: "file" }
-  | { type: "string"; example?: string };
-
 type Props = {
   method: string;
   title?: string;
   url?: UrlConfig;
-  headers?: Record<string, string>;
-  body?:
-    | string
-    | {
-        type: "json";
-        example?: string;
-      }
-    | Record<string, BodyField>;
-  bodyType?: "json" | "multipart";
+  body?: string | { type: "json"; example?: string };
+  requiresSignature?: boolean;
+  requiresAccessToken?: boolean;
 };
 
-
-
+/* ================= JSON HIGHLIGHT ================= */
 
 const highlightJson = (json: string) => {
   return json
@@ -45,7 +32,7 @@ const highlightJson = (json: string) => {
       `<span class="${styles.jsonKey}">$1</span>:`
     )
     .replace(
-      /:\s*("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*")/g,
+      /:\s*("(\\u[a-zA-Z0-9]{4}|\\[^\\"])*")/g,
       `: <span class="${styles.jsonValue}">$1</span>`
     )
     .replace(
@@ -54,341 +41,407 @@ const highlightJson = (json: string) => {
     );
 };
 
-
 /* ================= COMPONENT ================= */
 
 export default function ApiPlayground(props: Props) {
   if (!props.url) return null;
 
-  const bodyType = props.bodyType ?? "json";
+  const requiresSignature = props.requiresSignature ?? true;
+  const requiresAccessToken = props.requiresAccessToken ?? true;
+  const isOAuth = !requiresSignature && !requiresAccessToken;
 
-  /* ================= ENV ================= */
+  /* ================= URL HANDLING ================= */
 
-  const [env, setEnv] = useState<"sandbox" | "prod">("sandbox");
+  const baseUrl =
+    typeof props.url === "string"
+      ? props.url
+      : props.url.sandbox;
 
-  const resolvedUrl =
-    typeof props.url === "string" ? props.url : props.url[env];
+  const paramMatch = baseUrl.match(/{([^}]+)}/);
+  const paramKey = paramMatch ? paramMatch[1] : null;
 
-  /* ================= TOKEN ================= */
-
-  const [token, setTokenState] = useState(getToken() ?? "");
-
-  /* ================= HEADERS ================= */
-
-  const normalizeHeaders = (h?: Record<string, any>) =>
-    h
-      ? Object.fromEntries(
-          Object.entries(h).map(([k, v]) => [k, typeof v === "string" ? v : ""])
-        )
-      : {};
-
-  const [headers, setHeaders] = useState<Record<string, string>>(
-    normalizeHeaders(props.headers)
+  const [paramValue, setParamValue] = useState(
+    paramKey ?? ""
   );
 
-  const safeHeaders = Object.fromEntries(
-    Object.entries(headers).filter(
-      ([k]) => k.toLowerCase() !== "content-type"
-    )
-  );
-
-  /* ================= JSON BODY ================= */
-
-  let initialJsonBody = "{}";
-
-  if (typeof props.body === "string") {
-    initialJsonBody = props.body;
-  } else if (
-    props.body &&
-    typeof props.body === "object" &&
-    "type" in props.body &&
-    props.body.type === "json" &&
-    typeof props.body.example === "string"
-  ) {
-    initialJsonBody = props.body.example;
-  }
-
-  const [jsonBody, setJsonBody] = useState(initialJsonBody);
-
-  /* ================= MULTIPART BODY ================= */
-
-  const [multipart, setMultipart] = useState<Record<string, any>>({});
-
-  useEffect(() => {
-    if (bodyType !== "multipart") return;
-    if (!props.body || typeof props.body !== "object") return;
-    if ("type" in props.body) return;
-
-    const defaults: Record<string, any> = {};
-    Object.entries(props.body).forEach(([key, cfg]) => {
-      if (cfg.type === "string" && cfg.example) {
-        defaults[key] = cfg.example;
-      }
-    });
-
-    setMultipart(defaults);
-  }, [bodyType, props.body]);
+  const resolvedUrl = paramKey
+    ? baseUrl.replace(
+        `{${paramKey}}`,
+        paramValue
+      )
+    : baseUrl;
 
   /* ================= STATE ================= */
 
-  const [response, setResponse] = useState<any>(null);
-  const [status, setStatus] = useState<number | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] =
-    useState<"playground" | "code">("playground");
-  const [codeLang, setCodeLang] = useState<"curl" | "fetch">("curl");
+  const [tokenState, setTokenState] = useState(
+    getToken() ?? ""
+  );
 
-  /* ================= COPY STATE ================= */
+  const [privateKey, setPrivateKey] =
+    useState("");
 
-const [copiedBlock, setCopiedBlock] = useState<string | null>(null);
+  const initialHeaders = isOAuth
+    ? {
+        Authorization:
+          "Basic base64(clientId:clientSecret)",
+      }
+    : {};
 
-const handleCopy = async (value: string, block: string) => {
-  await navigator.clipboard.writeText(value);
-  setCopiedBlock(block);
-  setTimeout(() => setCopiedBlock(null), 1500);
-};
+  const [headers, setHeaders] =
+    useState<Record<string, string>>(
+      initialHeaders
+    );
 
+  const [jsonBody, setJsonBody] = useState(
+    typeof props.body === "string"
+      ? props.body
+      : props.body?.type === "json"
+      ? props.body.example ?? "{}"
+      : "{}"
+  );
+
+  const [response, setResponse] =
+    useState<any>(null);
+
+  const [status, setStatus] =
+    useState<number | null>(null);
+
+  const [loading, setLoading] =
+    useState(false);
+
+  /* ================= SIGNATURE ================= */
+
+  const generateNonce = () =>
+    crypto.randomUUID().replace(/-/g, "");
+
+  const generateTimestamp = () =>
+    Math.floor(Date.now() / 1000).toString();
+
+  const importPrivateKey = async (
+    pem: string
+  ) => {
+    const cleaned = pem
+      .replace(/-----BEGIN.*?-----/, "")
+      .replace(/-----END.*?-----/, "")
+      .replace(/\s/g, "");
+
+    const binaryDer = window.atob(cleaned);
+    const binaryArray = Uint8Array.from(
+      binaryDer,
+      (c) => c.charCodeAt(0)
+    );
+
+    return await crypto.subtle.importKey(
+      "pkcs8",
+      binaryArray.buffer,
+      {
+        name: "RSASSA-PKCS1-v1_5",
+        hash: "SHA-256",
+      },
+      false,
+      ["sign"]
+    );
+  };
+
+  const signRSA = async (
+    privateKeyPem: string,
+    method: string,
+    fullUrl: string,
+    body: any
+  ) => {
+    const nonce = generateNonce();
+    const timestamp = generateTimestamp();
+
+    let base64Data = "";
+    if (body && Object.keys(body).length > 0) {
+      base64Data = btoa(
+        JSON.stringify(body)
+      );
+    }
+
+    let plainText = "";
+    if (base64Data)
+      plainText += `data=${base64Data}&`;
+
+    plainText +=
+      `method=${method.toLowerCase()}` +
+      `&nonceStr=${nonce}` +
+      `&requestUrl=${fullUrl}` +
+      `&signType=sha256` +
+      `&timestamp=${timestamp}`;
+
+    const encoder = new TextEncoder();
+    const key =
+      await importPrivateKey(privateKeyPem);
+
+    const signatureBuffer =
+      await crypto.subtle.sign(
+        "RSASSA-PKCS1-v1_5",
+        key,
+        encoder.encode(plainText)
+      );
+
+    const signatureBase64 = btoa(
+      String.fromCharCode(
+        ...new Uint8Array(signatureBuffer)
+      )
+    );
+
+    return { signature: signatureBase64, nonce, timestamp };
+  };
 
   /* ================= SEND ================= */
 
   const send = async () => {
-    setLoading(true);
-    setResponse(null);
-    setStatus(null);
-
     try {
-      let res: Response;
+      setLoading(true);
+      setResponse(null);
+      setStatus(null);
 
-      if (bodyType === "multipart") {
-        const form = new FormData();
-        Object.entries(multipart).forEach(([k, v]) => form.append(k, v));
+      let requestBody: any;
 
-        res = await fetch(
-          "https://rm-api-proxy.aiman-danish.workers.dev/multipart",
-          {
-            method: "POST",
-            headers: {
-              "x-target-url": resolvedUrl,
-              ...(token ? { Authorization: `Bearer ${token}` } : {}),
-              ...safeHeaders,
-            },
-            body: form,
-          }
-        );
-      } else {
-        res = await fetch(
-          "https://rm-api-proxy.aiman-danish.workers.dev/json",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              url: resolvedUrl,
-              method: props.method,
-              headers: {
-                ...headers,
-                ...(token ? { Authorization: `Bearer ${token}` } : {}),
-              },
-              ...(props.method !== "GET" &&
-                props.method !== "DELETE" && {
-                  body: jsonBody,
-                }),
-            }),
-          }
+      if (
+        !["GET", "DELETE"].includes(
+          props.method
+        )
+      ) {
+        requestBody = JSON.parse(
+          jsonBody || "{}"
         );
       }
 
+      const finalHeaders: Record<
+        string,
+        string
+      > = { ...headers };
+
+      if (!isOAuth) {
+        if (requiresAccessToken) {
+          finalHeaders[
+            "Authorization"
+          ] = `Bearer ${tokenState}`;
+        }
+
+        if (requiresSignature) {
+          const {
+            signature,
+            nonce,
+            timestamp,
+          } = await signRSA(
+            privateKey,
+            props.method,
+            resolvedUrl,
+            requestBody
+          );
+
+          finalHeaders[
+            "X-Timestamp"
+          ] = timestamp;
+          finalHeaders[
+            "X-Nonce-Str"
+          ] = nonce;
+          finalHeaders[
+            "X-Signature"
+          ] = `sha256 ${signature}`;
+        }
+
+        if (requestBody) {
+          finalHeaders[
+            "Content-Type"
+          ] = "application/json";
+        }
+      }
+
+      const res = await fetch(
+        "https://rm-api-proxy.aiman-danish.workers.dev",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+          body: JSON.stringify({
+            url: resolvedUrl,
+            method: props.method,
+            headers: finalHeaders,
+            body: requestBody,
+          }),
+        }
+      );
+
+      const text = await res.text();
+
       setStatus(res.status);
-      setResponse(await res.json());
+
+      try {
+        setResponse(JSON.parse(text));
+      } catch {
+        setResponse(text);
+      }
     } catch (err: any) {
-      setResponse({ error: true, message: err.message });
+      alert(err.message);
     } finally {
       setLoading(false);
     }
   };
 
-  /* ================= CODE ================= */
-
-  const codeBody = bodyType === "json" ? jsonBody : "[form-data]";
-
-  const code = useMemo(() => {
-    return codeLang === "curl"
-      ? generateCurl({
-          method: props.method,
-          url: resolvedUrl,
-          headers,
-          body: codeBody,
-          token,
-        })
-      : generateFetch({
-          method: props.method,
-          url: resolvedUrl,
-          headers,
-          body: codeBody,
-          token,
-        });
-  }, [codeLang, props.method, resolvedUrl, headers, codeBody, token]);
-
-  const copy = (value: string) => navigator.clipboard.writeText(value);
-
-  const methodClass = styles[props.method.toLowerCase()];
-
   /* ================= RENDER ================= */
 
   return (
     <div className={styles.wrapper}>
-      {/* HEADER */}
       <div className={styles.header}>
-        <span className={`${styles.method} ${methodClass}`}>
+        <span
+          className={`${styles.method} ${
+            styles[
+              props.method.toLowerCase()
+            ]
+          }`}
+        >
           {props.method}
         </span>
 
-        <span className={styles.url}>{resolvedUrl}</span>
-
-        <div className={styles.envToggle}>
-          <button
-            className={`${styles.envBtn} ${
-              env === "sandbox" ? styles.envActiveSandbox : ""
-            }`}
-            onClick={() => setEnv("sandbox")}
-          >
-            Sandbox
-          </button>
-          <button
-            className={`${styles.envBtn} ${
-              env === "prod" ? styles.envActiveProd : ""
-            }`}
-            onClick={() => setEnv("prod")}
-          >
-            Prod
-          </button>
-        </div>
-      </div>
-
-      {/* TABS */}
-      <div className={styles.tabs}>
-        <button
-          className={`${styles.tab} ${
-            activeTab === "playground" ? styles.tabActive : ""
-          }`}
-          onClick={() => setActiveTab("playground")}
-        >
-          Playground
-        </button>
-
-        <select
-          className={styles.select}
-          value={codeLang}
-          onChange={(e) => {
-            setActiveTab("code");
-            setCodeLang(e.target.value as any);
-          }}
-        >
-          <option value="curl">cURL</option>
-          <option value="fetch">Fetch</option>
-        </select>
-      </div>
-
-      {/* PLAYGROUND */}
-      {activeTab === "playground" && (
-        <>
-          <label className={styles.label}>Access Token</label>
-          <input
-            className={styles.input}
-            type="password"
-            value={token}
-            onChange={(e) => {
-              setTokenState(e.target.value);
-              setToken(e.target.value);
-            }}
-          />
-
-          <div className={styles.blockHeader}>
-            <label className={styles.label}>Headers</label>
-
-
-          </div>
-
-<div className={styles.editorWrapper}>
-  <button
-    className={`${styles.copyIcon} ${
-      copiedBlock === "headers" ? styles.copied : ""
-    }`}
-    onClick={() =>
-      handleCopy(JSON.stringify(headers, null, 2), "headers")
-    }
-  >
-    {copiedBlock === "headers" ? <FiCheck /> : <FiCopy />}
-  </button>
-
-  <pre
-    className={styles.editor}
-    contentEditable
-    suppressContentEditableWarning
-    onBlur={(e) => {
-      try {
-        setHeaders(JSON.parse(e.currentTarget.innerText));
-      } catch {}
-    }}
-    dangerouslySetInnerHTML={{
-      __html: highlightJson(JSON.stringify(headers, null, 2)),
-    }}
-  />
-</div>
-
-
-
-
-          {props.method !== "GET" && (
+        <span className={styles.url}>
+          {paramKey ? (
             <>
-              <div className={styles.blockHeader}>
-                <label className={styles.label}>Body</label>
-
-              </div>
-
-<div className={styles.editorWrapper}>
-  <button
-    className={`${styles.copyIcon} ${
-      copiedBlock === "body" ? styles.copied : ""
-    }`}
-    onClick={() => handleCopy(jsonBody, "body")}
-  >
-    {copiedBlock === "body" ? <FiCheck /> : <FiCopy />}
-  </button>
-
-  <pre
-    className={styles.editor}
-    contentEditable
-    suppressContentEditableWarning
-    onBlur={(e) => setJsonBody(e.currentTarget.innerText)}
-    dangerouslySetInnerHTML={{
-      __html: highlightJson(jsonBody),
-    }}
-  />
-</div>
-
-
-
+              {
+                baseUrl.split(
+                  `{${paramKey}}`
+                )[0]
+              }
+              <span
+                contentEditable
+                suppressContentEditableWarning
+                className={
+                  styles.urlParam
+                }
+                onBlur={(e) =>
+                  setParamValue(
+                    e.currentTarget.innerText.trim()
+                  )
+                }
+              >
+                {paramValue}
+              </span>
+              {
+                baseUrl.split(
+                  `{${paramKey}}`
+                )[1]
+              }
             </>
+          ) : (
+            baseUrl
           )}
+        </span>
+      </div>
 
-          <button
-            className={styles.send}
-            onClick={send}
-            disabled={loading}
-          >
-            ▶ Send Request
-          </button>
-
-          {status && (
-            <pre className={styles.response}>
-              {JSON.stringify(response, null, 2)}
-            </pre>
-          )}
+      {requiresSignature && (
+        <>
+          <label className={styles.label}>
+            Private Key
+          </label>
+          <textarea
+            className={styles.textarea}
+            value={privateKey}
+            onChange={(e) =>
+              setPrivateKey(
+                e.target.value
+              )
+            }
+          />
         </>
       )}
 
-      {/* CODE */}
-      {activeTab === "code" && <pre className={styles.code}>{code}</pre>}
+      {requiresAccessToken && (
+        <>
+          <label className={styles.label}>
+            Access Token
+          </label>
+          <input
+            className={styles.input}
+            type="password"
+            value={tokenState}
+            onChange={(e) => {
+              setTokenState(
+                e.target.value
+              );
+              setToken(
+                e.target.value
+              );
+            }}
+          />
+        </>
+      )}
+
+      <label className={styles.label}>
+        Headers
+      </label>
+
+      <pre
+        className={styles.editor}
+        contentEditable
+        suppressContentEditableWarning
+        onBlur={(e) => {
+          try {
+            setHeaders(
+              JSON.parse(
+                e.currentTarget.innerText
+              )
+            );
+          } catch {}
+        }}
+        dangerouslySetInnerHTML={{
+          __html: highlightJson(
+            JSON.stringify(
+              headers,
+              null,
+              2
+            )
+          ),
+        }}
+      />
+
+      {props.method !== "GET" && (
+        <>
+          <label className={styles.label}>
+            Body
+          </label>
+          <pre
+            className={styles.editor}
+            contentEditable
+            suppressContentEditableWarning
+            onBlur={(e) =>
+              setJsonBody(
+                e.currentTarget.innerText
+              )
+            }
+            dangerouslySetInnerHTML={{
+              __html: highlightJson(
+                jsonBody
+              ),
+            }}
+          />
+        </>
+      )}
+
+      <button
+        className={styles.send}
+        onClick={send}
+        disabled={loading}
+      >
+        {loading
+          ? "Sending..."
+          : "▶ Send Request"}
+      </button>
+
+      {status && (
+        <pre className={styles.response}>
+          {JSON.stringify(
+            response,
+            null,
+            2
+          )}
+        </pre>
+      )}
     </div>
   );
 }
