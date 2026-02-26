@@ -50,55 +50,73 @@ export default function ApiPlayground(props: Props) {
   const requiresAccessToken = props.requiresAccessToken ?? true;
   const isOAuth = !requiresSignature && !requiresAccessToken;
 
-  /* ================= URL HANDLING ================= */
+  /* ================= ENV SWITCH ================= */
+
+  const hasEnv =
+    typeof props.url !== "string";
+
+  const [env, setEnv] = useState<
+    "sandbox" | "prod"
+  >("sandbox");
 
   const baseUrl =
     typeof props.url === "string"
       ? props.url
-      : props.url.sandbox;
+      : props.url[env];
 
-  const paramMatch = baseUrl.match(/{([^}]+)}/);
-  const paramKey = paramMatch ? paramMatch[1] : null;
+  /* ================= MULTI PARAM SUPPORT ================= */
 
-  const [paramValue, setParamValue] = useState(
-    paramKey ?? ""
+  const paramKeys = Array.from(
+    baseUrl.matchAll(/{([^}]+)}/g)
+  ).map((m) => m[1]);
+
+  const initialParams: Record<
+    string,
+    string
+  > = {};
+
+  paramKeys.forEach((key) => {
+    initialParams[key] = key;
+  });
+
+  const [params, setParams] =
+    useState(initialParams);
+
+  const resolvedUrl = paramKeys.reduce(
+    (url, key) =>
+      url.replace(
+        `{${key}}`,
+        params[key] ?? key
+      ),
+    baseUrl
   );
-
-  const resolvedUrl = paramKey
-    ? baseUrl.replace(
-        `{${paramKey}}`,
-        paramValue
-      )
-    : baseUrl;
 
   /* ================= STATE ================= */
 
-  const [tokenState, setTokenState] = useState(
-    getToken() ?? ""
-  );
+  const [tokenState, setTokenState] =
+    useState(getToken() ?? "");
 
   const [privateKey, setPrivateKey] =
     useState("");
 
-  const initialHeaders = isOAuth
-    ? {
-        Authorization:
-          "Basic base64(clientId:clientSecret)",
-      }
-    : {};
-
   const [headers, setHeaders] =
     useState<Record<string, string>>(
-      initialHeaders
+      isOAuth
+        ? {
+            Authorization:
+              "Basic base64(clientId:clientSecret)",
+          }
+        : {}
     );
 
-  const [jsonBody, setJsonBody] = useState(
-    typeof props.body === "string"
-      ? props.body
-      : props.body?.type === "json"
-      ? props.body.example ?? "{}"
-      : "{}"
-  );
+  const [jsonBody, setJsonBody] =
+    useState(
+      typeof props.body === "string"
+        ? props.body
+        : props.body?.type === "json"
+        ? props.body.example ?? "{}"
+        : "{}"
+    );
 
   const [response, setResponse] =
     useState<any>(null);
@@ -270,7 +288,6 @@ export default function ApiPlayground(props: Props) {
       );
 
       const text = await res.text();
-
       setStatus(res.status);
 
       try {
@@ -289,6 +306,35 @@ export default function ApiPlayground(props: Props) {
 
   return (
     <div className={styles.wrapper}>
+      {hasEnv && (
+        <div className={styles.envSwitch}>
+          <button
+            onClick={() =>
+              setEnv("sandbox")
+            }
+            className={
+              env === "sandbox"
+                ? styles.activeEnv
+                : ""
+            }
+          >
+            SANDBOX
+          </button>
+          <button
+            onClick={() =>
+              setEnv("prod")
+            }
+            className={
+              env === "prod"
+                ? styles.activeEnv
+                : ""
+            }
+          >
+            PROD
+          </button>
+        </div>
+      )}
+
       <div className={styles.header}>
         <span
           className={`${styles.method} ${
@@ -301,127 +347,40 @@ export default function ApiPlayground(props: Props) {
         </span>
 
         <span className={styles.url}>
-          {paramKey ? (
-            <>
-              {
-                baseUrl.split(
-                  `{${paramKey}}`
-                )[0]
-              }
-              <span
-                contentEditable
-                suppressContentEditableWarning
-                className={
-                  styles.urlParam
-                }
-                onBlur={(e) =>
-                  setParamValue(
-                    e.currentTarget.innerText.trim()
-                  )
-                }
-              >
-                {paramValue}
-              </span>
-              {
-                baseUrl.split(
-                  `{${paramKey}}`
-                )[1]
-              }
-            </>
-          ) : (
-            baseUrl
+          {baseUrl.split(/({[^}]+})/g).map(
+            (part, i) => {
+              const match =
+                part.match(
+                  /{([^}]+)}/
+                );
+              if (!match)
+                return <span key={i}>{part}</span>;
+
+              const key = match[1];
+
+              return (
+                <span
+                  key={i}
+                  contentEditable
+                  suppressContentEditableWarning
+                  className={
+                    styles.urlParam
+                  }
+                  onBlur={(e) =>
+                    setParams({
+                      ...params,
+                      [key]:
+                        e.currentTarget.innerText.trim(),
+                    })
+                  }
+                >
+                  {params[key]}
+                </span>
+              );
+            }
           )}
         </span>
       </div>
-
-      {requiresSignature && (
-        <>
-          <label className={styles.label}>
-            Private Key
-          </label>
-          <textarea
-            className={styles.textarea}
-            value={privateKey}
-            onChange={(e) =>
-              setPrivateKey(
-                e.target.value
-              )
-            }
-          />
-        </>
-      )}
-
-      {requiresAccessToken && (
-        <>
-          <label className={styles.label}>
-            Access Token
-          </label>
-          <input
-            className={styles.input}
-            type="password"
-            value={tokenState}
-            onChange={(e) => {
-              setTokenState(
-                e.target.value
-              );
-              setToken(
-                e.target.value
-              );
-            }}
-          />
-        </>
-      )}
-
-      <label className={styles.label}>
-        Headers
-      </label>
-
-      <pre
-        className={styles.editor}
-        contentEditable
-        suppressContentEditableWarning
-        onBlur={(e) => {
-          try {
-            setHeaders(
-              JSON.parse(
-                e.currentTarget.innerText
-              )
-            );
-          } catch {}
-        }}
-        dangerouslySetInnerHTML={{
-          __html: highlightJson(
-            JSON.stringify(
-              headers,
-              null,
-              2
-            )
-          ),
-        }}
-      />
-
-      {props.method !== "GET" && (
-        <>
-          <label className={styles.label}>
-            Body
-          </label>
-          <pre
-            className={styles.editor}
-            contentEditable
-            suppressContentEditableWarning
-            onBlur={(e) =>
-              setJsonBody(
-                e.currentTarget.innerText
-              )
-            }
-            dangerouslySetInnerHTML={{
-              __html: highlightJson(
-                jsonBody
-              ),
-            }}
-          />
-        </>
-      )}
 
       <button
         className={styles.send}
