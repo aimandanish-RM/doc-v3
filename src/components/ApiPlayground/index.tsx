@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { getToken, setToken } from "../../utils/auth";
 import styles from "./styles.module.css";
 
@@ -52,12 +52,8 @@ export default function ApiPlayground(props: Props) {
 
   /* ================= ENV SWITCH ================= */
 
-  const hasEnv =
-    typeof props.url !== "string";
-
-  const [env, setEnv] = useState<
-    "sandbox" | "prod"
-  >("sandbox");
+  const hasEnv = typeof props.url !== "string";
+  const [env, setEnv] = useState<"sandbox" | "prod">("sandbox");
 
   const baseUrl =
     typeof props.url === "string"
@@ -66,66 +62,46 @@ export default function ApiPlayground(props: Props) {
 
   /* ================= MULTI PARAM SUPPORT ================= */
 
-  const paramKeys = Array.from(
-    baseUrl.matchAll(/{([^}]+)}/g)
-  ).map((m) => m[1]);
+  const paramKeys = useMemo(() => {
+    return Array.from(
+      baseUrl.matchAll(/{([^}]+)}/g)
+    ).map((m) => m[1]);
+  }, [baseUrl]);
 
-  const initialParams: Record<
-    string,
-    string
-  > = {};
+  const [params, setParams] = useState<Record<string, string>>({});
 
-  paramKeys.forEach((key) => {
-    initialParams[key] = key;
-  });
-
-  const [params, setParams] =
-    useState(initialParams);
-
-  const resolvedUrl = paramKeys.reduce(
-    (url, key) =>
-      url.replace(
-        `{${key}}`,
-        params[key] ?? key
-      ),
-    baseUrl
-  );
+  const resolvedUrl = useMemo(() => {
+    return paramKeys.reduce((url, key) => {
+      const value = params[key] ?? key;
+      return url.replace(`{${key}}`, value);
+    }, baseUrl);
+  }, [baseUrl, paramKeys, params]);
 
   /* ================= STATE ================= */
 
-  const [tokenState, setTokenState] =
-    useState(getToken() ?? "");
+  const [tokenState, setTokenState] = useState(getToken() ?? "");
+  const [privateKey, setPrivateKey] = useState("");
 
-  const [privateKey, setPrivateKey] =
-    useState("");
+  const initialHeaders = isOAuth
+    ? {
+        Authorization: "Basic base64(clientId:clientSecret)",
+      }
+    : {};
 
   const [headers, setHeaders] =
-    useState<Record<string, string>>(
-      isOAuth
-        ? {
-            Authorization:
-              "Basic base64(clientId:clientSecret)",
-          }
-        : {}
-    );
+    useState<Record<string, string>>(initialHeaders);
 
-  const [jsonBody, setJsonBody] =
-    useState(
-      typeof props.body === "string"
-        ? props.body
-        : props.body?.type === "json"
-        ? props.body.example ?? "{}"
-        : "{}"
-    );
+  const [jsonBody, setJsonBody] = useState(
+    typeof props.body === "string"
+      ? props.body
+      : props.body?.type === "json"
+      ? props.body.example ?? "{}"
+      : "{}"
+  );
 
-  const [response, setResponse] =
-    useState<any>(null);
-
-  const [status, setStatus] =
-    useState<number | null>(null);
-
-  const [loading, setLoading] =
-    useState(false);
+  const [response, setResponse] = useState<any>(null);
+  const [status, setStatus] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
 
   /* ================= SIGNATURE ================= */
 
@@ -135,27 +111,21 @@ export default function ApiPlayground(props: Props) {
   const generateTimestamp = () =>
     Math.floor(Date.now() / 1000).toString();
 
-  const importPrivateKey = async (
-    pem: string
-  ) => {
+  const importPrivateKey = async (pem: string) => {
     const cleaned = pem
       .replace(/-----BEGIN.*?-----/, "")
       .replace(/-----END.*?-----/, "")
       .replace(/\s/g, "");
 
     const binaryDer = window.atob(cleaned);
-    const binaryArray = Uint8Array.from(
-      binaryDer,
-      (c) => c.charCodeAt(0)
+    const binaryArray = Uint8Array.from(binaryDer, (c) =>
+      c.charCodeAt(0)
     );
 
     return await crypto.subtle.importKey(
       "pkcs8",
       binaryArray.buffer,
-      {
-        name: "RSASSA-PKCS1-v1_5",
-        hash: "SHA-256",
-      },
+      { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
       false,
       ["sign"]
     );
@@ -172,14 +142,11 @@ export default function ApiPlayground(props: Props) {
 
     let base64Data = "";
     if (body && Object.keys(body).length > 0) {
-      base64Data = btoa(
-        JSON.stringify(body)
-      );
+      base64Data = btoa(JSON.stringify(body));
     }
 
     let plainText = "";
-    if (base64Data)
-      plainText += `data=${base64Data}&`;
+    if (base64Data) plainText += `data=${base64Data}&`;
 
     plainText +=
       `method=${method.toLowerCase()}` +
@@ -189,8 +156,7 @@ export default function ApiPlayground(props: Props) {
       `&timestamp=${timestamp}`;
 
     const encoder = new TextEncoder();
-    const key =
-      await importPrivateKey(privateKeyPem);
+    const key = await importPrivateKey(privateKeyPem);
 
     const signatureBuffer =
       await crypto.subtle.sign(
@@ -218,55 +184,35 @@ export default function ApiPlayground(props: Props) {
 
       let requestBody: any;
 
-      if (
-        !["GET", "DELETE"].includes(
-          props.method
-        )
-      ) {
-        requestBody = JSON.parse(
-          jsonBody || "{}"
-        );
+      if (!["GET", "DELETE"].includes(props.method)) {
+        requestBody = JSON.parse(jsonBody || "{}");
       }
 
-      const finalHeaders: Record<
-        string,
-        string
-      > = { ...headers };
+      const finalHeaders: Record<string, string> = {
+        ...headers,
+      };
 
       if (!isOAuth) {
         if (requiresAccessToken) {
-          finalHeaders[
-            "Authorization"
-          ] = `Bearer ${tokenState}`;
+          finalHeaders["Authorization"] = `Bearer ${tokenState}`;
         }
 
         if (requiresSignature) {
-          const {
-            signature,
-            nonce,
-            timestamp,
-          } = await signRSA(
-            privateKey,
-            props.method,
-            resolvedUrl,
-            requestBody
-          );
+          const { signature, nonce, timestamp } =
+            await signRSA(
+              privateKey,
+              props.method,
+              resolvedUrl,
+              requestBody
+            );
 
-          finalHeaders[
-            "X-Timestamp"
-          ] = timestamp;
-          finalHeaders[
-            "X-Nonce-Str"
-          ] = nonce;
-          finalHeaders[
-            "X-Signature"
-          ] = `sha256 ${signature}`;
+          finalHeaders["X-Timestamp"] = timestamp;
+          finalHeaders["X-Nonce-Str"] = nonce;
+          finalHeaders["X-Signature"] = `sha256 ${signature}`;
         }
 
         if (requestBody) {
-          finalHeaders[
-            "Content-Type"
-          ] = "application/json";
+          finalHeaders["Content-Type"] = "application/json";
         }
       }
 
@@ -274,10 +220,7 @@ export default function ApiPlayground(props: Props) {
         "https://rm-api-proxy.aiman-danish.workers.dev",
         {
           method: "POST",
-          headers: {
-            "Content-Type":
-              "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             url: resolvedUrl,
             method: props.method,
@@ -288,6 +231,7 @@ export default function ApiPlayground(props: Props) {
       );
 
       const text = await res.text();
+
       setStatus(res.status);
 
       try {
@@ -309,26 +253,14 @@ export default function ApiPlayground(props: Props) {
       {hasEnv && (
         <div className={styles.envSwitch}>
           <button
-            onClick={() =>
-              setEnv("sandbox")
-            }
-            className={
-              env === "sandbox"
-                ? styles.activeEnv
-                : ""
-            }
+            onClick={() => setEnv("sandbox")}
+            className={env === "sandbox" ? styles.activeEnv : ""}
           >
             SANDBOX
           </button>
           <button
-            onClick={() =>
-              setEnv("prod")
-            }
-            className={
-              env === "prod"
-                ? styles.activeEnv
-                : ""
-            }
+            onClick={() => setEnv("prod")}
+            className={env === "prod" ? styles.activeEnv : ""}
           >
             PROD
           </button>
@@ -338,67 +270,108 @@ export default function ApiPlayground(props: Props) {
       <div className={styles.header}>
         <span
           className={`${styles.method} ${
-            styles[
-              props.method.toLowerCase()
-            ]
+            styles[props.method.toLowerCase()]
           }`}
         >
           {props.method}
         </span>
 
         <span className={styles.url}>
-          {baseUrl.split(/({[^}]+})/g).map(
-            (part, i) => {
-              const match =
-                part.match(
-                  /{([^}]+)}/
-                );
-              if (!match)
-                return <span key={i}>{part}</span>;
+          {baseUrl.split(/({[^}]+})/g).map((part, i) => {
+            const match = part.match(/{([^}]+)}/);
+            if (!match) return <span key={i}>{part}</span>;
 
-              const key = match[1];
+            const key = match[1];
 
-              return (
-                <span
-                  key={i}
-                  contentEditable
-                  suppressContentEditableWarning
-                  className={
-                    styles.urlParam
-                  }
-                  onBlur={(e) =>
-                    setParams({
-                      ...params,
-                      [key]:
-                        e.currentTarget.innerText.trim(),
-                    })
-                  }
-                >
-                  {params[key]}
-                </span>
-              );
-            }
-          )}
+            return (
+              <span
+                key={i}
+                contentEditable
+                suppressContentEditableWarning
+                className={styles.urlParam}
+                onBlur={(e) =>
+                  setParams({
+                    ...params,
+                    [key]: e.currentTarget.innerText.trim(),
+                  })
+                }
+              >
+                {params[key] ?? key}
+              </span>
+            );
+          })}
         </span>
       </div>
+
+      {requiresSignature && (
+        <>
+          <label className={styles.label}>Private Key</label>
+          <textarea
+            className={styles.textarea}
+            value={privateKey}
+            onChange={(e) => setPrivateKey(e.target.value)}
+          />
+        </>
+      )}
+
+      {requiresAccessToken && (
+        <>
+          <label className={styles.label}>Access Token</label>
+          <input
+            className={styles.input}
+            type="password"
+            value={tokenState}
+            onChange={(e) => {
+              setTokenState(e.target.value);
+              setToken(e.target.value);
+            }}
+          />
+        </>
+      )}
+
+      <label className={styles.label}>Headers</label>
+      <pre
+        className={styles.editor}
+        contentEditable
+        suppressContentEditableWarning
+        onBlur={(e) => {
+          try {
+            setHeaders(JSON.parse(e.currentTarget.innerText));
+          } catch {}
+        }}
+        dangerouslySetInnerHTML={{
+          __html: highlightJson(
+            JSON.stringify(headers, null, 2)
+          ),
+        }}
+      />
+
+      {props.method !== "GET" && (
+        <>
+          <label className={styles.label}>Body</label>
+          <pre
+            className={styles.editor}
+            contentEditable
+            suppressContentEditableWarning
+            onBlur={(e) => setJsonBody(e.currentTarget.innerText)}
+            dangerouslySetInnerHTML={{
+              __html: highlightJson(jsonBody),
+            }}
+          />
+        </>
+      )}
 
       <button
         className={styles.send}
         onClick={send}
         disabled={loading}
       >
-        {loading
-          ? "Sending..."
-          : "▶ Send Request"}
+        {loading ? "Sending..." : "▶ Send Request"}
       </button>
 
       {status && (
         <pre className={styles.response}>
-          {JSON.stringify(
-            response,
-            null,
-            2
-          )}
+          {JSON.stringify(response, null, 2)}
         </pre>
       )}
     </div>
