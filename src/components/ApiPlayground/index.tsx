@@ -41,6 +41,25 @@ const highlightJson = (json: string) => {
     );
 };
 
+/* ================= DEEP SORT FUNCTION ================= */
+
+const sortObject = (obj: any): any => {
+  if (Array.isArray(obj)) {
+    return obj.map(sortObject);
+  }
+
+  if (obj !== null && typeof obj === "object") {
+    return Object.keys(obj)
+      .sort()
+      .reduce((result: any, key) => {
+        result[key] = sortObject(obj[key]);
+        return result;
+      }, {});
+  }
+
+  return obj;
+};
+
 /* ================= COMPONENT ================= */
 
 export default function ApiPlayground(props: Props) {
@@ -63,9 +82,7 @@ export default function ApiPlayground(props: Props) {
   /* ================= MULTI PARAM SUPPORT ================= */
 
   const paramKeys = useMemo(() => {
-    return Array.from(
-      baseUrl.matchAll(/{([^}]+)}/g)
-    ).map((m) => m[1]);
+    return Array.from(baseUrl.matchAll(/{([^}]+)}/g)).map((m) => m[1]);
   }, [baseUrl]);
 
   const [params, setParams] = useState<Record<string, string>>({});
@@ -141,8 +158,11 @@ export default function ApiPlayground(props: Props) {
     const timestamp = generateTimestamp();
 
     let base64Data = "";
+
     if (body && Object.keys(body).length > 0) {
-      base64Data = btoa(JSON.stringify(body));
+      const sortedBody = sortObject(body); // ✅ FIX
+      const bodyString = JSON.stringify(sortedBody);
+      base64Data = btoa(bodyString);
     }
 
     let plainText = "";
