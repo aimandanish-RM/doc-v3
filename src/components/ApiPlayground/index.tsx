@@ -12,6 +12,7 @@ import {
   hasPrivateKey,
   clearPrivateKey,
 } from "../../utils/privateKey";
+import { lookupError, extractErrorCodes } from "../../utils/errorCodes";
 import styles from "./styles.module.css";
 
 /* ================= TYPES ================= */
@@ -548,6 +549,7 @@ export default function ApiPlayground(props: Props) {
       {/* RESPONSE */}
       {status !== null && (
         <div>
+          {/* Status line */}
           <div className={styles.statusLine}>
             <span
               className={
@@ -562,11 +564,72 @@ export default function ApiPlayground(props: Props) {
               <span className={styles.statusHint}>{response._error}</span>
             )}
           </div>
+
+          {/* Raw response body */}
           {!response?._error && (
             <pre className={styles.response}>
               {JSON.stringify(response, null, 2)}
             </pre>
           )}
+
+          {/* Error code lookup — only shown on non-2xx with a parseable body */}
+          {status >= 300 && !response?._error && (() => {
+            const codes = extractErrorCodes(response);
+            if (codes.length === 0) return null;
+            return (
+              <div className={styles.errorLookup}>
+                <div className={styles.errorLookupHeader}>
+                  <span className={styles.errorLookupIcon}>⚑</span>
+                  <span>Error Code Reference</span>
+                </div>
+                {codes.map((code) => {
+                  const entry = lookupError(code);
+                  return (
+                    <div key={code} className={styles.errorLookupEntry}>
+                      <div className={styles.errorLookupCode}>{code}</div>
+                      {entry ? (
+                        <>
+                          <div className={styles.errorLookupDesc}>
+                            {entry.description}
+                          </div>
+                          {entry.solution && (
+                            <div className={styles.errorLookupSolution}>
+                              <span className={styles.errorLookupSolutionLabel}>
+                                💡 Fix
+                              </span>
+                              {entry.solution}
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <div className={styles.errorLookupDesc}>
+                          No description found.{" "}
+                          <a
+                            href="/docs/error-codes"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={styles.errorLookupLink}
+                          >
+                            View all error codes →
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+                <div className={styles.errorLookupFooter}>
+                  <a
+                    href="/docs/error-codes"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.errorLookupLink}
+                  >
+                    View full error code reference →
+                  </a>
+                </div>
+              </div>
+            );
+          })()}
         </div>
       )}
     </div>
