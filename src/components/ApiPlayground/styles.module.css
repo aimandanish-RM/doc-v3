@@ -21,11 +21,9 @@
   font-size: 13px;
 }
 
-/* Postman colors */
 .post {
   background: #facc15;
-    color: rgb(255, 255, 255);
-
+  color: rgb(255, 255, 255);
 }
 .get {
   background: #22c55e;
@@ -115,6 +113,13 @@
   font-weight: 600;
 }
 
+.labelHint {
+  font-size: 11px;
+  font-weight: 400;
+  opacity: 0.55;
+  margin-left: 4px;
+}
+
 .input,
 .textarea {
   width: 100%;
@@ -147,7 +152,8 @@
   color: var(--ifm-color-primary);
 }
 
-/* ================= BUTTON ================= */
+/* ================= SEND BUTTON ================= */
+
 .send {
   margin-top: 20px;
   position: relative;
@@ -162,30 +168,21 @@
   transition: all 0.3s ease;
 }
 
-/* Light mode core */
 :root[data-theme="light"] .send {
-  background: #111111; /* softer than pure black */
+  background: #111111;
 }
 
-/* Dark mode core */
 :root[data-theme="dark"] .send {
   background: #000000;
 }
 
-/* Gradient outline */
 .send::before {
   content: "";
   position: absolute;
   inset: -2px;
   border-radius: 14px;
   padding: 2px;
-  background: linear-gradient(
-    135deg,
-    #00f5ff,
-    #7c3aed,
-    #f472b6,
-    #00f5ff
-  );
+  background: linear-gradient(135deg, #00f5ff, #7c3aed, #f472b6, #00f5ff);
   background-size: 300% 300%;
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -195,7 +192,6 @@
   z-index: -1;
 }
 
-/* Hover glow */
 .send:hover {
   transform: translateY(-2px);
   box-shadow:
@@ -203,16 +199,22 @@
     0 0 25px rgba(124, 58, 237, 0.4);
 }
 
-/* Active press */
 .send:active {
   transform: scale(0.97);
 }
 
-/* Disabled */
 .send:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   box-shadow: none;
+}
+
+/* Visually dim but not disable when auth prereqs aren't met */
+.sendBlocked {
+  opacity: 0.55;
+}
+.sendBlocked::before {
+  background: linear-gradient(135deg, #6b7280, #9ca3af);
 }
 
 /* ================= OUTPUT ================= */
@@ -226,6 +228,37 @@
   border-radius: 12px;
   font-size: 13px;
   overflow-x: auto;
+}
+
+.statusLine {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.statusOk {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: #22c55e22;
+  color: #22c55e;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.statusErr {
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: #ef444422;
+  color: #ef4444;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.statusHint {
+  font-size: 12px;
+  opacity: 0.7;
+  font-style: italic;
 }
 
 /* ================= JSON EDITOR ================= */
@@ -245,17 +278,15 @@
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
-/* Postman colors */
 .jsonKey {
-  color: #38bdf8; /* light blue */
+  color: #38bdf8;
   font-weight: 500;
 }
 
 .jsonValue {
-  color: #facc15; /* yellow */
+  color: #facc15;
 }
 
-/* copy to clipboard styling */
 .iconBtn {
   background: transparent;
   border: none;
@@ -272,8 +303,6 @@
   transform: scale(1.1);
 }
 
-
-/* tick copy to clipboard styling */
 .editorWrapper {
   position: relative;
 }
@@ -300,7 +329,7 @@
   color: #22c55e;
 }
 
-/* ================= URL PARAM EDIT ================= */
+/* ================= URL PARAM ================= */
 
 .urlParam {
   background: #facc15;
@@ -321,14 +350,7 @@
   outline: 2px solid var(--ifm-color-primary);
 }
 
-.urlParam {
-  background: #facc15;
-  color: #111827;
-  padding: 2px 6px;
-  border-radius: 6px;
-  cursor: text;
-  font-weight: 600;
-}
+/* ================= ENV SWITCH ================= */
 
 .envSwitch {
   margin-bottom: 10px;
@@ -345,4 +367,135 @@
 .activeEnv {
   background: var(--ifm-color-primary);
   color: white;
+}
+
+/* ================= AUTH STATUS BANNERS ================= */
+
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  margin-bottom: 10px;
+  border: 1px solid transparent;
+}
+
+/* coloured dot */
+.bannerDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.bannerSuccess {
+  background: #14532d22;
+  border-color: #22c55e44;
+  color: #22c55e;
+}
+.bannerSuccess .bannerDot {
+  background: #22c55e;
+  box-shadow: 0 0 6px #22c55e88;
+}
+
+.bannerError {
+  background: #450a0a22;
+  border-color: #ef444444;
+  color: #ef4444;
+}
+.bannerError .bannerDot {
+  background: #ef4444;
+  box-shadow: 0 0 6px #ef444488;
+}
+
+.bannerWarning {
+  background: #42230022;
+  border-color: #facc1566;
+  color: #fbbf24;
+}
+.bannerWarning .bannerDot {
+  background: #fbbf24;
+  box-shadow: 0 0 6px #fbbf2488;
+}
+
+.bannerInfo {
+  background: #0c1a4222;
+  border-color: #38bdf844;
+  color: #38bdf8;
+}
+.bannerInfo .bannerDot {
+  background: #38bdf8;
+  box-shadow: 0 0 6px #38bdf888;
+}
+
+.bannerNeutral {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-emphasis-300);
+  color: var(--ifm-font-color-base);
+}
+.bannerNeutral .bannerDot {
+  background: var(--ifm-color-emphasis-500);
+}
+
+/* push action button to the right */
+.bannerAction {
+  margin-left: auto;
+  background: none;
+  border: 1px solid currentColor;
+  color: inherit;
+  border-radius: 6px;
+  padding: 2px 10px;
+  font-size: 11.5px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+.bannerAction:hover {
+  opacity: 1;
+}
+
+/* ================= PRIVATE KEY PROMPT ================= */
+
+.keyPromptWrapper {
+  margin-bottom: 10px;
+}
+
+.keyPromptBody {
+  margin-top: 6px;
+  padding: 14px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 10px;
+  background: var(--ifm-code-background);
+}
+
+.keyTextarea {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  min-height: 140px;
+  resize: vertical;
+}
+
+.keySubmit {
+  margin-top: 10px;
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: none;
+  background: var(--ifm-color-primary);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.keySubmit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.keySubmit:hover:not(:disabled) {
+  opacity: 0.85;
 }
